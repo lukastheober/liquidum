@@ -9,6 +9,8 @@ import java.util.LinkedList;
  * @created 18-Mai-2019 16:01:12
  */
 public class Controller {
+	
+	//TODO test
 
 	private GUI gui;
 	private LinkedList<ListOfTasks> listCollection;
