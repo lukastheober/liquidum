@@ -13,8 +13,6 @@ import java.util.LinkedList;
 
 public class Controller {
 	
-	//TODO screw it up
-	//TODO test  
 	//TODO test
 
 	private GUI gui;
