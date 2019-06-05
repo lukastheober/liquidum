@@ -35,7 +35,7 @@ public class MainMenuBar extends JMenuBar {
 		JMenuItem menuResetFilter = new JMenuItem("Filter zurücksetzten");
 		menuResetFilter.addActionListener(actListener);
 		submenuFilter.add(menuResetFilter);
-		JMenuItem filterButton = new JMenuItem("Rot");
+		filterButton = new JMenuItem("Rot");
 		filterButton.addActionListener(actListener);
 		submenuFilter.add(filterButton);
 		filterButton = new JMenuItem("Grün");
