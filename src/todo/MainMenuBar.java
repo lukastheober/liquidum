@@ -1,6 +1,7 @@
 package todo;
 
 import javax.swing.JMenuBar;
+import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 
@@ -12,43 +13,51 @@ import javax.swing.JMenu;
 
 public class MainMenuBar extends JMenuBar {
 
-	private int filterButton;
-	private int listCreateButton;
-	private int restoreTaskButton;
-	private int searchButton;
-	private int showBinButton;
+	private JMenuItem filterButton;
+	private JMenuItem listCreateButton;
+	private JMenuItem restoreTaskButton;
+	private JMenuItem searchButton;
+	private JMenuItem showBinButton;
 
 	public MainMenuBar() {
 		JMenu mainMenu = new JMenu("Menü");
 		add(mainMenu);
+		
+		ActionListener actListener = new MainMenuBarActionListener();
 
-		JMenuItem menuAddList = new JMenuItem("Neue Liste erstellen");
-		menuAddList.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
-		mainMenu.add(menuAddList);
+		listCreateButton = new JMenuItem("Neue Liste erstellen");
+		listCreateButton.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+		listCreateButton.addActionListener(actListener);
+		mainMenu.add(listCreateButton);
 
-		// JMenu submenuFilter = new ListSortMenu("Filter");
-
-		// temp until ListSortMenu implemented
 		JMenu submenuFilter = new JMenu("Filter");
 
 		JMenuItem menuResetFilter = new JMenuItem("Filter zurücksetzten");
+		menuResetFilter.addActionListener(actListener);
 		submenuFilter.add(menuResetFilter);
-		JMenuItem menuFilterColor1 = new JMenuItem("Color1");
-		submenuFilter.add(menuFilterColor1);
-		JMenuItem menuFilterColor2 = new JMenuItem("Color2");
-		submenuFilter.add(menuFilterColor2);
-		JMenuItem menuFilterColor3 = new JMenuItem("Color3");
-		submenuFilter.add(menuFilterColor3);
+		JMenuItem filterButton = new JMenuItem("Rot");
+		filterButton.addActionListener(actListener);
+		submenuFilter.add(filterButton);
+		filterButton = new JMenuItem("Grün");
+		menuResetFilter.addActionListener(actListener);
+		submenuFilter.add(filterButton);
+		filterButton = new JMenuItem("Blau");
+		menuResetFilter.addActionListener(actListener);
+		submenuFilter.add(filterButton);
 
 		mainMenu.add(submenuFilter);
 
-		JMenuItem menuSearch = new JMenuItem("Suchen");
-		menuSearch.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
-		mainMenu.add(menuSearch);
+		searchButton = new JMenuItem("Suchen");
+		searchButton.addActionListener(actListener);
+		mainMenu.add(searchButton);
 
-		JMenuItem menuRestore = new JMenuItem("Aufgabe wiederherstellen");
-		menuRestore.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
-		mainMenu.add(menuRestore);
+		showBinButton = new JMenuItem("Papierkorb zeigen");
+		showBinButton.addActionListener(actListener);
+		mainMenu.add(showBinButton);
+		
+		restoreTaskButton = new JMenuItem("Aufgabe wiederherstellen");
+		restoreTaskButton.addActionListener(actListener);
+		mainMenu.add(restoreTaskButton);
 
 	}
 }
