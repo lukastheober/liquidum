@@ -20,42 +20,42 @@ public class MainMenuBar extends JMenuBar {
 	private JMenuItem showBinButton;
 
 	public MainMenuBar() {
-		JMenu mainMenu = new JMenu("Menü");
+		JMenu mainMenu = new JMenu("Menu");
 		add(mainMenu);
 		
 		ActionListener actListener = new MainMenuBarActionListener();
 
-		listCreateButton = new JMenuItem("Neue Liste erstellen");
-		listCreateButton.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
+		listCreateButton = new JMenuItem("Create new List");
+		//listCreateButton.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
 		listCreateButton.addActionListener(actListener);
 		mainMenu.add(listCreateButton);
 
 		JMenu submenuFilter = new JMenu("Filter");
 
-		JMenuItem menuResetFilter = new JMenuItem("Filter zurücksetzten");
+		JMenuItem menuResetFilter = new JMenuItem("reset Filter");
 		menuResetFilter.addActionListener(actListener);
 		submenuFilter.add(menuResetFilter);
-		filterButton = new JMenuItem("Rot");
+		filterButton = new JMenuItem("Red");
 		filterButton.addActionListener(actListener);
 		submenuFilter.add(filterButton);
-		filterButton = new JMenuItem("Grün");
+		filterButton = new JMenuItem("Green");
 		menuResetFilter.addActionListener(actListener);
 		submenuFilter.add(filterButton);
-		filterButton = new JMenuItem("Blau");
+		filterButton = new JMenuItem("Blue");
 		menuResetFilter.addActionListener(actListener);
 		submenuFilter.add(filterButton);
 
 		mainMenu.add(submenuFilter);
 
-		searchButton = new JMenuItem("Suchen");
+		searchButton = new JMenuItem("Search");
 		searchButton.addActionListener(actListener);
 		mainMenu.add(searchButton);
 
-		showBinButton = new JMenuItem("Papierkorb zeigen");
+		showBinButton = new JMenuItem("Show bin");
 		showBinButton.addActionListener(actListener);
 		mainMenu.add(showBinButton);
 		
-		restoreTaskButton = new JMenuItem("Aufgabe wiederherstellen");
+		restoreTaskButton = new JMenuItem("Restore Task");
 		restoreTaskButton.addActionListener(actListener);
 		mainMenu.add(restoreTaskButton);
 
