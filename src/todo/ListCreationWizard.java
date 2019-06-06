@@ -16,7 +16,7 @@ public class ListCreationWizard extends MyDialog {
 
 	private JTextField name;
 	private JButton cancel;
-	private JButton createTask;
+	private JButton createListOfTasks;
 
 	public ListCreationWizard(Controller controller) {
 		super(controller);
@@ -56,9 +56,9 @@ public class ListCreationWizard extends MyDialog {
 		});
 		this.add(cancel);
 
-		createTask = new JButton("  Aufgabe erstellen");
-		createTask.setName("create");
-		createTask.addActionListener(new ActionListener() {
+		createListOfTasks = new JButton("  Liste erstellen");
+		createListOfTasks.setName("create");
+		createListOfTasks.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -68,6 +68,6 @@ public class ListCreationWizard extends MyDialog {
 				controller.addList(new ListOfTasks());
 			}
 		});
-		this.add(createTask);
+		this.add(createListOfTasks);
 	}
 }
