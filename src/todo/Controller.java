@@ -13,9 +13,10 @@ import java.util.LinkedList;
 
 public class Controller {
 
+
 	//check
 	//TODO test  
-	//TODO test
+
 
 	private GUI gui;
 	private LinkedList<ListOfTasks> listCollection;
