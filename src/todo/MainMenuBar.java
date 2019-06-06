@@ -13,51 +13,39 @@ import javax.swing.JMenu;
 
 public class MainMenuBar extends JMenuBar {
 
-	private JMenuItem filterButton;
-	private JMenuItem listCreateButton;
-	private JMenuItem restoreTaskButton;
-	private JMenuItem searchButton;
-	private JMenuItem showBinButton;
+	private JMenuItem filterButton1, filterButton2, filterButton3, filterButton4, filterButton5, filterButton6,
+			filterButton7,listCreateButton, searchButton, showBinButton;
 
 	public MainMenuBar() {
-		JMenu mainMenu = new JMenu("Menu");
+		JMenu mainMenu = new JMenu("Menü");
 		add(mainMenu);
-		
-		ActionListener actListener = new MainMenuBarActionListener();
 
-		listCreateButton = new JMenuItem("Create new List");
-		//listCreateButton.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
-		listCreateButton.addActionListener(actListener);
+		listCreateButton = new JMenuItem("Liste erstellen");
 		mainMenu.add(listCreateButton);
-
-		JMenu submenuFilter = new JMenu("Filter");
-
-		JMenuItem menuResetFilter = new JMenuItem("reset Filter");
-		menuResetFilter.addActionListener(actListener);
+		JMenu submenuFilter = new JMenu("Filtern");
+		JMenuItem menuResetFilter = new JMenuItem("Filter zurücksetzten");
 		submenuFilter.add(menuResetFilter);
-		filterButton = new JMenuItem("Red");
-		filterButton.addActionListener(actListener);
-		submenuFilter.add(filterButton);
-		filterButton = new JMenuItem("Green");
-		menuResetFilter.addActionListener(actListener);
-		submenuFilter.add(filterButton);
-		filterButton = new JMenuItem("Blue");
-		menuResetFilter.addActionListener(actListener);
-		submenuFilter.add(filterButton);
-
+		filterButton1 = new JMenuItem("Rot");
+		submenuFilter.add(filterButton1);
+		filterButton2 = new JMenuItem("Grün");
+		submenuFilter.add(filterButton2);
+		filterButton3 = new JMenuItem("Blau1");
+		submenuFilter.add(filterButton3);
+		filterButton4 = new JMenuItem("Blau2");
+		submenuFilter.add(filterButton4);
+		filterButton5 = new JMenuItem("Blau3");
+		submenuFilter.add(filterButton5);
+		filterButton6 = new JMenuItem("Blau4");
+		submenuFilter.add(filterButton6);
+		filterButton7 = new JMenuItem("Blau5");
+		submenuFilter.add(filterButton7);
 		mainMenu.add(submenuFilter);
 
-		searchButton = new JMenuItem("Search");
-		searchButton.addActionListener(actListener);
+		searchButton = new JMenuItem("Suchen");
 		mainMenu.add(searchButton);
 
-		showBinButton = new JMenuItem("Show bin");
-		showBinButton.addActionListener(actListener);
+		showBinButton = new JMenuItem("Papierkorb anzeigen");
 		mainMenu.add(showBinButton);
-		
-		restoreTaskButton = new JMenuItem("Restore Task");
-		restoreTaskButton.addActionListener(actListener);
-		mainMenu.add(restoreTaskButton);
 
 	}
 }
