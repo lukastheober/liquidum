@@ -1,5 +1,7 @@
 package todo;
 
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.util.LinkedList;
 
 import javax.swing.*;
@@ -17,10 +19,37 @@ public class ListOfTasks extends JPanel {
 	private JButton deleteButton;
 	private JButton editButton;
 	private JLabel nameLabel;
-	private ListSortMenu sortingMenu;
+	private ListSortMenu sortingMenu = new ListSortMenu();
 
 	public ListOfTasks(){
-
+		addTaskButton = new JButton("Hinzufügen");
+		editButton = new JButton("Bearbeiten");
+		deleteButton = new JButton("Entfernen");
+		
+        JFrame listFrame = new JFrame(name);
+		JPanel topPanel = new JPanel();
+		JPanel workPanel = new JPanel();
+		JPanel gridPanel = new JPanel();
+//		topPanel.add(nameLabel);
+		topPanel.add(sortingMenu);
+		listFrame.add(topPanel);
+				
+		gridPanel.add(addTaskButton);
+		gridPanel.add(editButton);
+		gridPanel.add(deleteButton);
+		
+		workPanel.add(gridPanel);
+		listFrame.add(workPanel);
+			
+		listFrame.pack();
+		
+		listFrame.setSize(420, 666);
+		listFrame.setLocationRelativeTo(null);
+		listFrame.setVisible(true);
+	}
+	
+	public String getListName() {
+		return this.name;
 	}
 
 	/**
@@ -29,8 +58,7 @@ public class ListOfTasks extends JPanel {
 	 * @param newList
 	 */
 	public void overwrite(ListOfTasks newList){
-
+		this.name = newList.name;
+		this.nameLabel = newList.nameLabel;
 	}
-
-
 }
