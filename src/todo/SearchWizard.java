@@ -13,6 +13,10 @@ import javax.swing.*;
  */
 public class SearchWizard extends MyDialog {
 	
+	public static void main(String[] args) {
+		new SearchWizard(new Controller());
+	}
+	
 	JTextField textField = new JTextField();
 
 	public SearchWizard(Controller controller) {
@@ -25,47 +29,41 @@ public class SearchWizard extends MyDialog {
 		setLocationRelativeTo(getParent());
 		setResizable(false);
 		
-		setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(5, 5, 5, 5);
+		setLayout(new BorderLayout());
 		
-		c.gridx = 0;
-		c.gridy = 0;
-		c.weightx = 1;
-		c.weighty = 1;
-		c.anchor = GridBagConstraints.LINE_START;
-		c.gridwidth = GridBagConstraints.RELATIVE;
-		c.fill = GridBagConstraints.NONE;
-		add(new JLabel("Suchen:"), c);
+		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new GridBagLayout());
 		
-		c.gridx = 1;
-		c.gridy = 0;
-		c.weightx = 1;
-		c.weighty = 1;
-		c.anchor = GridBagConstraints.LINE_END;
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		add(textField, c);
+		topPanel.add(new JLabel("Suchen:"), new GridBagConstraints(0, 0, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_START, GridBagConstraints.NONE, 
+				new Insets(5, 5, 5, 5), 0, 0));
 		
-		c.gridx = 0;
-		c.gridy = 1;
-		c.weightx = 1;
-		c.weighty = 1;
-		c.anchor = GridBagConstraints.CENTER;
-		c.gridwidth = GridBagConstraints.RELATIVE;
-		c.fill = GridBagConstraints.HORIZONTAL;
+		
+		topPanel.add(textField, new GridBagConstraints(1, 0, 1, 1, 20, 1, 
+				GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+		
+		add(topPanel, BorderLayout.CENTER);
+		
+		JPanel bottomPanel = new JPanel();
+		bottomPanel.setLayout(new GridBagLayout());
+		
+		
 		JButton cancel = new JButton("Abbrechen");
-		add(cancel, c);
+		bottomPanel.add(cancel, new GridBagConstraints(0, 0, 1, 1, 1, 1, 
+				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
 		
-		c.gridx = 1;
-		c.gridy = 1;
-		c.weightx = 1;
-		c.weighty = 1;
-		c.anchor = GridBagConstraints.CENTER;
-		c.gridwidth = GridBagConstraints.RELATIVE;
-		c.fill = GridBagConstraints.HORIZONTAL;
+		
+		
 		JButton confirm = new JButton("Suchen");
-		add(confirm, c);
+		bottomPanel.add(confirm, new GridBagConstraints(1, 0, 1, 1, 1, 1, 
+				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+		
+		add(bottomPanel, BorderLayout.SOUTH);
+		
+		
 		
 		cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -76,6 +74,7 @@ public class SearchWizard extends MyDialog {
 		confirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.searchFor(textField.getText());
+				dispose();
 			}
 		});
 		
