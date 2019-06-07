@@ -36,9 +36,7 @@ public class GUI extends JFrame {
 		
 		guiFrame.setVisible(true);
 	}
-	public static void main(String[] args) {
-		new GUI();
-	}
+
 	/**
 	 * Updates the whole UI.
 	 * JComponents can be updated using updateUI().

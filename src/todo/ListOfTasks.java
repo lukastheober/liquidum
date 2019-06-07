@@ -54,10 +54,7 @@ public class ListOfTasks extends JPanel {
 	public String getListName() {
 		return this.name;
 	}
-	
-	public static void main(String[] args) {
-		new ListOfTasks();
-	}
+
 	/**
 	 * Overwrites all data in this List with data of the new Task, except tasks.
 	 * 
