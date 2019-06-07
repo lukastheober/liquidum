@@ -18,16 +18,13 @@ public class ListOfTasks extends JPanel {
 	private JButton addTaskButton;
 	private JButton deleteButton;
 	private JButton editButton;
-	//TODO is this important?
 	private JLabel nameLabel;
 	private ListSortMenu sortingMenu = new ListSortMenu();
 
 	public ListOfTasks(){
-		//test
-		addTaskButton = new JButton("+");
+		addTaskButton = new JButton("Hinzufügen");
 		editButton = new JButton("Bearbeiten");
-		deleteButton = new JButton("X");
-		//testend
+		deleteButton = new JButton("Entfernen");
 		
         JFrame listFrame = new JFrame(name);
 		JPanel topPanel = new JPanel();

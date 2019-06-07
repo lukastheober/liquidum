@@ -32,8 +32,7 @@ public class GUI extends JFrame {
 //		guiFrame.setSize(height, width);
 		
 		guiFrame.setJMenuBar(menuBar);
-		guiFrame.setContentPane(listContainer);
-		
+		//TODO contentpane for listcontainer. has to be scrollable. fixed size?
 		guiFrame.setVisible(true);
 	}
 
