@@ -1,6 +1,6 @@
 package todo;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  * @author benja
@@ -9,10 +9,16 @@ import javax.swing.JOptionPane;
  */
 public class ListDeletionWarningDialog extends MyOptionPane {
 
-	public ListDeletionWarningDialog(Controller controller){
+	public ListDeletionWarningDialog(Controller controller, ListOfTasks list){
 		super(controller);
-		// TODO Auto-generated constructor stub
+		
+		int selection = JOptionPane.showConfirmDialog(null, "Sicher, dass Sie diese Liste löschen wollen?",
+				"Warnung!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		
+		if (selection == 0) {
+			controller.removeList(list);
+		}
+		
 	}
-
 
 }
