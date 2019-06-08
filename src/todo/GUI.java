@@ -25,7 +25,7 @@ public class GUI extends JFrame {
 		
 		//fullscreen
 		guiFrame.setSize(height, width);
-		
+		guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//charming padding(9/10screen)
 //		height = (height/10*9);
 //		width = (width/10*9);
