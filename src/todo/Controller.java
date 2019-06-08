@@ -1,6 +1,8 @@
 package todo;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
 /**
@@ -27,6 +29,27 @@ public class Controller {
 	 */
 	public Controller() {
 		// TODO
+		setActionListenerUp();
+	}
+	
+	//method to add ActionListener for MainMenuBar
+	private void setActionListenerUp() {
+		gui.getMainMenuBar().getListCreateButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ListCreationWizard wiz = new ListCreationWizard(Controller.this);
+			}
+		});
+		
+		gui.getMainMenuBar().getSearchButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SearchWizard wiz = new SearchWizard(Controller.this);
+				
+			}
+		});
 	}
 
 	/**

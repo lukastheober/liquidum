@@ -48,4 +48,12 @@ public class MainMenuBar extends JMenuBar {
 		mainMenu.add(showBinButton);
 
 	}
+	
+	public JMenuItem getListCreateButton() {
+		return listCreateButton;
+	}
+	
+	public JMenuItem getSearchButton() {
+		return listCreateButton;
+	}
 }
