@@ -157,19 +157,11 @@ public class Controller {
 	 * @param color: the Color chosen by the user
 	 */
 	public void filterBy(Color color) {
-<<<<<<< HEAD
-		Iterator<ListOfTasks> taskListsIterator = this.listCollection.iterator();
-		
-		while(taskListsIterator.hasNext()) {
-			
-			ListOfTasks actualTaskListObject = taskListsIterator.next();
-=======
 		Iterator<ListOfTasks> taskListIterator = this.listCollection.iterator();
 
 		while (taskListIterator.hasNext()) {
 
 			ListOfTasks actualTaskListObject = taskListIterator.next();
->>>>>>> branch 'Controller' of https://github.com/lukastheober/liquidum.git
 			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
 			Iterator<Task> taskIterator = actualListOfTasks.iterator();
 			boolean taskListWithoutFilteredColor = true;
