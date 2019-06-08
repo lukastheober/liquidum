@@ -124,7 +124,6 @@ public class Controller {
 				actualListOfTasks.set(actualListOfTasks.indexOf(oldTask), newTask);
 			}
 		}
-		gui.update();
 		save();
 	}
 
