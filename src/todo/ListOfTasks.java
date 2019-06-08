@@ -19,7 +19,7 @@ public class ListOfTasks extends JPanel {
 	private JLabel nameLabel;
 	private ListSortMenu sortingMenu;
 
-	public ListOfTasks(){
+	public ListOfTasks() {
 
 	}
 
@@ -28,9 +28,11 @@ public class ListOfTasks extends JPanel {
 	 * 
 	 * @param newList
 	 */
-	public void overwrite(ListOfTasks newList){
+	public void overwrite(ListOfTasks newList) {
 
 	}
 
-
+	public LinkedList<Task> getTaskList() {
+		return tasks;
+	}
 }
