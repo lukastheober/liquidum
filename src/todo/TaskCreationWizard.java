@@ -99,7 +99,7 @@ public class TaskCreationWizard extends MyDialog {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				System.out.println("Task-Constructor missing");
-				controller.addTask(new Task());
+				controller.addTask(new Task(name, date, colour, interval));
 
 			}
 		});
