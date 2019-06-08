@@ -143,7 +143,7 @@ public class Controller {
 			ListOfTasks actualTaskListObject = taskListIterator.next();
 			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
 			Iterator<Task> taskIterator = actualListOfTasks.iterator();
-			boolean taskListWithoutFilteredColor = false;
+			boolean taskListWithoutFilteredColor = true;
 			
 			while(taskIterator.hasNext()) {
 		
@@ -151,7 +151,6 @@ public class Controller {
 			
 				if(actualTask.getColor() != color) {
 					actualTask.setVisible(false);
-					taskListWithoutFilteredColor = true;
 				} else {
 					taskListWithoutFilteredColor = false;
 				}
