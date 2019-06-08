@@ -84,7 +84,7 @@ public class Controller {
 		ListOfTasks myList = task.getMyList();
 		myList.getTaskList().add(task);
 		gui.update();
-		saver();
+		save();
 	}
 
 	/**
@@ -138,7 +138,15 @@ public class Controller {
 	 * @param newTask the Task after it was edited
 	 */
 	public void editTask(Task oldTask, Task newTask) {
-		// TODO
+		Iterator<ListOfTasks> iterator = this.listCollection.iterator();
+		while (iterator.hasNext()) {
+			LinkedList<Task> actualListOfTasks = iterator.next().getTaskList();
+			if (actualListOfTasks.contains(oldTask)) {
+				actualListOfTasks.set(actualListOfTasks.indexOf(oldTask), newTask);
+			}
+		}
+		gui.update();
+		save();
 	}
 
 	/**
@@ -149,7 +157,31 @@ public class Controller {
 	 * @param color: the Color chosen by the user
 	 */
 	public void filterBy(Color color) {
-		// TODO
+		Iterator<ListOfTasks> taskListIterator = this.listCollection.iterator();
+
+		while (taskListIterator.hasNext()) {
+
+			ListOfTasks actualTaskListObject = taskListIterator.next();
+			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
+			Iterator<Task> taskIterator = actualListOfTasks.iterator();
+			boolean taskListWithoutFilteredColor = true;
+
+			while (taskIterator.hasNext()) {
+
+				Task actualTask = taskIterator.next();
+
+				if (actualTask.getColor() != color) {
+					actualTask.setVisible(false);
+				} else {
+					taskListWithoutFilteredColor = false;
+				}
+			}
+			if (taskListWithoutFilteredColor) {
+				actualTaskListObject.setVisible(false);
+			}
+		}
+		gui.update();
+		save();
 	}
 
 	/**
