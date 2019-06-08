@@ -3,7 +3,11 @@ package todo;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
+
+import org.w3c.dom.ls.LSInput;
 
 /**
  * @author benja
@@ -89,8 +93,17 @@ public class Controller {
 	 * 
 	 * @param list: the ListOfTasks that is being deleted
 	 */
-	private void clearBinOfAllTasksFrom(ListOfTasks list) {
-		// TODO
+	public void clearBinOfAllTasksFrom(ListOfTasks list) {
+		LinkedList tasksToDelete = list.getTaskList();
+		Iterator<Task> listIterator = tasksToDelete.iterator();
+		Iterator<Task> trashIterator = trashBin.iterator();
+		while (listIterator.hasNext()) {
+			while (trashIterator.hasNext()) {
+				if (trashIterator.next().equals(listIterator.next())) {
+					trashBin.remove(trashIterator.next());
+				}
+			}
+		}
 	}
 
 	/**
@@ -98,7 +111,12 @@ public class Controller {
 	 * deletionDate is longer than 3 days ago.
 	 */
 	private void deleteOldTasksFromBin() {
-		// TODO
+		Iterator<Task> trashIterator = trashBin.iterator();
+		while (trashIterator.hasNext()) {
+			// Date to Calendar Conversion missing
+//			if (trashIterator.next().getDeletionDate())
+//				trashBin.remove(trashIterator.next());
+		}
 	}
 
 	/**
