@@ -22,32 +22,33 @@ public class ListOfTasks extends JPanel {
 	private ListSortMenu sortingMenu = new ListSortMenu();
 
 	public ListOfTasks() {
-		addTaskButton = new JButton("Hinzufügen");
+		tasks = new LinkedList<Task>();
+		addTaskButton = new JButton("Hinzufï¿½gen");
 		editButton = new JButton("Bearbeiten");
 		deleteButton = new JButton("Entfernen");
-		
-        JFrame listFrame = new JFrame(name);
+
+		JFrame listFrame = new JFrame(name);
 		JPanel topPanel = new JPanel();
 		JPanel workPanel = new JPanel();
 		JPanel gridPanel = new JPanel();
 //		topPanel.add(nameLabel);
 		topPanel.add(sortingMenu);
 		listFrame.add(topPanel);
-				
+
 		gridPanel.add(addTaskButton);
 		gridPanel.add(editButton);
 		gridPanel.add(deleteButton);
-		
+
 		workPanel.add(gridPanel);
 		listFrame.add(workPanel);
-			
+
 		listFrame.pack();
-		
+
 		listFrame.setSize(420, 666);
 		listFrame.setLocationRelativeTo(null);
 		listFrame.setVisible(true);
 	}
-	
+
 	public String getListName() {
 		return this.name;
 

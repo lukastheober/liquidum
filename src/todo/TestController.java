@@ -60,10 +60,10 @@ public class TestController {
 		ListOfTasks list1 = new ListOfTasks();
 		ListOfTasks list2 = new ListOfTasks();
 		Task toMove = new Task();
-		list1.getTasks().add(toMove);
+		list1.getTaskList().add(toMove);
 		c1.moveDraggedTaskToList(list2);
-		assertNull(list1.getTasks().getFirst());
-		assertEquals(toMove, list2.getTasks().getFirst());
+		assertNull(list1.getTaskList().getFirst());
+		assertEquals(toMove, list2.getTaskList().getFirst());
 		assertNull(draggedTask);
 	}
 
@@ -71,9 +71,9 @@ public class TestController {
 	public void moveTaskToListTf2NullObject() {
 		ListOfTasks list1 = new ListOfTasks();
 		Task toMove = new Task();
-		list1.getTasks().add(toMove);
+		list1.getTaskList().add(toMove);
 		c1.moveDraggedTaskToList(null);
-		assertEquals(toMove, list1.getTasks().getFirst());
+		assertEquals(toMove, list1.getTaskList().getFirst());
 		assertNull(draggedTask);
 	}
 
@@ -84,11 +84,11 @@ public class TestController {
 		Task a = new Task();
 		Task b = new Task();
 		draggedTask = a;
-		list1.getTasks().add(a);
-		list1.getTasks().add(b);
+		list1.getTaskList().add(a);
+		list1.getTaskList().add(b);
 		c1.moveTaskUnderOtherTask(b);
-		assertEquals(1, list1.getTasks().indexOf(a));
-		assertEquals(1, list1.getTasks().indexOf(b));
+		assertEquals(1, list1.getTaskList().indexOf(a));
+		assertEquals(1, list1.getTaskList().indexOf(b));
 		assertNull(draggedTask);
 	}
 
@@ -97,10 +97,10 @@ public class TestController {
 		ListOfTasks list1 = new ListOfTasks();
 		Task a = new Task();
 		draggedTask = a;
-		list1.getTasks().add(a);
+		list1.getTaskList().add(a);
 		c1.moveTaskUnderOtherTask(null);
-		assertEquals(0, list1.getTasks().indexOf(a));
-		assertNull(list1.getTasks().get(1));
+		assertEquals(0, list1.getTaskList().indexOf(a));
+		assertNull(list1.getTaskList().get(1));
 		assertNull(draggedTask);
 	}
 
@@ -137,10 +137,10 @@ public class TestController {
 		listCollection.add(list1);
 		Task a = new Task();
 		Task b = new Task();
-		list1.getTasks().add(a);
-		list1.getTasks().add(b);
+		list1.getTaskList().add(a);
+		list1.getTaskList().add(b);
 		c1.removeTask(a);
-		assertFalse(listCollection.getFirst().getTasks().contains(a));
+		assertFalse(listCollection.getFirst().getTaskList().contains(a));
 		assertTrue(trashBin.contains(a));
 	}
 
@@ -149,9 +149,9 @@ public class TestController {
 		ListOfTasks list1 = new ListOfTasks();
 		listCollection.add(list1);
 		Task a = new Task();
-		list1.getTasks().add(a);
+		list1.getTaskList().add(a);
 		c1.removeTask(null);
-		assertEquals(a, listCollection.getFirst().getTasks().getFirst());
+		assertEquals(a, listCollection.getFirst().getTaskList().getFirst());
 	}
 
 	// Constructor of ListOfTasks missing
@@ -166,11 +166,11 @@ public class TestController {
 		ListOfTasks list1 = new ListOfTasks();
 		listCollection.add(list1);
 		Task a = new Task();
-		list1.getTasks().add(a);
+		list1.getTaskList().add(a);
 		c1.removeTask(a);
 		c1.restoreTask(a);
 		assertEquals(0, trashBin.size());
-		assertTrue(listCollection.getFirst().getTasks().contains(a));
+		assertTrue(listCollection.getFirst().getTaskList().contains(a));
 	}
 
 	@Test
@@ -178,11 +178,11 @@ public class TestController {
 		ListOfTasks list1 = new ListOfTasks();
 		listCollection.add(list1);
 		Task a = new Task();
-		list1.getTasks().add(a);
+		list1.getTaskList().add(a);
 		c1.removeTask(a);
 		c1.restoreTask(null);
 		assertEquals(1, trashBin.size());
-		assertFalse(listCollection.getFirst().getTasks().contains(a));
+		assertFalse(listCollection.getFirst().getTaskList().contains(a));
 	}
 
 	// Constructor of ListOfTasks missing

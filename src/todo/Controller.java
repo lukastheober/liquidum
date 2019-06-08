@@ -3,8 +3,11 @@ package todo;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
+
+import org.w3c.dom.ls.LSInput;
 
 /**
  * @author benja
@@ -30,11 +33,15 @@ public class Controller {
 	 */
 	public Controller() {
 		// TODO
+		listCollection = new LinkedList<ListOfTasks>();
+		trashBin = new LinkedList<Task>();
+		draggedList = null;
+		draggedTask = null;
 		gui = new GUI();
 		setActionListenerUp();
 	}
-	
-	//method to add ActionListener for MainMenuBar
+
+	// method to add ActionListener for MainMenuBar
 	private void setActionListenerUp() {
 		gui.getMainMenuBar().getListCreateButton().addActionListener(new ActionListener() {
 
@@ -44,13 +51,13 @@ public class Controller {
 				System.out.println("test");
 			}
 		});
-		
+
 		gui.getMainMenuBar().getSearchButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SearchWizard wiz = new SearchWizard(Controller.this);
-				
+
 			}
 		});
 	}
@@ -86,8 +93,17 @@ public class Controller {
 	 * 
 	 * @param list: the ListOfTasks that is being deleted
 	 */
-	private void clearBinOfAllTasksFrom(ListOfTasks list) {
-		// TODO
+	public void clearBinOfAllTasksFrom(ListOfTasks list) {
+		LinkedList tasksToDelete = list.getTaskList();
+		Iterator<Task> listIterator = tasksToDelete.iterator();
+		Iterator<Task> trashIterator = trashBin.iterator();
+		while (listIterator.hasNext()) {
+			while (trashIterator.hasNext()) {
+				if (trashIterator.next().equals(listIterator.next())) {
+					trashBin.remove(trashIterator.next());
+				}
+			}
+		}
 	}
 
 	/**
@@ -95,7 +111,12 @@ public class Controller {
 	 * deletionDate is longer than 3 days ago.
 	 */
 	private void deleteOldTasksFromBin() {
-		// TODO
+		Iterator<Task> trashIterator = trashBin.iterator();
+		while (trashIterator.hasNext()) {
+			// Date to Calendar Conversion missing
+//			if (trashIterator.next().getDeletionDate())
+//				trashBin.remove(trashIterator.next());
+		}
 	}
 
 	/**
@@ -118,9 +139,9 @@ public class Controller {
 	 */
 	public void editTask(Task oldTask, Task newTask) {
 		Iterator<ListOfTasks> iterator = this.listCollection.iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			LinkedList<Task> actualListOfTasks = iterator.next().getTaskList();
-			if(actualListOfTasks.contains(oldTask)) {
+			if (actualListOfTasks.contains(oldTask)) {
 				actualListOfTasks.set(actualListOfTasks.indexOf(oldTask), newTask);
 			}
 		}
@@ -136,26 +157,34 @@ public class Controller {
 	 * @param color: the Color chosen by the user
 	 */
 	public void filterBy(Color color) {
+<<<<<<< HEAD
 		Iterator<ListOfTasks> taskListsIterator = this.listCollection.iterator();
 		
 		while(taskListsIterator.hasNext()) {
 			
 			ListOfTasks actualTaskListObject = taskListsIterator.next();
+=======
+		Iterator<ListOfTasks> taskListIterator = this.listCollection.iterator();
+
+		while (taskListIterator.hasNext()) {
+
+			ListOfTasks actualTaskListObject = taskListIterator.next();
+>>>>>>> branch 'Controller' of https://github.com/lukastheober/liquidum.git
 			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
 			Iterator<Task> taskIterator = actualListOfTasks.iterator();
 			boolean taskListWithoutFilteredColor = true;
-			
-			while(taskIterator.hasNext()) {
-		
+
+			while (taskIterator.hasNext()) {
+
 				Task actualTask = taskIterator.next();
-			
-				if(actualTask.getColor() != color) {
+
+				if (actualTask.getColor() != color) {
 					actualTask.setVisible(false);
 				} else {
 					taskListWithoutFilteredColor = false;
 				}
 			}
-			if(taskListWithoutFilteredColor) {
+			if (taskListWithoutFilteredColor) {
 				actualTaskListObject.setVisible(false);
 			}
 		}
@@ -314,5 +343,5 @@ public class Controller {
 //	public static void main(String[] args) {
 //		Controller bla = new Controller();
 //	}
-	
+
 }
