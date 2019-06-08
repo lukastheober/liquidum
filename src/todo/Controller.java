@@ -3,6 +3,7 @@ package todo;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -74,7 +75,7 @@ public class Controller {
 		ListOfTasks myList = task.getMyList();
 		myList.getTaskList().add(task);
 		gui.update();
-		saver();
+		save();
 	}
 
 	/**
@@ -114,7 +115,15 @@ public class Controller {
 	 * @param newTask the Task after it was edited
 	 */
 	public void editTask(Task oldTask, Task newTask) {
-		// TODO
+		Iterator<ListOfTasks> iterator = this.listCollection.iterator();
+		while(iterator.hasNext()) {
+			LinkedList<Task> actualListOfTasks = iterator.next().getTaskList();
+			if(actualListOfTasks.contains(oldTask)) {
+				actualListOfTasks.set(actualListOfTasks.indexOf(oldTask), newTask);
+			}
+		}
+		gui.update();
+		save();
 	}
 
 	/**
