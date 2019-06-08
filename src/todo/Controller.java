@@ -29,11 +29,15 @@ public class Controller {
 	 */
 	public Controller() {
 		// TODO
+		listCollection = new LinkedList<ListOfTasks>();
+		trashBin = new LinkedList<Task>();
+		draggedList = null;
+		draggedTask = null;
 		gui = new GUI();
 		setActionListenerUp();
 	}
-	
-	//method to add ActionListener for MainMenuBar
+
+	// method to add ActionListener for MainMenuBar
 	private void setActionListenerUp() {
 		gui.getMainMenuBar().getListCreateButton().addActionListener(new ActionListener() {
 
@@ -43,13 +47,13 @@ public class Controller {
 				System.out.println("test");
 			}
 		});
-		
+
 		gui.getMainMenuBar().getSearchButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SearchWizard wiz = new SearchWizard(Controller.this);
-				
+
 			}
 		});
 	}
@@ -268,5 +272,5 @@ public class Controller {
 //	public static void main(String[] args) {
 //		Controller bla = new Controller();
 //	}
-	
+
 }
