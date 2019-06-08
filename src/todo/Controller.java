@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
+import javax.swing.JMenuItem;
 
 import org.w3c.dom.ls.LSInput;
 
@@ -48,7 +49,6 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ListCreationWizard wiz = new ListCreationWizard(Controller.this);
-				System.out.println("test");
 			}
 		});
 
@@ -57,9 +57,37 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SearchWizard wiz = new SearchWizard(Controller.this);
-
 			}
 		});
+		
+		gui.getMainMenuBar().getResetFilter().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				resetFilter();
+			}
+		});
+		
+		JMenuItem[] filterMenu = gui.getMainMenuBar().getFilterButton();
+		for(JMenuItem filter : filterMenu) {
+			filter.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					switch(e.getActionCommand()) {
+					case "Rot":
+						filterBy(Color.red);
+						break;
+					case "Blau":
+						filterBy(Color.blue);
+					case "Grün":
+						filterBy(Color.green);
+					default:
+						System.out.println("couldnt pick color");
+					}
+				}
+			});
+		}	
 	}
 
 	/**
