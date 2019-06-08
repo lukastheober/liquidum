@@ -9,9 +9,16 @@ import javax.swing.JOptionPane;
  */
 public class TaskDeletionWarningDialog extends MyOptionPane {
 
-	public TaskDeletionWarningDialog(Controller controller) {
+	public TaskDeletionWarningDialog(Controller controller, Task task){
 		super(controller);
-		// TODO Auto-generated constructor stub
+		
+		int selection = JOptionPane.showConfirmDialog(null, "Sicher, dass Sie diese Aufgabe löschen wollen?",
+				"Warnung!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		
+		if (selection == 0) {
+			controller.removeTask(task);
+		}
+		
 	}
 
 }

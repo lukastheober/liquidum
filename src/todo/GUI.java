@@ -14,8 +14,8 @@ import javax.swing.JFrame;
  */
 public class GUI extends JFrame {
 
-	private ListContainer listContainer;
-	private MainMenuBar menuBar;
+	private ListContainer listContainer = new ListContainer();
+	private MainMenuBar menuBar = new MainMenuBar();
 	
 	public GUI() {
 		JFrame guiFrame = new JFrame("Liquidum");

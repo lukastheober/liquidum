@@ -30,6 +30,7 @@ public class Controller {
 	 */
 	public Controller() {
 		// TODO
+		gui = new GUI();
 		setActionListenerUp();
 	}
 	
@@ -40,6 +41,7 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ListCreationWizard wiz = new ListCreationWizard(Controller.this);
+				System.out.println("test");
 			}
 		});
 		
@@ -272,4 +274,8 @@ public class Controller {
 
 	}
 
+//	public static void main(String[] args) {
+//		Controller bla = new Controller();
+//	}
+	
 }
