@@ -136,7 +136,32 @@ public class Controller {
 	 * @param color: the Color chosen by the user
 	 */
 	public void filterBy(Color color) {
-		// TODO
+		Iterator<ListOfTasks> taskListIterator = this.listCollection.iterator();
+		
+		while(taskListIterator.hasNext()) {
+			
+			ListOfTasks actualTaskListObject = taskListIterator.next();
+			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
+			Iterator<Task> taskIterator = actualListOfTasks.iterator();
+			boolean taskListWithoutFilteredColor = false;
+			
+			while(taskIterator.hasNext()) {
+		
+				Task actualTask = taskIterator.next();
+			
+				if(actualTask.getColor() != color) {
+					actualTask.setVisible(false);
+					taskListWithoutFilteredColor = true;
+				} else {
+					taskListWithoutFilteredColor = false;
+				}
+			}
+			if(taskListWithoutFilteredColor) {
+				actualTaskListObject.setVisible(false);
+			}
+		}
+		gui.update();
+		save();
 	}
 
 	/**
