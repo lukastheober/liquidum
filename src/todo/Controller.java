@@ -136,11 +136,11 @@ public class Controller {
 	 * @param color: the Color chosen by the user
 	 */
 	public void filterBy(Color color) {
-		Iterator<ListOfTasks> taskListIterator = this.listCollection.iterator();
+		Iterator<ListOfTasks> taskListsIterator = this.listCollection.iterator();
 		
-		while(taskListIterator.hasNext()) {
+		while(taskListsIterator.hasNext()) {
 			
-			ListOfTasks actualTaskListObject = taskListIterator.next();
+			ListOfTasks actualTaskListObject = taskListsIterator.next();
 			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
 			Iterator<Task> taskIterator = actualListOfTasks.iterator();
 			boolean taskListWithoutFilteredColor = true;
@@ -167,7 +167,20 @@ public class Controller {
 	 * Only called by the FilterMenu. Turns all Tasks and ListOfTasks visible.
 	 */
 	public void resetFilter() {
-
+		Iterator<ListOfTasks> taskListsIterator = this.listCollection.iterator();
+		
+		while(taskListsIterator.hasNext()) {
+			
+			ListOfTasks actualTaskListObject = taskListsIterator.next();
+			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
+			Iterator<Task> taskIterator = actualListOfTasks.iterator();
+			
+			while(taskIterator.hasNext()) {
+				taskIterator.next().setVisible(true);
+			}
+		}
+		gui.update();
+		save();
 	}
 
 	/**
