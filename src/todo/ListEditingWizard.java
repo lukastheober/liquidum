@@ -29,6 +29,7 @@ public class ListEditingWizard extends MyDialog {
 
 	public ListEditingWizard(ListOfTasks tasklist, Controller controller) {
 		super(controller);
+		oldList = tasklist;
 		initialize();
 	}
 
@@ -79,9 +80,4 @@ public class ListEditingWizard extends MyDialog {
 		});
 		this.add(editListOfTasks);
 	}
-
-	public static void main(String[] args) {
-		ListEditingWizard bla = new ListEditingWizard(null, null);
-	}
-
 }
