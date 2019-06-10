@@ -14,90 +14,54 @@ import javax.swing.*;
 public class ListOfTasks extends JPanel {
 
 	private String name;
-	private LinkedList<Task> tasks;
 	private JButton addTaskButton;
 	private JButton deleteButton;
 	private JButton editButton;
 	private JLabel nameLabel;
-	private ListSortMenu sortingMenu = new ListSortMenu();
+	private LinkedList<Task> tasks = new LinkedList();
+	private ListSortMenu sortingMenu;
 	
-	/*
-	 * 	
-	 */    
-    private int nrOfTasks = 0;
-    private static final int maxNrOfTasks = 10;    
-    
-    public ListOfTasks(String aListName) {
-	    setLayout(new GridLayout(maxNrOfTasks + 1,1));
-	    setBorder(BorderFactory.createLineBorder(Color.BLACK));
-	    
-	    menuBar = new ListMenuBar(aListName);
-	    this.listNr = MyGUI.getListContainer().getNumberOfLists() + 1;
-	    menuBar.myList = listNr;
-	    
-	    add(menuBar);
-    }
-    
-    public int getNrOfTasks() {
-            return nrOfTasks;
-    }
-    
-    public void setNrOfTasks(int i) {
-            nrOfTasks = i;
-    }
-    
-
-	/*
-	 * 
-	 */
-	public void oldListOfTasks(String n) {
-		name = n;
-		//TODO set nameLabel
-		this.displayFields();
+	static final int MAX_TASKS = 10;
+	
+	public ListOfTasks(String listName) {
+		setLayout(new GridLayout(MAX_TASKS + 1, 1));
+		
+		nameLabel = new JLabel(listName);
+		
+		JPanel topBar = menuBars(listName);
+		
+		add(topBar);
+		//TODO viewable tasks
 	}
 	
-	public ListOfTasks(){
-		displayFields();
-	}
-	
-	private void displayFields() {
-		addTaskButton = new JButton("Hinzuf�gen");
+	private JPanel menuBars(String listName) {
+		JPanel menues = new JPanel();
+		menues.setLayout(new GridLayout(2, 3));
+		
+		sortingMenu = new ListSortMenu(listName);
+		
+		//buttons
+		addTaskButton = new JButton("+");
+		//TODO create-new-task (wizzard?)
 		editButton = new JButton("Bearbeiten");
 		deleteButton = new JButton("Entfernen");
 		
-        JFrame listFrame = new JFrame(name);
-		JPanel topPanel = new JPanel();
-		JPanel workPanel = new JPanel();
-		JPanel gridPanel = new JPanel();
-		//TODO include namelabel in Panel
-		topPanel.add(sortingMenu);
-		listFrame.add(topPanel);
-				
-		gridPanel.add(addTaskButton);
-		gridPanel.add(editButton);
-		gridPanel.add(deleteButton);
-		
-		workPanel.add(gridPanel);
-		listFrame.add(workPanel);
-			
-		listFrame.pack();
-		
-		listFrame.setSize(420, 666);
-		listFrame.setLocationRelativeTo(null);
-		listFrame.setVisible(true);
+		menues.add(sortingMenu); 
+		menues.add(editButton);
+		menues.add(addTaskButton);
+		menues.add(deleteButton);
 	}
 	
 	public String getListName() {
 		return this.name;
 	}
-	
 
 	/**
 	 * Overwrites all data in this List with data of the new Task, except tasks.
 	 * 
 	 * @param newList
 	 */
-	public void overwrite(ListOfTasks newList){
+	public void overwrite(ListOfTasks newList) {
 		this.name = newList.name;
 		this.nameLabel = newList.nameLabel;
 	}

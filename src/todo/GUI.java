@@ -24,8 +24,8 @@ public class GUI extends JFrame {
 	
 	public GUI() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		mainWindowHeight = screenSize.height - 200;
-		mainWindowWidth = screenSize.width - 450;
+		mainWindowHeight = screenSize.height;
+		mainWindowWidth = screenSize.width;
 		
         //window settings
         setSize(mainWindowWidth, mainWindowHeight);
@@ -55,7 +55,8 @@ public class GUI extends JFrame {
                 e.printStackTrace();
         }
 	}
-	
+		
+	//testing main
 	public static void main(String[] args) {
 		new GUI();
 	}
