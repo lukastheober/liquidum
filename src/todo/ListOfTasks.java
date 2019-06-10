@@ -20,19 +20,14 @@ public class ListOfTasks extends JPanel {
 	private JButton editButton;
 	private JLabel nameLabel;
 	private ListSortMenu sortingMenu = new ListSortMenu();
+	
 	/*
 	 * 	
-	 */
-
-    private static final long serialVersionUID = 1L;
-    
-    String listName;
-    int listNr = 0;
-    int nrOfTasks = 0;
+	 */    
+    private int nrOfTasks = 0;
     private static final int maxNrOfTasks = 10;    
     
     public ListOfTasks(String aListName) {
-	    
 	    setLayout(new GridLayout(maxNrOfTasks + 1,1));
 	    setBorder(BorderFactory.createLineBorder(Color.BLACK));
 	    
