@@ -20,9 +20,19 @@ public class ListOfTasks extends JPanel {
 	private JButton editButton;
 	private JLabel nameLabel;
 	private ListSortMenu sortingMenu = new ListSortMenu();
-
+	
+	public ListOfTasks(String n) {
+		name = n;
+		//TODO set nameLabel
+		this.displayFields();
+	}
+	
 	public ListOfTasks(){
-		addTaskButton = new JButton("Hinzufügen");
+		displayFields();
+	}
+	
+	private void displayFields() {
+		addTaskButton = new JButton("Hinzufï¿½gen");
 		editButton = new JButton("Bearbeiten");
 		deleteButton = new JButton("Entfernen");
 		
@@ -30,7 +40,7 @@ public class ListOfTasks extends JPanel {
 		JPanel topPanel = new JPanel();
 		JPanel workPanel = new JPanel();
 		JPanel gridPanel = new JPanel();
-//		topPanel.add(nameLabel);
+		//TODO include namelabel in Panel
 		topPanel.add(sortingMenu);
 		listFrame.add(topPanel);
 				
@@ -51,6 +61,7 @@ public class ListOfTasks extends JPanel {
 	public String getListName() {
 		return this.name;
 	}
+	
 
 	/**
 	 * Overwrites all data in this List with data of the new Task, except tasks.
