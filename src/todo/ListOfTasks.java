@@ -20,8 +20,42 @@ public class ListOfTasks extends JPanel {
 	private JButton editButton;
 	private JLabel nameLabel;
 	private ListSortMenu sortingMenu = new ListSortMenu();
-	
-	public ListOfTasks(String n) {
+	/*
+	 * 	
+	 */
+
+    private static final long serialVersionUID = 1L;
+    
+    String listName;
+    int listNr = 0;
+    int nrOfTasks = 0;
+    private static final int maxNrOfTasks = 10;    
+    
+    public ListOfTasks(String aListName) {
+	    
+	    setLayout(new GridLayout(maxNrOfTasks + 1,1));
+	    setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	    
+	    menuBar = new ListMenuBar(aListName);
+	    this.listNr = MyGUI.getListContainer().getNumberOfLists() + 1;
+	    menuBar.myList = listNr;
+	    
+	    add(menuBar);
+    }
+    
+    public int getNrOfTasks() {
+            return nrOfTasks;
+    }
+    
+    public void setNrOfTasks(int i) {
+            nrOfTasks = i;
+    }
+    
+
+	/*
+	 * 
+	 */
+	public void oldListOfTasks(String n) {
 		name = n;
 		//TODO set nameLabel
 		this.displayFields();
