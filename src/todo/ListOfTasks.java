@@ -14,44 +14,46 @@ import javax.swing.*;
 public class ListOfTasks extends JPanel {
 
 	private String name;
-	private LinkedList<Task> tasks;
 	private JButton addTaskButton;
 	private JButton deleteButton;
 	private JButton editButton;
 	private JLabel nameLabel;
-	private ListSortMenu sortingMenu = new ListSortMenu();
-
-	public ListOfTasks() {
-		tasks = new LinkedList<Task>();
-		addTaskButton = new JButton("Hinzuf�gen");
+	private LinkedList<Task> tasks = new LinkedList();
+	private ListSortMenu sortingMenu;
+	
+	static final int MAX_TASKS = 10;
+	
+	public ListOfTasks(String listName) {
+		setLayout(new GridLayout(MAX_TASKS + 1, 1));
+		
+		nameLabel = new JLabel(listName);
+		
+		JPanel topBar = menuBars(listName);
+		
+		add(topBar);
+		//TODO viewable tasks
+	}
+	
+	private JPanel menuBars(String listName) {
+		JPanel menues = new JPanel();
+		menues.setLayout(new GridLayout(2, 3));
+		
+		sortingMenu = new ListSortMenu(listName);
+		
+		//buttons
+		addTaskButton = new JButton("+");
+		//TODO create-new-task (wizzard?)
 		editButton = new JButton("Bearbeiten");
 		deleteButton = new JButton("Entfernen");
-
-		JFrame listFrame = new JFrame(name);
-		JPanel topPanel = new JPanel();
-		JPanel workPanel = new JPanel();
-		JPanel gridPanel = new JPanel();
-//		topPanel.add(nameLabel);
-		topPanel.add(sortingMenu);
-		listFrame.add(topPanel);
-
-		gridPanel.add(addTaskButton);
-		gridPanel.add(editButton);
-		gridPanel.add(deleteButton);
-
-		workPanel.add(gridPanel);
-		listFrame.add(workPanel);
-
-		listFrame.pack();
-
-		listFrame.setSize(420, 666);
-		listFrame.setLocationRelativeTo(null);
-		listFrame.setVisible(true);
+		
+		menues.add(sortingMenu); 
+		menues.add(editButton);
+		menues.add(addTaskButton);
+		menues.add(deleteButton);
 	}
-
+	
 	public String getListName() {
 		return this.name;
-
 	}
 
 	/**
@@ -62,9 +64,5 @@ public class ListOfTasks extends JPanel {
 	public void overwrite(ListOfTasks newList) {
 		this.name = newList.name;
 		this.nameLabel = newList.nameLabel;
-	}
-
-	public LinkedList<Task> getTaskList() {
-		return tasks;
 	}
 }

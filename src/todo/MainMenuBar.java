@@ -45,7 +45,6 @@ public class MainMenuBar extends JMenuBar {
 
 		showBinButton = new JMenuItem("Papierkorb anzeigen");
 		mainMenu.add(showBinButton);
-
 	}
 
 	public JMenuItem getListCreateButton() {
