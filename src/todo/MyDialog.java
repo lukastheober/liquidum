@@ -15,7 +15,7 @@ public abstract class MyDialog extends JDialog {
 	 * @param controller: the Controller this dialog ansers to
 	 */
 	public MyDialog(Controller controller){
-		
+		this.controller = controller;
 	}
 
 }

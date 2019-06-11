@@ -15,7 +15,7 @@ public abstract class MyOptionPane extends JOptionPane {
 	 * @param controller: the Controller this dialog ansers to
 	 */
 	public MyOptionPane(Controller controller){
-
+		this.controller = controller;
 	}
 
 }
