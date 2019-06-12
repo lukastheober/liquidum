@@ -35,10 +35,10 @@ public class ListOfTasks extends JPanel {
 	}
 	
 	private JPanel menuBars(String listName) {
-		JPanel menues = new JPanel();
-		menues.setLayout(new GridLayout(2, 3));
+		JPanel menus = new JPanel();
+		menus.setLayout(new GridLayout(2, 3));
 		
-		sortingMenu = new ListSortMenu(listName);
+		sortingMenu = new ListSortMenu();
 		
 		//buttons
 		addTaskButton = new JButton("+");
@@ -46,10 +46,12 @@ public class ListOfTasks extends JPanel {
 		editButton = new JButton("Bearbeiten");
 		deleteButton = new JButton("Entfernen");
 		
-		menues.add(sortingMenu); 
-		menues.add(editButton);
-		menues.add(addTaskButton);
-		menues.add(deleteButton);
+		menus.add(sortingMenu); 
+		menus.add(editButton);
+		menus.add(addTaskButton);
+		menus.add(deleteButton);
+		
+		return menus;
 	}
 	
 	public String getListName() {
