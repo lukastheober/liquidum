@@ -285,7 +285,7 @@ public class Controller {
 		while (taskListsIterator.hasNext()) {
 
 			ListOfTasks actualTaskListObject = taskListsIterator.next();
-			String nameOfActualTaskList = actualTaskListObject.getListName();
+			String nameOfActualTaskListObject = actualTaskListObject.getListName();
 			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
 			Iterator<Task> taskIterator = actualListOfTasks.iterator();
 			boolean taskListWithoutFilteredTasks = true;
@@ -302,7 +302,7 @@ public class Controller {
 					taskListWithoutFilteredTasks = false;
 				}
 			}
-			if (taskListWithoutFilteredTasks && !(nameOfActualTaskList.contains(string))) {
+			if (taskListWithoutFilteredTasks && !(nameOfActualTaskListObject.contains(string))) {
 				actualTaskListObject.setVisible(false);
 			}
 		}
