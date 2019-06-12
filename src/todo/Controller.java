@@ -80,7 +80,7 @@ public class Controller {
 						break;
 					case "Blau":
 						filterBy(Color.blue);
-					case "Grün":
+					case "Grï¿½n":
 						filterBy(Color.green);
 					default:
 						System.out.println("couldnt pick color");
@@ -363,5 +363,9 @@ public class Controller {
 //	public static void main(String[] args) {
 //		Controller bla = new Controller();
 //	}
+	public void save() {
+		Save saveLists = new Save(listCollection);
+		saveLists.saveAll();
+	}
 
 }
