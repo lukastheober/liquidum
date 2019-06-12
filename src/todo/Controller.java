@@ -236,21 +236,14 @@ public class Controller {
 	 * @param list
 	 */
 	public void removeList(ListOfTasks list) {
-		Iterator<ListOfTasks> taskListIterator = listCollection.iterator();
 		
-		while(taskListIterator.hasNext()) {
-			
-			ListOfTasks actualListOfTasks = taskListIterator.next();
-			if(actualListOfTasks == list) {
-				listCollection.remove(listCollection.indexOf(actualListOfTasks));
+		listCollection.remove(listCollection.indexOf(list));
 				
-				Iterator<Task> trashBinIterator = trashBin.iterator();
-				while(trashBinIterator.hasNext()) {
-					Task actualTaskInTrashBin = trashBinIterator.next();
-					if(actualTaskInTrashBin.getMyList() == actualListOfTasks) {
-						deleteTaskFromBin(actualTaskInTrashBin);
-					}
-				}
+		Iterator<Task> trashBinIterator = trashBin.iterator();
+		while(trashBinIterator.hasNext()) {
+			Task actualTaskInTrashBin = trashBinIterator.next();
+			if(actualTaskInTrashBin.getMyList() == list) {
+				deleteTaskFromBin(actualTaskInTrashBin);
 			}
 		}
 	}
@@ -262,7 +255,11 @@ public class Controller {
 	 * @param task
 	 */
 	public void removeTask(Task task) {
-		// TODO
+		ListOfTasks actualListOfTasksObject = task.getMyList();
+		LinkedList<Task> actualListOfTasks = actualListOfTasksObject.getTasks();
+		
+		actualListOfTasks.remove(actualListOfTasks.indexOf(task));
+		trashBin.add(task);
 	}
 
 	/**
