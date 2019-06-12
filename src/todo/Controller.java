@@ -280,7 +280,34 @@ public class Controller {
 	 * @param string: the String entered by the user
 	 */
 	public void searchFor(String string) {
-		// TODO
+		Iterator<ListOfTasks> taskListsIterator = this.listCollection.iterator();
+
+		while (taskListsIterator.hasNext()) {
+
+			ListOfTasks actualTaskListObject = taskListsIterator.next();
+			String nameOfActualTaskList = actualTaskListObject.getListName();
+			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
+			Iterator<Task> taskIterator = actualListOfTasks.iterator();
+			boolean taskListWithoutFilteredTasks = true;
+
+			while (taskIterator.hasNext()) {
+
+				Task actualTask = taskIterator.next();
+				String actualTaskName = actualTask.getNameLabel().getName();
+				String actualTaskText = actualTask.getTextPane().getText();
+
+				if (!(actualTaskName.contains(string) || actualTaskText.contains(string))) {
+					actualTask.setVisible(false);
+				} else {
+					taskListWithoutFilteredTasks = false;
+				}
+			}
+			if (taskListWithoutFilteredTasks && !(nameOfActualTaskList.contains(string))) {
+				actualTaskListObject.setVisible(false);
+			}
+		}
+		gui.update();
+		save();
 	}
 
 	/**
