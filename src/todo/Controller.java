@@ -162,13 +162,8 @@ public class Controller {
 	 * @param newTask the Task after it was edited
 	 */
 	public void editTask(Task oldTask, Task newTask) {
-		Iterator<ListOfTasks> iterator = this.listCollection.iterator();
-		while (iterator.hasNext()) {
-			LinkedList<Task> actualListOfTasks = iterator.next().getTasks();
-			if (actualListOfTasks.contains(oldTask)) {
-				actualListOfTasks.set(actualListOfTasks.indexOf(oldTask), newTask);
-			}
-		}
+		LinkedList<Task> actualListOfTasks = oldTask.getMyList().getTasks();
+		actualListOfTasks.set(actualListOfTasks.indexOf(oldTask), newTask);
 		gui.update();
 		save();
 	}
@@ -246,6 +241,8 @@ public class Controller {
 				deleteTaskFromBin(actualTaskInTrashBin);
 			}
 		}
+		gui.update();
+		save();
 	}
 
 	/**
@@ -260,6 +257,8 @@ public class Controller {
 		
 		actualListOfTasks.remove(actualListOfTasks.indexOf(task));
 		trashBin.add(task);
+		gui.update();
+		save();
 	}
 
 	/**
