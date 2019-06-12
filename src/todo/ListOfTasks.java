@@ -38,7 +38,7 @@ public class ListOfTasks extends JPanel {
 		JPanel menus = new JPanel();
 		menus.setLayout(new GridLayout(2, 3));
 		
-		sortingMenu = new ListSortMenu();
+		sortingMenu = new ListSortMenu(this);
 		
 		//buttons
 		addTaskButton = new JButton("+");
