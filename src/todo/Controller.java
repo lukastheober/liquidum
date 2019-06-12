@@ -57,22 +57,22 @@ public class Controller {
 				SearchWizard wiz = new SearchWizard(Controller.this);
 			}
 		});
-		
+
 		gui.getMainMenuBar().getResetFilter().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				resetFilter();
 			}
 		});
-		
+
 		JMenuItem[] filterMenu = gui.getMainMenuBar().getFilterButton();
-		for(JMenuItem filter : filterMenu) {
+		for (JMenuItem filter : filterMenu) {
 			filter.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					switch(e.getActionCommand()) {
+					switch (e.getActionCommand()) {
 					case "Rot":
 						filterBy(Color.red);
 						break;
@@ -85,7 +85,7 @@ public class Controller {
 					}
 				}
 			});
-		}	
+		}
 	}
 
 	/**
@@ -153,7 +153,9 @@ public class Controller {
 	 * @param newList: the ListOfTasks after it was edited
 	 */
 	public void editList(ListOfTasks oldList, ListOfTasks newList) {
-		// TODO
+		listCollection.set(listCollection.indexOf(oldList), newList);
+		gui.update();
+		save();
 	}
 
 	/**
@@ -210,14 +212,14 @@ public class Controller {
 	 */
 	public void resetFilter() {
 		Iterator<ListOfTasks> taskListsIterator = this.listCollection.iterator();
-		
-		while(taskListsIterator.hasNext()) {
-			
+
+		while (taskListsIterator.hasNext()) {
+
 			ListOfTasks actualTaskListObject = taskListsIterator.next();
 			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
 			Iterator<Task> taskIterator = actualListOfTasks.iterator();
-			
-			while(taskIterator.hasNext()) {
+
+			while (taskIterator.hasNext()) {
 				taskIterator.next().setVisible(true);
 			}
 		}
@@ -233,13 +235,13 @@ public class Controller {
 	 * @param list
 	 */
 	public void removeList(ListOfTasks list) {
-		
+
 		listCollection.remove(listCollection.indexOf(list));
-				
+
 		Iterator<Task> trashBinIterator = trashBin.iterator();
-		while(trashBinIterator.hasNext()) {
+		while (trashBinIterator.hasNext()) {
 			Task actualTaskInTrashBin = trashBinIterator.next();
-			if(actualTaskInTrashBin.getMyList() == list) {
+			if (actualTaskInTrashBin.getMyList() == list) {
 				deleteTaskFromBin(actualTaskInTrashBin);
 			}
 		}
@@ -256,7 +258,7 @@ public class Controller {
 	public void removeTask(Task task) {
 		ListOfTasks actualListOfTasksObject = task.getMyList();
 		LinkedList<Task> actualListOfTasks = actualListOfTasksObject.getTaskList();
-		
+
 		actualListOfTasks.remove(actualListOfTasks.indexOf(task));
 		trashBin.add(task);
 		gui.update();
@@ -322,8 +324,8 @@ public class Controller {
 	 */
 	public void sortListBy(ListOfTasks list, SortingCategory category) {
 		LinkedList<Task> actualTaskList = list.getTaskList();
-		
-		switch(category) {
+
+		switch (category) {
 		case Color:
 			Collections.sort(actualTaskList, new Comparator<Task>() {
 
@@ -332,8 +334,8 @@ public class Controller {
 					// TODO
 					return 0;
 				}
-				
-			}); 
+
+			});
 			break;
 		case Deadline:
 			Collections.sort(actualTaskList, new Comparator<Task>() {
@@ -342,8 +344,8 @@ public class Controller {
 				public int compare(Task task1, Task task2) {
 					return task1.getDeadline().compareTo(task2.getDeadline());
 				}
-				
-			}); 
+
+			});
 			break;
 		case Name:
 			Collections.sort(actualTaskList, new Comparator<Task>() {
@@ -352,8 +354,8 @@ public class Controller {
 				public int compare(Task task1, Task task2) {
 					return task1.getName().compareTo(task2.getName());
 				}
-				
-			}); 
+
+			});
 		}
 	}
 
@@ -387,11 +389,11 @@ public class Controller {
 	 *        draggedList.
 	 */
 	public void moveDraggedListNextToOtherList(ListOfTasks list) {
-		listCollection.remove((ListOfTasks) draggedObject);
+		listCollection.remove(draggedObject);
 		int index = listCollection.indexOf(list);
 		listCollection.add(index + 1, (ListOfTasks) draggedObject);
 		draggedObject = null;
-		
+
 		gui.update();
 		save();
 	}
@@ -409,7 +411,7 @@ public class Controller {
 		myList.getTaskList().remove(task);
 		list.getTaskList().add(task);
 		draggedObject = null;
-		
+
 		gui.update();
 		save();
 	}
@@ -428,7 +430,7 @@ public class Controller {
 		int index = list.getTaskList().indexOf(task);
 		list.getTaskList().add(index + 1, draggedTask);
 		draggedObject = null;
-		
+
 		gui.update();
 		save();
 	}
@@ -441,8 +443,6 @@ public class Controller {
 	public void saveDraggedObject(Object draggedObject) {
 		this.draggedObject = draggedObject;
 	}
-
-	
 
 //	public static void main(String[] args) {
 //		Controller bla = new Controller();
