@@ -22,7 +22,7 @@ public class GUI extends JFrame {
 	private int mainWindowWidth;
 	private int mainWindowHeight;
 	
-	public void GUI() {
+	public GUI() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		mainWindowHeight = screenSize.height;
 		mainWindowWidth = screenSize.width;
@@ -38,13 +38,12 @@ public class GUI extends JFrame {
         //add menuBar and listContainer
         menuBar = new MainMenuBar();
         listContainer = new ListContainer();
-
         setJMenuBar(menuBar);
         add(listContainer, BorderLayout.CENTER);
         revalidate();
-        
+
         //Look and feel
-	     try {
+	    try {
 	    	 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -56,7 +55,12 @@ public class GUI extends JFrame {
                 e.printStackTrace();
         }
 	}
-
+		
+	//testing main
+	public static void main(String[] args) {
+		new GUI();
+	}
+	
 	/**
 	 * Updates the whole UI.
 	 * JComponents can be updated using updateUI().
