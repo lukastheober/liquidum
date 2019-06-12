@@ -362,8 +362,8 @@ public class Controller {
 //		Controller bla = new Controller();
 //	}
 	public void save() {
-		Save saveLists = new Save(listCollection);
-		saveLists.saveAll();
+		Thread t1 = new Save(listCollection);
+		t1.start();
 	}
 
 }

@@ -13,9 +13,7 @@ import java.util.LinkedList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import ListSaver.Task;
-
-public class Save {
+public class Save extends Thread{
 	LinkedList<ListOfTasks> collection;
 	String listName;
 	JSONArray jsonArray;
@@ -35,14 +33,13 @@ public class Save {
 	public void saveList(ListOfTasks list) {
 		this.listName = list.getName();
 		this.jsonArray = new JSONArray();
-
-		int lenght = list.size();
-		for (int i = 0; i < lenght; i++) {
-			Task temp = list.get(i);
+		
+		for (Iterator i = list.getTasks.iterator(); i.hasNext();) {
+			Task temp = i.next;
 			JSONObject jTemp = new JSONObject();
-			JSONObject addable = taskToJSON(temp, jTemp);
-			jsonArray.add(addable);
-		}
+			jsonArray.add(taskToJSON(temp, jTemp));
+	      }
+
 		writeJSONFile();
 	}
 
@@ -78,6 +75,7 @@ public class Save {
 		}
 
 	}
+	@SuppressWarnings("unchecked") 
 	private JSONObject taskToJSON(Task task, JSONObject jSon) {
 		this.temp=jSon;
 		putColor(task);
@@ -121,6 +119,12 @@ public class Save {
 	private void putInterval(Task task) {
 		String i = "" +task.getInterval();
 		temp.put("interval", i);
+	}
+
+	@Override
+	public void run() {
+		saveAll();
+		
 	}
 
 }
