@@ -15,8 +15,17 @@ public class ListSortMenu extends JMenu {
 	private JMenuItem deadlineButton;
 	private JMenuItem nameButton;
 
-	public ListSortMenu(){
-
+	public ListSortMenu(ListOfTasks myList){
+		this.myList = myList;
+		JMenu mainMenu = new JMenu("sortieren");
+		add(mainMenu);
+		colorButton = new JMenuItem("nach Farbe");
+		mainMenu.add(colorButton);
+		deadlineButton = new JMenuItem("nach Ablaufdatum");
+		mainMenu.add(deadlineButton);
+		nameButton = new JMenuItem("nach Name");
+		mainMenu.add(nameButton);
+		
 	}
 
 
