@@ -366,7 +366,9 @@ public class Controller {
 	 * @param task
 	 */
 	public void deleteTaskFromBin(Task task) {
-
+		trashBin.remove(task);
+		gui.update();
+		save();
 	}
 
 	/**
