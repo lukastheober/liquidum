@@ -15,9 +15,30 @@ public class TaskMenu extends JMenu {
 	private JMenuItem duplicateButton;
 	private JMenuItem editButton;
 
-	public TaskMenu() {
-
+	public TaskMenu(Task myTask) {
+		this.myTask = myTask;
+		JMenu mainMenu = new JMenu("Bearbeiten");
+		add(mainMenu);
+		deleteButton = new JMenuItem("Task löschen");
+		mainMenu.add(deleteButton);
+		duplicateButton = new JMenuItem("Task duplizieren");
+		mainMenu.add(duplicateButton);
+		editButton = new JMenuItem("Task bearbeiten");
+		mainMenu.add(editButton);
 	}
-
+	
+	public Task getTask() {
+		return myTask;
+	}
+	
+	public JMenuItem getDeleteButton() {
+		return deleteButton;
+	}
+	public JMenuItem getDuplicateButton() {
+		return duplicateButton;
+	}
+	public JMenuItem getEditButton() {
+		return editButton;
+	}
 
 }
