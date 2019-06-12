@@ -31,8 +31,8 @@ public class TestController {
 	///////////////// moveListNextToOtherList Test /////////////////
 	@Test
 	public void moveListNextToOtherListTf1Working() {
-		ListOfTasks toDrag = new ListOfTasks();
-		ListOfTasks toMove = new ListOfTasks();
+		ListOfTasks toDrag = new ListOfTasks("toDrag");
+		ListOfTasks toMove = new ListOfTasks("toMove");
 		listCollection.add(toDrag);
 		listCollection.add(toMove);
 		c1.moveDraggedListNextToOtherList(listCollection.get(1));
@@ -42,9 +42,9 @@ public class TestController {
 
 	@Test
 	public void moveListNextToOtherListTf2NullObject() {
-		ListOfTasks a = new ListOfTasks();
-		ListOfTasks b = new ListOfTasks();
-		ListOfTasks c = new ListOfTasks();
+		ListOfTasks a = new ListOfTasks("a");
+		ListOfTasks b = new ListOfTasks("b");
+		ListOfTasks c = new ListOfTasks("c");
 		listCollection.add(a);
 		listCollection.add(b);
 		listCollection.add(c);
@@ -57,8 +57,8 @@ public class TestController {
 	///////////////// moveTaskToList Test /////////////////
 	@Test
 	public void moveTaskToListTf1Working() {
-		ListOfTasks list1 = new ListOfTasks();
-		ListOfTasks list2 = new ListOfTasks();
+		ListOfTasks list1 = new ListOfTasks("1");
+		ListOfTasks list2 = new ListOfTasks("2");
 		Task toMove = new Task();
 		list1.getTaskList().add(toMove);
 		c1.moveDraggedTaskToList(list2);
@@ -69,7 +69,7 @@ public class TestController {
 
 	@Test
 	public void moveTaskToListTf2NullObject() {
-		ListOfTasks list1 = new ListOfTasks();
+		ListOfTasks list1 = new ListOfTasks("1");
 		Task toMove = new Task();
 		list1.getTaskList().add(toMove);
 		c1.moveDraggedTaskToList(null);
@@ -77,37 +77,10 @@ public class TestController {
 		assertNull(draggedTask);
 	}
 
-	///////////////// moveTaskUnderOtherTask Test /////////////////
-	@Test
-	public void moveTaskToUnderOtherTaskTF1Working() {
-		ListOfTasks list1 = new ListOfTasks();
-		Task a = new Task();
-		Task b = new Task();
-		draggedTask = a;
-		list1.getTaskList().add(a);
-		list1.getTaskList().add(b);
-		c1.moveTaskUnderOtherTask(b);
-		assertEquals(1, list1.getTaskList().indexOf(a));
-		assertEquals(1, list1.getTaskList().indexOf(b));
-		assertNull(draggedTask);
-	}
-
-	@Test
-	public void moveTaskToUnderOtherTaskTF2NullObject() {
-		ListOfTasks list1 = new ListOfTasks();
-		Task a = new Task();
-		draggedTask = a;
-		list1.getTaskList().add(a);
-		c1.moveTaskUnderOtherTask(null);
-		assertEquals(0, list1.getTaskList().indexOf(a));
-		assertNull(list1.getTaskList().get(1));
-		assertNull(draggedTask);
-	}
-
 	///////////////// removeList Test /////////////////
 	@Test
 	public void removeListTF1Working() {
-		ListOfTasks list1 = new ListOfTasks();
+		ListOfTasks list1 = new ListOfTasks("1");
 		Task a = new Task();
 		trashBin.add(a);
 		listCollection.add(list1);
@@ -118,7 +91,7 @@ public class TestController {
 
 	@Test
 	public void removeListTF2NullObject() {
-		ListOfTasks list1 = new ListOfTasks();
+		ListOfTasks list1 = new ListOfTasks("1");
 		listCollection.add(list1);
 		c1.removeList(null);
 		assertEquals(list1, listCollection.getFirst());
@@ -127,13 +100,13 @@ public class TestController {
 	// Constructor of ListOfTasks missing
 	@Test
 	public void removeListTF3ObjectWithTasksNull() {
-		ListOfTasks list1 = new ListOfTasks();
+		ListOfTasks list1 = new ListOfTasks("1");
 	}
 
 	///////////////// removeTask Test /////////////////
 	@Test
 	public void removeTaskTF1Working() {
-		ListOfTasks list1 = new ListOfTasks();
+		ListOfTasks list1 = new ListOfTasks("1");
 		listCollection.add(list1);
 		Task a = new Task();
 		Task b = new Task();
@@ -146,7 +119,7 @@ public class TestController {
 
 	@Test
 	public void removeTaskTF2NullObject() {
-		ListOfTasks list1 = new ListOfTasks();
+		ListOfTasks list1 = new ListOfTasks("1");
 		listCollection.add(list1);
 		Task a = new Task();
 		list1.getTaskList().add(a);
@@ -163,7 +136,7 @@ public class TestController {
 	///////////////// restoreTask Test /////////////////
 	@Test
 	public void restoreTaskTF1Working() {
-		ListOfTasks list1 = new ListOfTasks();
+		ListOfTasks list1 = new ListOfTasks("1");
 		listCollection.add(list1);
 		Task a = new Task();
 		list1.getTaskList().add(a);
@@ -175,7 +148,7 @@ public class TestController {
 
 	@Test
 	public void restoreTaskTF2NullObject() {
-		ListOfTasks list1 = new ListOfTasks();
+		ListOfTasks list1 = new ListOfTasks("1");
 		listCollection.add(list1);
 		Task a = new Task();
 		list1.getTaskList().add(a);
