@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Properties;
+import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -38,9 +39,11 @@ public class TaskEditingWizard extends MyDialog {
 	private JButton createTask;
 	private Task oldTask;
 
-	private String[] colours = { "Auswählen", "Blau", "Rot", "Grün" };
+	private String[] colours = { "Schwarz", "Blau", "Rot", "Grün", "Grau", "Orange", "Pink" };
 	private String[] intervals = { "Auswählen", "1 h", "2 h", "3 h", "4 h", "5 h" };
 
+	//private final static int BLACK = Color.BLACK.getRGB();
+	
 	private void initialize() {
 
 		setLayout(new GridLayout(0, 2, 10, 10));
@@ -74,6 +77,7 @@ public class TaskEditingWizard extends MyDialog {
 
 		this.add(new JLabel("    Farbe"));
 		colour = new JComboBox<String>(colours);
+		colour.setSelectedIndex(colorToIndex(oldTask.getColor()));
 		colour.setName("colour");
 		this.add(colour);
 
@@ -101,8 +105,8 @@ public class TaskEditingWizard extends MyDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("Task-Constructor missing");
-				oldTask.overwrite(new Task(name, date, colour, interval));
+				System.out.println("Task-Constructor not complete");
+				oldTask.overwrite(new Task(name, date, colour, interval, (ListOfTasks) e.getSource()));
 
 			}
 		});
@@ -110,6 +114,25 @@ public class TaskEditingWizard extends MyDialog {
 
 	}
 
+	private int colorToIndex(Color inColor) {
+
+		if(inColor == Color.BLACK) {
+			return 0;
+		} else if(inColor == Color.BLUE) {
+			return 1;
+		} else if(inColor == Color.RED) {
+			return 2;
+		} else if(inColor == Color.GREEN) {
+			return 3;
+		} else if(inColor == Color.GRAY) {
+			return 4;
+		} else if(inColor == Color.ORANGE) {
+			return 5;
+		} else {
+			return 6;
+		}
+	}
+	
 	public TaskEditingWizard(Task task, Controller controller) {
 		super(controller);
 		oldTask = task;
