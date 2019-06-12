@@ -20,44 +20,10 @@ public class ListOfTasks extends JPanel {
 	private JButton editButton;
 	private JLabel nameLabel;
 	private ListSortMenu sortingMenu = new ListSortMenu();
-	/*
-	 * 	
-	 */
-
-    private static final long serialVersionUID = 1L;
     
-    String listName;
-    int listNr = 0;
-    int nrOfTasks = 0;
-    private static final int maxNrOfTasks = 10;    
-    
-    public ListOfTasks(String aListName) {
-	    
-	    setLayout(new GridLayout(maxNrOfTasks + 1,1));
-	    setBorder(BorderFactory.createLineBorder(Color.BLACK));
-	    
-	    menuBar = new ListMenuBar(aListName);
-	    this.listNr = MyGUI.getListContainer().getNumberOfLists() + 1;
-	    menuBar.myList = listNr;
-	    
-	    add(menuBar);
-    }
-    
-    public int getNrOfTasks() {
-            return nrOfTasks;
-    }
-    
-    public void setNrOfTasks(int i) {
-            nrOfTasks = i;
-    }
-    
-
-	/*
-	 * 
-	 */
 	public void oldListOfTasks(String n) {
 		name = n;
-		//TODO set nameLabel
+		nameLabel = new JLabel(n);
 		this.displayFields();
 	}
 	
@@ -74,7 +40,6 @@ public class ListOfTasks extends JPanel {
 		JPanel topPanel = new JPanel();
 		JPanel workPanel = new JPanel();
 		JPanel gridPanel = new JPanel();
-		//TODO include namelabel in Panel
 		topPanel.add(sortingMenu);
 		listFrame.add(topPanel);
 				
@@ -96,6 +61,10 @@ public class ListOfTasks extends JPanel {
 		return this.name;
 	}
 	
+	public LinkedList<Task> getTaskList(){
+		return this.tasks;
+	}
+	
 
 	/**
 	 * Overwrites all data in this List with data of the new Task, except tasks.
@@ -106,4 +75,35 @@ public class ListOfTasks extends JPanel {
 		this.name = newList.name;
 		this.nameLabel = newList.nameLabel;
 	}
+	
+	//Ignore this
+	
+	/*
+	private static final long serialVersionUID = 1L;
+    
+    String listName;
+    int listNr = 0;
+    int nrOfTasks = 0;
+    private static final int maxNrOfTasks = 10;    
+    
+    public ListOfTasks(String aListName) {
+	    
+	    setLayout(new GridLayout(maxNrOfTasks + 1,1));
+	    setBorder(BorderFactory.createLineBorder(Color.BLACK));
+	    
+//	    menuBar = new ListMenuBar(aListName);
+//	    this.listNr = MyGUI.getListContainer().getNumberOfLists() + 1;
+//	    menuBar.myList = listNr;
+//	    
+//	    add(menuBar);
+    }
+    
+    public int getNrOfTasks() {
+            return nrOfTasks;
+    }
+    
+    public void setNrOfTasks(int i) {
+            nrOfTasks = i;
+    }
+	*/
 }
