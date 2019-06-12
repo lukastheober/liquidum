@@ -64,6 +64,7 @@ public class ListCreationWizard extends MyDialog {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				controller.addList(new ListOfTasks(name.getName()));
+				dispose();
 			}
 		});
 		this.add(createListOfTasks);

@@ -26,7 +26,7 @@ public class ListOfTasks extends JPanel {
 	
 	public ListOfTasks(String listName) {
 		//TODO use this object
-		MouseListener dnd = new DragAndDropMouseListener();	
+	//	MouseListener dnd = new DragAndDropMouseListener();	
 
 		setLayout(new GridLayout(MAX_TASKS + 1, 1));
 		nameLabel = new JLabel(listName);

@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -21,8 +22,10 @@ public class GUI extends JFrame {
 	private MainMenuBar menuBar = new MainMenuBar();
 	private int mainWindowWidth;
 	private int mainWindowHeight;
+	private Controller myController;
 	
-	public GUI() {
+	public GUI(Controller myController) {
+		this.myController = myController;
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		mainWindowHeight = screenSize.height;
 		mainWindowWidth = screenSize.width;
@@ -57,17 +60,25 @@ public class GUI extends JFrame {
 	}
 		
 	//testing main
-	public static void main(String[] args) {
-		new GUI();
-	}
+//	public static void main(String[] args) {
+//		new GUI();
+//	}
+	
+	
+	
 	
 	/**
 	 * Updates the whole UI.
 	 * JComponents can be updated using updateUI().
 	 */
 	public void update(){
+		//TODO nur zum testen, muss nach ListContainer migriert werden
 		menuBar.updateUI();
 		listContainer.updateUI();
+		
+		for(ListOfTasks loT : myController.getallListOfTasks()) {
+			add(loT);
+		}		
 	}
 
 	public MainMenuBar getMainMenuBar() {
