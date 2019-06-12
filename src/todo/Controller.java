@@ -3,6 +3,8 @@ package todo;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -319,7 +321,40 @@ public class Controller {
 	 * @param category
 	 */
 	public void sortListBy(ListOfTasks list, SortingCategory category) {
-		// TODO
+		LinkedList<Task> actualTaskList = list.getTaskList();
+		
+		switch(category) {
+		case Color:
+			Collections.sort(actualTaskList, new Comparator<Task>() {
+
+				@Override
+				public int compare(Task task1, Task task2) {
+					// TODO
+					return 0;
+				}
+				
+			}); 
+			break;
+		case Deadline:
+			Collections.sort(actualTaskList, new Comparator<Task>() {
+
+				@Override
+				public int compare(Task task1, Task task2) {
+					return task1.getDeadline().compareTo(task2.getDeadline());
+				}
+				
+			}); 
+			break;
+		case Name:
+			Collections.sort(actualTaskList, new Comparator<Task>() {
+
+				@Override
+				public int compare(Task task1, Task task2) {
+					return task1.getName().compareTo(task2.getName());
+				}
+				
+			}); 
+		}
 	}
 
 	/**
