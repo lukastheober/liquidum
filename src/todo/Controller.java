@@ -16,8 +16,6 @@ import org.w3c.dom.ls.LSInput;
  * @created 18-Mai-2019 16:01:12
  */
 
-// test 123abc
-
 public class Controller {
 
 	// check
