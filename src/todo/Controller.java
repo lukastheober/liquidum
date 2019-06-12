@@ -106,7 +106,7 @@ public class Controller {
 	 */
 	public void addTask(Task task) {
 		ListOfTasks myList = task.getMyList();
-		myList.getTaskList().add(task);
+		myList.getTasks().add(task);
 		gui.update();
 		save();
 	}
@@ -118,7 +118,7 @@ public class Controller {
 	 * @param list: the ListOfTasks that is being deleted
 	 */
 	public void clearBinOfAllTasksFrom(ListOfTasks list) {
-		LinkedList tasksToDelete = list.getTaskList();
+		LinkedList tasksToDelete = list.getTasks();
 		Iterator<Task> listIterator = tasksToDelete.iterator();
 		Iterator<Task> trashIterator = trashBin.iterator();
 		while (listIterator.hasNext()) {
@@ -164,7 +164,7 @@ public class Controller {
 	public void editTask(Task oldTask, Task newTask) {
 		Iterator<ListOfTasks> iterator = this.listCollection.iterator();
 		while (iterator.hasNext()) {
-			LinkedList<Task> actualListOfTasks = iterator.next().getTaskList();
+			LinkedList<Task> actualListOfTasks = iterator.next().getTasks();
 			if (actualListOfTasks.contains(oldTask)) {
 				actualListOfTasks.set(actualListOfTasks.indexOf(oldTask), newTask);
 			}
@@ -186,7 +186,7 @@ public class Controller {
 		while (taskListsIterator.hasNext()) {
 
 			ListOfTasks actualTaskListObject = taskListsIterator.next();
-			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
+			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTasks();
 			Iterator<Task> taskIterator = actualListOfTasks.iterator();
 			boolean taskListWithoutFilteredColor = true;
 
@@ -217,7 +217,7 @@ public class Controller {
 		while(taskListsIterator.hasNext()) {
 			
 			ListOfTasks actualTaskListObject = taskListsIterator.next();
-			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
+			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTasks();
 			Iterator<Task> taskIterator = actualListOfTasks.iterator();
 			
 			while(taskIterator.hasNext()) {
@@ -332,8 +332,8 @@ public class Controller {
 	public void moveDraggedTaskToList(ListOfTasks list) {
 		Task task = (Task) draggedObject;
 		ListOfTasks myList = task.getMyList();
-		myList.getTaskList().remove(task);
-		list.getTaskList().add(task);
+		myList.getTasks().remove(task);
+		list.getTasks().add(task);
 		draggedObject = null;
 		
 		gui.update();
@@ -349,10 +349,10 @@ public class Controller {
 	 */
 	public void moveDraggedTaskUnderOtherTask(Task task) {
 		Task draggedTask = (Task) draggedObject;
-		draggedTask.getMyList().getTaskList().remove(draggedTask);
+		draggedTask.getMyList().getTasks().remove(draggedTask);
 		ListOfTasks list = task.getMyList();
-		int index = list.getTaskList().indexOf(task);
-		list.getTaskList().add(index + 1, draggedTask);
+		int index = list.getTasks().indexOf(task);
+		list.getTasks().add(index + 1, draggedTask);
 		draggedObject = null;
 		
 		gui.update();
