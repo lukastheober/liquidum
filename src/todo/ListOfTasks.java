@@ -25,7 +25,8 @@ public class ListOfTasks extends JPanel {
 	static final int MAX_TASKS = 10;
 	
 	public ListOfTasks(String listName) {
-		MouseListener dnd = new DragAndDropMouseListener();		
+		//TODO use this object
+		MouseListener dnd = new DragAndDropMouseListener();	
 
 		setLayout(new GridLayout(MAX_TASKS + 1, 1));
 		nameLabel = new JLabel(listName);
