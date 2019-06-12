@@ -24,8 +24,7 @@ public class Controller {
 	private GUI gui;
 	private LinkedList<ListOfTasks> listCollection;
 	private LinkedList<Task> trashBin;
-	private ListOfTasks draggedList;
-	private Task draggedTask;
+	private Object draggedObject;
 
 	/**
 	 * Creates and opens the GUI-frame.
@@ -34,8 +33,7 @@ public class Controller {
 		// TODO
 		listCollection = new LinkedList<ListOfTasks>();
 		trashBin = new LinkedList<Task>();
-		draggedList = null;
-		draggedTask = null;
+		draggedObject = null;
 		gui = new GUI();
 		setActionListenerUp();
 	}
@@ -309,24 +307,37 @@ public class Controller {
 	/**
 	 * Only called by a DragAndDropMouseListener. Changes the order of the
 	 * listCollection so that the draggedList is on the right side of the given
-	 * list. Reset the draggedList to null.
+	 * list. Reset the draggedObject to null.
 	 * 
 	 * @param list: the ListOfTasks that will end up on the left side of the
 	 *        draggedList.
 	 */
 	public void moveDraggedListNextToOtherList(ListOfTasks list) {
-
+		listCollection.remove((ListOfTasks) draggedObject);
+		int index = listCollection.indexOf(list);
+		listCollection.add(index + 1, (ListOfTasks) draggedObject);
+		draggedObject = null;
+		
+		gui.update();
+		save();
 	}
 
 	/**
 	 * Only called by a DragAndDropMouseListener. Removes the draggedTask from its
-	 * current ListOfTasks and add it to the given ListOfTasks. Reset the
-	 * draggedTask to null.
+	 * current ListOfTasks and adds it to the given ListOfTasks. Reset the
+	 * draggedObject to null.
 	 * 
 	 * @param list
 	 */
 	public void moveDraggedTaskToList(ListOfTasks list) {
-
+		Task task = (Task) draggedObject;
+		ListOfTasks myList = task.getMyList();
+		myList.getTaskList().remove(task);
+		list.getTaskList().add(task);
+		draggedObject = null;
+		
+		gui.update();
+		save();
 	}
 
 	/**
@@ -336,8 +347,16 @@ public class Controller {
 	 * 
 	 * @param task
 	 */
-	public void moveTaskUnderOtherTask(Task task) {
-
+	public void moveDraggedTaskUnderOtherTask(Task task) {
+		Task draggedTask = (Task) draggedObject;
+		draggedTask.getMyList().getTaskList().remove(draggedTask);
+		ListOfTasks list = task.getMyList();
+		int index = list.getTaskList().indexOf(task);
+		list.getTaskList().add(index + 1, draggedTask);
+		draggedObject = null;
+		
+		gui.update();
+		save();
 	}
 
 	/**
@@ -345,18 +364,11 @@ public class Controller {
 	 * 
 	 * @param list: the new draggedList
 	 */
-	public void saveDraggedList(ListOfTasks list) {
-
+	public void saveDraggedObject(Object draggedObject) {
+		this.draggedObject = draggedObject;
 	}
 
-	/**
-	 * Called when the user starts a drag over a Task.
-	 * 
-	 * @param task: the new draggedTask
-	 */
-	public void saveDraggedTask(Task task) {
-
-	}
+	
 
 //	public static void main(String[] args) {
 //		Controller bla = new Controller();
@@ -364,6 +376,14 @@ public class Controller {
 	public void save() {
 		Thread t1 = new Save(listCollection);
 		t1.start();
+	}
+
+	public Object getDraggedObject() {
+		return draggedObject;
+	}
+
+	public void setDraggedObject(Object object) {
+		draggedObject = null;
 	}
 
 }
