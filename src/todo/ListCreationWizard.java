@@ -64,8 +64,8 @@ public class ListCreationWizard extends MyDialog {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				// missing Constructor with params
-				System.out.println("Missing ListOfTasks Constructor, doing nothing");
-				controller.addList(new ListOfTasks(name));
+				//System.out.println("Missing ListOfTasks Constructor, doing nothing");
+				controller.addList(new ListOfTasks(name.getName()));
 			}
 		});
 		this.add(createListOfTasks);

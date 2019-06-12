@@ -23,7 +23,7 @@ public class Task extends JPanel {
 	private JLabel nameLabel;
 	private JTextPane textPane;
 
-	public Task(){
+	public Task() {
 
 	}
 
@@ -32,7 +32,7 @@ public class Task extends JPanel {
 	 * 
 	 * @param newTask
 	 */
-	public void overwrite(Task newTask){
+	public void overwrite(Task newTask) {
 
 	}
 
@@ -40,9 +40,12 @@ public class Task extends JPanel {
 	 * 
 	 * @param date
 	 */
-	public boolean expiresWithin3DaysOf(Date date){
+	public boolean expiresWithin3DaysOf(Date date) {
 		return false;
 	}
 
+	public ListOfTasks getMyList() {
+		return myList;
+	}
 
 }
