@@ -85,7 +85,6 @@ public class TaskCreationWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				dispose();
 			}
 		});
@@ -97,7 +96,7 @@ public class TaskCreationWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				// TODO Task-Constructor is missing
 				System.out.println("Task-Constructor missing");
 				controller.addTask(new Task(name.getText(), date, colour.getSelectedItem(), interval.getSelectedItem()));
 
