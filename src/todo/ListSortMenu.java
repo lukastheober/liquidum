@@ -28,5 +28,19 @@ public class ListSortMenu extends JMenu {
 		
 	}
 
-
+	public ListOfTasks getListOfTasks() {
+		return myList;
+	}
+	
+	public JMenuItem getColorButton() {
+		return colorButton;
+	}
+	
+	public JMenuItem getDeadLineButton() {
+		return deadlineButton;
+	}
+	
+	public JMenuItem getNameButton() {
+		return nameButton;
+	}
 }
