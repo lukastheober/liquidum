@@ -1,7 +1,6 @@
 package todo;
 
 import javax.swing.JMenuBar;
-import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 
@@ -14,7 +13,7 @@ import javax.swing.JMenu;
 public class MainMenuBar extends JMenuBar {
 
 	private JMenuItem filterButton1, filterButton2, filterButton3, filterButton4, filterButton5, filterButton6,
-			filterButton7,listCreateButton, searchButton, showBinButton;
+			filterButton7, listCreateButton, searchButton, showBinButton, menuResetFilter;
 
 	public MainMenuBar() {
 		JMenu mainMenu = new JMenu("Menü");
@@ -23,7 +22,7 @@ public class MainMenuBar extends JMenuBar {
 		listCreateButton = new JMenuItem("Liste erstellen");
 		mainMenu.add(listCreateButton);
 		JMenu submenuFilter = new JMenu("Filtern");
-		JMenuItem menuResetFilter = new JMenuItem("Filter zurücksetzten");
+		menuResetFilter = new JMenuItem("Filter zurücksetzten");
 		submenuFilter.add(menuResetFilter);
 		filterButton1 = new JMenuItem("Rot");
 		submenuFilter.add(filterButton1);
@@ -46,5 +45,23 @@ public class MainMenuBar extends JMenuBar {
 
 		showBinButton = new JMenuItem("Papierkorb anzeigen");
 		mainMenu.add(showBinButton);
+	}
+
+	public JMenuItem getListCreateButton() {
+		return listCreateButton;
+	}
+
+	public JMenuItem getSearchButton() {
+		return searchButton;
+	}
+
+	public JMenuItem[] getFilterButton() {
+		JMenuItem[] list = { filterButton1, filterButton2, filterButton3, filterButton4, filterButton5, filterButton6,
+				filterButton7 };
+		return list;
+	}
+	
+	public JMenuItem getResetFilter() {
+		return menuResetFilter;
 	}
 }
