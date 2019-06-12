@@ -2,6 +2,7 @@ package todo;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.MouseListener;
 import java.util.LinkedList;
 
 import javax.swing.*;
@@ -24,17 +25,18 @@ public class ListOfTasks extends JPanel {
 	static final int MAX_TASKS = 10;
 	
 	public ListOfTasks(String listName) {
+		MouseListener dnd = new DragAndDropMouseListener();		
+
 		setLayout(new GridLayout(MAX_TASKS + 1, 1));
-		
 		nameLabel = new JLabel(listName);
 		
-		JPanel topBar = menuBars(listName);
+		JPanel topBar = menuBars();
+		//TODO viewable tasks
 		
 		add(topBar);
-		//TODO viewable tasks
 	}
 	
-	private JPanel menuBars(String listName) {
+	private JPanel menuBars() {
 		JPanel menus = new JPanel();
 		menus.setLayout(new GridLayout(2, 3));
 		
