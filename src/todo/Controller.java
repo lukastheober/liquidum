@@ -139,7 +139,7 @@ public class Controller {
 	private void deleteOldTasksFromBin() {
 		Iterator<Task> trashIterator = trashBin.iterator();
 		while (trashIterator.hasNext()) {
-			// Date to Calendar Conversion missing
+			// TODO Date to Calendar Conversion missing
 //			if (trashIterator.next().getDeletionDate())
 //				trashBin.remove(trashIterator.next());
 		}
@@ -377,7 +377,12 @@ public class Controller {
 	 * @param task
 	 */
 	public void duplicateTask(Task task) {
-
+		// TODO Waiting on Task Constructor...
+//		Task clone = new Task();  
+//		LinkedList<Task> taskList = task.getMyList().getTaskList();
+//		taskList.add(taskList.indexOf(task) + 1, clone);
+//		gui.update();
+//		save();
 	}
 
 	/**
