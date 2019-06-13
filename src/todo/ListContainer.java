@@ -1,5 +1,8 @@
 package todo;
 
+import java.awt.GridLayout;
+import java.util.LinkedList;
+
 import javax.swing.JPanel;
 
 /**
@@ -10,7 +13,15 @@ import javax.swing.JPanel;
 public class ListContainer extends JPanel {
 
 	public ListContainer(){
-
+		setLayout(new GridLayout(1,10));
 	}
 
+	public void loadListsOfTasks(LinkedList<ListOfTasks> inListOfTasks) {
+		for(ListOfTasks lot : inListOfTasks) {
+			add(lot);
+		}
+		validate();
+		repaint();
+	}
+	
 }

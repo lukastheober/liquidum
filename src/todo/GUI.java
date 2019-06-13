@@ -74,4 +74,8 @@ public class GUI extends JFrame {
 		return menuBar;
 	}
 	
+	public ListContainer getListContainer() {
+		return listContainer;
+	}
+	
 }
