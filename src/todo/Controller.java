@@ -236,7 +236,7 @@ public class Controller {
 	 */
 	public void removeList(ListOfTasks list) {
 
-		listCollection.remove(listCollection.indexOf(list));
+		listCollection.remove(list);
 
 		Iterator<Task> trashBinIterator = trashBin.iterator();
 		while (trashBinIterator.hasNext()) {
@@ -259,7 +259,7 @@ public class Controller {
 		ListOfTasks actualListOfTasksObject = task.getMyList();
 		LinkedList<Task> actualListOfTasks = actualListOfTasksObject.getTaskList();
 
-		actualListOfTasks.remove(actualListOfTasks.indexOf(task));
+		actualListOfTasks.remove(task);
 		trashBin.add(task);
 		gui.update();
 		save();
