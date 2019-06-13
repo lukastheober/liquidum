@@ -297,7 +297,7 @@ public class Controller {
 			while (taskIterator.hasNext()) {
 
 				Task actualTask = taskIterator.next();
-				String actualTaskName = actualTask.getNameLabel().getName();
+				String actualTaskName = actualTask.getName();
 				String actualTaskText = actualTask.getTextPane().getText();
 
 				if (!(actualTaskName.contains(string) || actualTaskText.contains(string))) {
@@ -331,8 +331,9 @@ public class Controller {
 
 				@Override
 				public int compare(Task task1, Task task2) {
-					// TODO
-					return 0;
+					String color1 = task1.getColor().toString();
+					String color2 = task2.getColor().toString();
+					return color1.compareTo(color2);
 				}
 
 			});
