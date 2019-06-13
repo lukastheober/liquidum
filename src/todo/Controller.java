@@ -358,6 +358,8 @@ public class Controller {
 
 			});
 		}
+		gui.update();
+		save();
 	}
 
 	/**
