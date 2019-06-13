@@ -256,9 +256,7 @@ public class Controller {
 	 * @param task
 	 */
 	public void removeTask(Task task) {
-		ListOfTasks actualListOfTasksObject = task.getMyList();
-		LinkedList<Task> actualListOfTasks = actualListOfTasksObject.getTaskList();
-
+		LinkedList<Task> actualListOfTasks = task.getMyList().getTaskList();
 		actualListOfTasks.remove(task);
 		trashBin.add(task);
 		gui.update();
