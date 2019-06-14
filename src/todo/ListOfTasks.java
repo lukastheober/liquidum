@@ -23,34 +23,34 @@ public class ListOfTasks extends JPanel {
 	private ListSortMenu sortingMenu;
 	
 	static final int MAX_TASKS = 10;
-	
-	public ListOfTasks(String listName) {
-		//TODO use this object
-	//	MouseListener dnd = new DragAndDropMouseListener();	
 
+	public ListOfTasks(String listName) {
+		// TODO use this object
+		// MouseListener dnd = new DragAndDropMouseListener();
+		name = listName;
 		setLayout(new GridLayout(MAX_TASKS + 1, 1));
 		nameLabel = new JLabel(listName);
-		
+
 		JPanel topBar = menuBars();
-		//TODO viewable tasks
-		
+		// TODO viewable tasks
+
 		add(topBar);
 		setVisible(true);
 	}
-	
+
 	private JPanel menuBars() {
 		JPanel menus = new JPanel();
 		menus.setLayout(new GridLayout(2, 3));
-		
+
 		sortingMenu = new ListSortMenu(this);
-		
-		//buttons
+
+		// buttons
 		addTaskButton = new JButton("+");
-		//TODO create-new-task (wizzard?)
+		// TODO create-new-task (wizzard?)
 		editButton = new JButton("Bearbeiten");
 		deleteButton = new JButton("Entfernen");
-		
-		menus.add(sortingMenu); 
+
+		menus.add(sortingMenu);
 		menus.add(editButton);
 		menus.add(addTaskButton);
 		menus.add(deleteButton);
@@ -65,7 +65,7 @@ public class ListOfTasks extends JPanel {
 	public LinkedList<Task> getTaskList(){
 		return this.tasks;
 	}
-	
+
 	/**
 	 * Overwrites all data in this List with data of the new Task, except tasks.
 	 * 
@@ -75,9 +75,16 @@ public class ListOfTasks extends JPanel {
 		this.name = newList.name;
 		this.nameLabel = newList.nameLabel;
 	}
-	
-//	//testing main
-//	public static void main(String[] args) {
-//		new ListOfTasks("povowjcn");
-//	}
+
+	public JButton getDeleteButton() {
+		return deleteButton;
+	}
+
+	public JButton getAddTaskButton() {
+		return addTaskButton;
+	}
+
+	public JButton getEditButton() {
+		return editButton;
+	}
 }
