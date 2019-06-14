@@ -43,13 +43,13 @@ public class ListOfTasks extends JPanel {
 		menus.setLayout(new GridLayout(2, 3));
 
 		sortingMenu = new ListSortMenu(this);
-
+		
 		// buttons
 		addTaskButton = new JButton("+");
-		// TODO create-new-task (wizzard?)
 		editButton = new JButton("Bearbeiten");
 		deleteButton = new JButton("Entfernen");
-
+		
+		menus.add(nameLabel);
 		menus.add(sortingMenu);
 		menus.add(editButton);
 		menus.add(addTaskButton);
