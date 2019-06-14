@@ -52,6 +52,7 @@ public class ListEditingWizard extends MyDialog {
 		this.add(new JLabel("    Name"));
 		name = new JTextField(oldList.getListName());
 		name.setName("name");
+		name.setText(oldList.getListName());
 		this.add(name);
 
 		cancel = new JButton("  Abbrechen");
@@ -75,7 +76,7 @@ public class ListEditingWizard extends MyDialog {
 				// TODO Auto-generated method stub
 				// missing Constructor with params
 				System.out.println("Missing ListOfTasks Constructor, doing nothing");
-				oldList.overwrite(new ListOfTasks());
+				oldList.overwrite(new ListOfTasks(name.getText()));
 			}
 		});
 		this.add(editListOfTasks);
