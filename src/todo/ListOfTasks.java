@@ -35,6 +35,7 @@ public class ListOfTasks extends JPanel {
 		//TODO viewable tasks
 		
 		add(topBar);
+		setVisible(true);
 	}
 	
 	private JPanel menuBars() {
@@ -74,4 +75,9 @@ public class ListOfTasks extends JPanel {
 		this.name = newList.name;
 		this.nameLabel = newList.nameLabel;
 	}
+	
+//	//testing main
+//	public static void main(String[] args) {
+//		new ListOfTasks("povowjcn");
+//	}
 }
