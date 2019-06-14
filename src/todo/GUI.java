@@ -16,7 +16,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @created 18-Mai-2019 16:01:12
  */
 public class GUI extends JFrame {
-	
+
 	private ListContainer listContainer = new ListContainer();
 	private MainMenuBar menuBar = new MainMenuBar();
 	private int mainWindowWidth;
@@ -69,4 +69,13 @@ public class GUI extends JFrame {
 		menuBar.updateUI();
 		listContainer.updateUI();
 	}
+
+	public MainMenuBar getMainMenuBar() {
+		return menuBar;
+	}
+	
+	public ListContainer getListContainer() {
+		return listContainer;
+	}
+	
 }

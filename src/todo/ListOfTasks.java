@@ -2,6 +2,7 @@ package todo;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.MouseListener;
 import java.util.LinkedList;
 
 import javax.swing.*;
@@ -24,21 +25,23 @@ public class ListOfTasks extends JPanel {
 	static final int MAX_TASKS = 10;
 	
 	public ListOfTasks(String listName) {
+		//TODO use this object
+	//	MouseListener dnd = new DragAndDropMouseListener();	
+
 		setLayout(new GridLayout(MAX_TASKS + 1, 1));
-		
 		nameLabel = new JLabel(listName);
 		
-		JPanel topBar = menuBars(listName);
+		JPanel topBar = menuBars();
+		//TODO viewable tasks
 		
 		add(topBar);
-		//TODO viewable tasks
 	}
 	
-	private JPanel menuBars(String listName) {
-		JPanel menues = new JPanel();
-		menues.setLayout(new GridLayout(2, 3));
+	private JPanel menuBars() {
+		JPanel menus = new JPanel();
+		menus.setLayout(new GridLayout(2, 3));
 		
-		sortingMenu = new ListSortMenu(listName);
+		sortingMenu = new ListSortMenu(this);
 		
 		//buttons
 		addTaskButton = new JButton("+");
@@ -46,16 +49,22 @@ public class ListOfTasks extends JPanel {
 		editButton = new JButton("Bearbeiten");
 		deleteButton = new JButton("Entfernen");
 		
-		menues.add(sortingMenu); 
-		menues.add(editButton);
-		menues.add(addTaskButton);
-		menues.add(deleteButton);
+		menus.add(sortingMenu); 
+		menus.add(editButton);
+		menus.add(addTaskButton);
+		menus.add(deleteButton);
+		
+		return menus;
 	}
 	
 	public String getListName() {
 		return this.name;
 	}
-
+	
+	public LinkedList<Task> getTaskList(){
+		return this.tasks;
+	}
+	
 	/**
 	 * Overwrites all data in this List with data of the new Task, except tasks.
 	 * 

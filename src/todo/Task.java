@@ -8,13 +8,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
-
 /**
  * @author benja
  * @version 1.0
  * @created 18-Mai-2019 16:01:12
  */
-
 public class Task extends JPanel {
 
 	/**
@@ -143,5 +141,4 @@ public class Task extends JPanel {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

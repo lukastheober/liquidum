@@ -56,16 +56,15 @@ public class ListCreationWizard extends MyDialog {
 		});
 		this.add(cancel);
 
-		createListOfTasks = new JButton("  Liste erstellen");
+		createListOfTasks = new JButton("Liste erstellen");
 		createListOfTasks.setName("create");
 		createListOfTasks.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				// missing Constructor with params
-				System.out.println("Missing ListOfTasks Constructor, doing nothing");
-				controller.addList(new ListOfTasks(name));
+				controller.addList(new ListOfTasks(name.getName()));
+				dispose();
 			}
 		});
 		this.add(createListOfTasks);
