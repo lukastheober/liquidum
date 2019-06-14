@@ -96,8 +96,9 @@ public class Controller {
 	 */
 	public void addList(ListOfTasks list) {
 		listCollection.add(list);
+		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
-		save();
+	//	save();
 	}
 
 	/**
@@ -361,6 +362,7 @@ public class Controller {
 //	public static void main(String[] args) {
 //		Controller bla = new Controller();
 //	}
+//	
 	public void save() {
 		Thread t1 = new Save(listCollection);
 		t1.start();
