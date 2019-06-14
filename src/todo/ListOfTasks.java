@@ -21,7 +21,7 @@ public class ListOfTasks extends JPanel {
 	private JLabel nameLabel;
 	private LinkedList<Task> tasks = new LinkedList();
 	private ListSortMenu sortingMenu;
-
+	
 	static final int MAX_TASKS = 10;
 
 	public ListOfTasks(String listName) {
@@ -35,6 +35,7 @@ public class ListOfTasks extends JPanel {
 		// TODO viewable tasks
 
 		add(topBar);
+		setVisible(true);
 	}
 
 	private JPanel menuBars() {
@@ -53,15 +54,15 @@ public class ListOfTasks extends JPanel {
 		menus.add(editButton);
 		menus.add(addTaskButton);
 		menus.add(deleteButton);
-
+		
 		return menus;
 	}
-
+	
 	public String getListName() {
 		return this.name;
 	}
-
-	public LinkedList<Task> getTaskList() {
+	
+	public LinkedList<Task> getTaskList(){
 		return this.tasks;
 	}
 

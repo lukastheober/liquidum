@@ -55,11 +55,6 @@ public class GUI extends JFrame {
                 e.printStackTrace();
         }
 	}
-		
-	//testing main
-	public static void main(String[] args) {
-		new GUI();
-	}
 	
 	/**
 	 * Updates the whole UI.
@@ -73,9 +68,7 @@ public class GUI extends JFrame {
 	public MainMenuBar getMainMenuBar() {
 		return menuBar;
 	}
-	
 	public ListContainer getListContainer() {
 		return listContainer;
 	}
-	
 }

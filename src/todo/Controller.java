@@ -100,7 +100,6 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				TaskCreationWizard wiz = new TaskCreationWizard(list, Controller.this);
 				
 			}
@@ -110,7 +109,6 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				ListEditingWizard wiz = new ListEditingWizard(list, Controller.this);
 				
 			}
@@ -120,7 +118,6 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				ListDeletionWarningDialog diag = new ListDeletionWarningDialog(Controller.this, list);
 			}
 		});
