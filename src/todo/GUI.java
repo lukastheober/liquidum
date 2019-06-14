@@ -39,7 +39,8 @@ public class GUI extends JFrame {
         menuBar = new MainMenuBar();
         listContainer = new ListContainer();
         setJMenuBar(menuBar);
-        add(listContainer, BorderLayout.CENTER);
+//        add(listContainer, BorderLayout.CENTER);
+        add(listContainer);
         revalidate();
 
         //Look and feel
