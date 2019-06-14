@@ -63,7 +63,7 @@ public class ListCreationWizard extends MyDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				controller.addList(new ListOfTasks(name.getName()));
+				controller.addList(new ListOfTasks(name.getText()));
 				dispose();
 			}
 		});
