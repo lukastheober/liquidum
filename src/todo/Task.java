@@ -52,45 +52,45 @@ public class Task extends JPanel {
 		add(createTopBar(), BorderLayout.NORTH);
 		
 		createTextPanel(text);
-		add(textPanel, BorderLayout.CENTER);
+		add(this.textPanel, BorderLayout.CENTER);
 		
 		setVisible(true);
 	}
 	
 	private JPanel createTopBar() {
-		JPanel colorPanel = new JPanel();
-		colorPanel.setPreferredSize(new Dimension(20,20));
-		colorPanel.setBackground(this.color);
-		colorPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
-		
-		this.nameLabel = new JLabel(name);
-		nameLabel.setHorizontalTextPosition(JLabel.LEFT);
-		nameLabel.setPreferredSize(new Dimension(230,20));
+		this.nameLabel = new JLabel(this.name);
+		this.nameLabel.setHorizontalTextPosition(JLabel.LEFT);
+		this.nameLabel.setPreferredSize(new Dimension(270,20));
 				
-		this.dateLabel = new JLabel(deadline.toString());
-		dateLabel.setPreferredSize(new Dimension(85,20));
+		this.dateLabel = new JLabel(this.deadline.toString());
+		this.dateLabel.setPreferredSize(new Dimension(80,20));
 				
 		this.menu = new TaskMenu(this);
 				
 		JPanel topBar = new JPanel(new FlowLayout());
-		topBar.add(colorPanel);
-		topBar.add(nameLabel);
-		topBar.add(dateLabel);
-		topBar.add(menu);
+		topBar.add(this.nameLabel);
+		topBar.add(this.dateLabel);
+		topBar.add(this.menu);
 		topBar.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 		
 		return topBar;
 	}
 	
 	private void createTextPanel(String text) {
-		this.textPanel = new JPanel(new GridLayout(1,1));
+		this.textPanel = new JPanel(new BorderLayout());
+		this.textPanel.setBackground(Color.WHITE);
+		this.textPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
+		
 		JLabel textLabel = new JLabel(text);
 		textLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		textLabel.setVerticalAlignment(SwingConstants.TOP);
 		
-		textPanel.setBackground(Color.WHITE);
-		textPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
-		textPanel.add(textLabel);
+		JPanel colorPanel = new JPanel();
+		colorPanel.setBackground(this.color.darker());
+		colorPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
+		
+		this.textPanel.add(textLabel, BorderLayout.CENTER);
+		this.textPanel.add(colorPanel, BorderLayout.EAST);
 	}
 	
 	public boolean expiresWithing3DaysOf(LocalDate date) {
@@ -129,7 +129,7 @@ public class Task extends JPanel {
 		return name;
 	}
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -143,5 +143,5 @@ public class Task extends JPanel {
 		frame.add(t3);
 		frame.pack();
 		frame.setVisible(true);
-	}*/
+	}
 }
