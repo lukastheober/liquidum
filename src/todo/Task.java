@@ -3,12 +3,16 @@ package todo;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.time.LocalDate;
 
 import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  * @author benja
@@ -32,7 +36,7 @@ public class Task extends JPanel {
 	private String name;
 	private JLabel nameLabel;
 	private JLabel dateLabel;
-	private JLabel textLabel;
+	private JPanel textPanel;
 
 	public Task(String name, LocalDate deadline, int interval, Color color, String text) {
 		this.name = name;
@@ -40,27 +44,53 @@ public class Task extends JPanel {
 		this.interval = interval;
 		this.color = color;
 		
-		setSize(400, 250);
+		setPreferredSize(new Dimension(400, 150));
 		setLayout(new BorderLayout());
-		setBorder(BorderFactory.createLineBorder(Color.BLACK));	
+		setBackground(Color.WHITE);
+		setBorder(BorderFactory.createRaisedBevelBorder());
+		
+		add(createTopBar(), BorderLayout.NORTH);
+		
+		createTextPanel(text);
+		add(textPanel, BorderLayout.CENTER);
+		
+		setVisible(true);
+	}
+	
+	private JPanel createTopBar() {
+		JPanel colorPanel = new JPanel();
+		colorPanel.setPreferredSize(new Dimension(20,20));
+		colorPanel.setBackground(this.color);
+		colorPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 		
 		this.nameLabel = new JLabel(name);
+		nameLabel.setHorizontalTextPosition(JLabel.LEFT);
+		nameLabel.setPreferredSize(new Dimension(230,20));
+				
 		this.dateLabel = new JLabel(deadline.toString());
+		dateLabel.setPreferredSize(new Dimension(85,20));
+				
 		this.menu = new TaskMenu(this);
-		JPanel topBar = new JPanel(new GridLayout(1,3));
+				
+		JPanel topBar = new JPanel(new FlowLayout());
+		topBar.add(colorPanel);
 		topBar.add(nameLabel);
 		topBar.add(dateLabel);
 		topBar.add(menu);
-		topBar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		topBar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		add(topBar, BorderLayout.NORTH);
+		topBar.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 		
-		this.textLabel = new JLabel(text);
-		textLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		textLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		add(textLabel, BorderLayout.CENTER);
+		return topBar;
+	}
+	
+	private void createTextPanel(String text) {
+		this.textPanel = new JPanel(new GridLayout(1,1));
+		JLabel textLabel = new JLabel(text);
+		textLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		textLabel.setVerticalAlignment(SwingConstants.TOP);
 		
-		setVisible(true);
+		textPanel.setBackground(Color.WHITE);
+		textPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
+		textPanel.add(textLabel);
 	}
 	
 	public boolean expiresWithing3DaysOf(LocalDate date) {
@@ -69,10 +99,6 @@ public class Task extends JPanel {
 
 	public void overwrite(Task newTask) {
 		
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	public Color getColor() {
@@ -103,31 +129,19 @@ public class Task extends JPanel {
 		return name;
 	}
 
-	public JLabel getNameLabel() {
-		return nameLabel;
-	}
-
-	public JLabel getDateLabel() {
-		return dateLabel;
-	}
-
-	public JLabel getTextLabel() {
-		return textLabel;
-	}
-
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        frame.setSize(400, 750);
         frame.setLayout(new GridLayout(3,1));
         
 		Task t1 = new Task("Müll rausbringen", LocalDate.now(), 2, Color.red, "Grüne und schwarze Tonne sind dran.");
 		Task t2 = new Task("Wäsche waschen", LocalDate.now(), 2, Color.green, "Buntwäsche.");
-		Task t3 = new Task("Blumen gießen", LocalDate.now(), 2, Color.red, "Auch an Tomaten denken.");
+		Task t3 = new Task("Blumen gießen", LocalDate.now(), 2, Color.blue, "Auch an Tomaten denken.");
 		frame.add(t1);
 		frame.add(t2);
 		frame.add(t3);
+		frame.pack();
 		frame.setVisible(true);
-	}*/
+	}
 }
