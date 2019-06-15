@@ -48,7 +48,7 @@ public class Task extends JPanel {
 		setPreferredSize(new Dimension(400, 150));
 		setLayout(new BorderLayout());
 		setBackground(Color.WHITE);
-		setBorder(BorderFactory.createRaisedBevelBorder());
+		setBorder(BorderFactory.createLoweredBevelBorder());
 		
 		add(createTopBar(), BorderLayout.NORTH);
 		
