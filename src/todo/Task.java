@@ -93,7 +93,7 @@ public class Task extends JPanel {
 		this.textPanel.add(colorPanel, BorderLayout.EAST);
 	}
 	
-	public boolean expiresWithing3DaysOf() {
+	public boolean expiresWithing3Days() {
 		return this.deadline.minusDays(3).isBefore(LocalDate.now());
 	}
 
