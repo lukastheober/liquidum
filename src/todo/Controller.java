@@ -96,6 +96,32 @@ public class Controller {
 	 */
 	public void addList(ListOfTasks list) {
 		listCollection.add(list);
+		list.getAddTaskButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TaskCreationWizard wiz = new TaskCreationWizard(list, Controller.this);
+				
+			}
+		});
+		
+		list.getEditButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ListEditingWizard wiz = new ListEditingWizard(list, Controller.this);
+				
+			}
+		});
+		
+		list.getDeleteButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ListDeletionWarningDialog diag = new ListDeletionWarningDialog(Controller.this, list);
+			}
+		});
+		
 		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
 	//	save();
@@ -111,7 +137,7 @@ public class Controller {
 		ListOfTasks myList = task.getMyList();
 		myList.getTaskList().add(task);
 		gui.update();
-		save();
+		//TODO save();
 	}
 
 	/**
@@ -359,10 +385,10 @@ public class Controller {
 
 	}
 
-//	public static void main(String[] args) {
-//		Controller bla = new Controller();
-//	}
-//	
+	public static void main(String[] args) {
+		Controller bla = new Controller();
+	}
+
 	public void save() {
 		Thread t1 = new Save(listCollection);
 		t1.start();

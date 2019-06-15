@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 public class ListContainer extends JPanel {
 
 	public ListContainer(){
+		setSize(200,200);
 		setLayout(new GridLayout(1,10));
 	}
 

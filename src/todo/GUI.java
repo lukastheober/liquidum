@@ -2,11 +2,14 @@ package todo;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -35,11 +38,14 @@ public class GUI extends JFrame {
         setLayout(new BorderLayout());
         setVisible(true);
         
-        //add menuBar and listContainer
+        //menuBar
         menuBar = new MainMenuBar();
-        listContainer = new ListContainer();
         setJMenuBar(menuBar);
-        add(listContainer, BorderLayout.CENTER);
+        
+        //content
+        listContainer = new ListContainer();
+        add(listContainer);
+        
         revalidate();
 
         //Look and feel
@@ -55,11 +61,6 @@ public class GUI extends JFrame {
                 e.printStackTrace();
         }
 	}
-		
-	//testing main
-	public static void main(String[] args) {
-		new GUI();
-	}
 	
 	/**
 	 * Updates the whole UI.
@@ -73,9 +74,7 @@ public class GUI extends JFrame {
 	public MainMenuBar getMainMenuBar() {
 		return menuBar;
 	}
-	
 	public ListContainer getListContainer() {
 		return listContainer;
 	}
-	
 }
