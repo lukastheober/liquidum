@@ -3,6 +3,7 @@ package todo;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -97,34 +98,34 @@ public class Controller {
 	public void addList(ListOfTasks list) {
 		listCollection.add(list);
 		list.getAddTaskButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				TaskCreationWizard wiz = new TaskCreationWizard(list, Controller.this);
-				
+
 			}
 		});
-		
+
 		list.getEditButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ListEditingWizard wiz = new ListEditingWizard(list, Controller.this);
-				
+
 			}
 		});
-		
+
 		list.getDeleteButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ListDeletionWarningDialog diag = new ListDeletionWarningDialog(Controller.this, list);
 			}
 		});
-		
+
 		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
-	//	save();
+		// save();
 	}
 
 	/**
@@ -137,7 +138,7 @@ public class Controller {
 		ListOfTasks myList = task.getMyList();
 		myList.getTaskList().add(task);
 		gui.update();
-		//TODO save();
+		// TODO save();
 	}
 
 	/**
@@ -166,9 +167,8 @@ public class Controller {
 	private void deleteOldTasksFromBin() {
 		Iterator<Task> trashIterator = trashBin.iterator();
 		while (trashIterator.hasNext()) {
-			// TODO Date to Calendar Conversion missing
-//			if (trashIterator.next().getDeletionDate())
-//				trashBin.remove(trashIterator.next());
+			if (trashIterator.next().getDeletionDate().isBefore(LocalDate.now().minusDays(30)))
+				trashBin.remove(trashIterator.next());
 		}
 	}
 
