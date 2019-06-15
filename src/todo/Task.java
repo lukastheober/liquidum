@@ -1,12 +1,18 @@
 package todo;
 
 
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.LayoutManager;
-import java.util.Date;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.time.LocalDate;
+
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 
 /**
  * @author benja
@@ -22,123 +28,120 @@ public class Task extends JPanel {
 
 	
 	private Color color;
-	private Date deadline;
-	private Date deletionDate;
+	private LocalDate deadline;
+	private LocalDate deletionDate;
 	private int interval;
 	private TaskMenu menu;
 	private ListOfTasks myList;
 	private String name;
 	private JLabel nameLabel;
 	private JLabel dateLabel;
-	private JTextPane textPane;
+	private JPanel textPanel;
 
-	public Task(Color color, Date deadline, Date deletionDate, int interval, TaskMenu menu, ListOfTasks myList,
-			String name, JLabel nameLabel, JLabel dateLabel, JTextPane textPane) {
-		super();
-		this.color = color;
-		this.deadline = deadline;
-		this.deletionDate = deletionDate;
-		this.interval = interval;
-		this.menu = menu;
-		this.myList = myList;
+	public Task(String name, LocalDate deadline, int interval, Color color, String text) {
 		this.name = name;
-		this.nameLabel = nameLabel;
-		this.dateLabel = dateLabel;
-		this.textPane = textPane;
+		this.deadline = deadline;
+		this.interval = interval;
+		this.color = color;
+		
+		setPreferredSize(new Dimension(400, 150));
+		setLayout(new BorderLayout());
+		setBackground(Color.WHITE);
+		setBorder(BorderFactory.createRaisedBevelBorder());
+		
+		add(createTopBar(), BorderLayout.NORTH);
+		
+		createTextPanel(text);
+		add(this.textPanel, BorderLayout.CENTER);
+		
+		setVisible(true);
 	}
-	public boolean expiresWithing3DaysOf(Date date) {
-		return true;
+	
+	private JPanel createTopBar() {
+		this.nameLabel = new JLabel(this.name);
+		this.nameLabel.setHorizontalTextPosition(JLabel.LEFT);
+		this.nameLabel.setPreferredSize(new Dimension(270,20));
+				
+		this.dateLabel = new JLabel(this.deadline.toString());
+		this.dateLabel.setPreferredSize(new Dimension(80,20));
+				
+		this.menu = new TaskMenu(this);
+				
+		JPanel topBar = new JPanel(new FlowLayout());
+		topBar.add(this.nameLabel);
+		topBar.add(this.dateLabel);
+		topBar.add(this.menu);
+		topBar.setBorder(BorderFactory.createLoweredSoftBevelBorder());
+		
+		return topBar;
+	}
+	
+	private void createTextPanel(String text) {
+		this.textPanel = new JPanel(new BorderLayout());
+		this.textPanel.setBackground(Color.WHITE);
+		this.textPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
+		
+		JLabel textLabel = new JLabel(text);
+		textLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		textLabel.setVerticalAlignment(SwingConstants.TOP);
+		
+		JPanel colorPanel = new JPanel();
+		colorPanel.setBackground(this.color.darker());
+		colorPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
+		
+		this.textPanel.add(textLabel, BorderLayout.CENTER);
+		this.textPanel.add(colorPanel, BorderLayout.EAST);
+	}
+	
+	public boolean expiresWithing3Days() {
+		return this.deadline.minusDays(3).isBefore(LocalDate.now());
 	}
 
 	public void overwrite(Task newTask) {
+		
 	}
 
 	public Color getColor() {
 		return color;
 	}
 
-	public void setColor(Color color) {
-		this.color = color;
-	}
-
-	public Date getDeadline() {
+	public LocalDate getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(Date deadline) {
-		this.deadline = deadline;
-	}
-
-	public Date getDeletionDate() {
+	public LocalDate getDeletionDate() {
 		return deletionDate;
-	}
-
-	public void setDeletionDate(Date deletionDate) {
-		this.deletionDate = deletionDate;
 	}
 
 	public int getInterval() {
 		return interval;
 	}
 
-	public void setInterval(int interval) {
-		this.interval = interval;
-	}
-
 	public TaskMenu getMenu() {
 		return menu;
-	}
-
-	public void setMenu(TaskMenu menu) {
-		this.menu = menu;
 	}
 
 	public ListOfTasks getMyList() {
 		return myList;
 	}
 
-	public void setMyList(ListOfTasks myList) {
-		this.myList = myList;
-	}
-
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public JLabel getNameLabel() {
-		return nameLabel;
-	}
-
-	public void setNameLabel(JLabel nameLabel) {
-		this.nameLabel = nameLabel;
-	}
-
-	public JLabel getDateLabel() {
-		return dateLabel;
-	}
-
-	public void setDateLabel(JLabel dateLabel) {
-		this.dateLabel = dateLabel;
-	}
-
-	public JTextPane getTextPane() {
-		return textPane;
-	}
-
-	public void setTextPane(JTextPane textPane) {
-		this.textPane = textPane;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(new GridLayout(3,1));
+        
+		Task t1 = new Task("Müll rausbringen", LocalDate.now(), 2, Color.red, "Grüne und schwarze Tonne sind dran.");
+		Task t2 = new Task("Wäsche waschen", LocalDate.now(), 2, Color.green, "Buntwäsche.");
+		Task t3 = new Task("Blumen gießen", LocalDate.now(), 2, Color.blue, "Auch an Tomaten denken.");
+		frame.add(t1);
+		frame.add(t2);
+		frame.add(t3);
+		frame.pack();
+		frame.setVisible(true);
 	}
 }
