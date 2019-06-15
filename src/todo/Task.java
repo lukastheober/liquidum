@@ -38,7 +38,8 @@ public class Task extends JPanel {
 	private JLabel dateLabel;
 	private JPanel textPanel;
 
-	public Task(String name, LocalDate deadline, int interval, Color color, String text) {
+	public Task(ListOfTasks myList, String name, LocalDate deadline, int interval, Color color, String text) {
+		this.myList = myList;
 		this.name = name;
 		this.deadline = deadline;
 		this.interval = interval;
@@ -129,19 +130,19 @@ public class Task extends JPanel {
 		return name;
 	}
 
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setLayout(new GridLayout(3,1));
-        
-		Task t1 = new Task("Müll rausbringen", LocalDate.now(), 2, Color.red, "Grüne und schwarze Tonne sind dran.");
-		Task t2 = new Task("Wäsche waschen", LocalDate.now(), 2, Color.green, "Buntwäsche.");
-		Task t3 = new Task("Blumen gießen", LocalDate.now(), 2, Color.blue, "Auch an Tomaten denken.");
-		frame.add(t1);
-		frame.add(t2);
-		frame.add(t3);
-		frame.pack();
-		frame.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		JFrame frame = new JFrame();
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setLocationRelativeTo(null);
+//        frame.setLayout(new GridLayout(3,1));
+//        
+//		Task t1 = new Task("Müll rausbringen", LocalDate.now(), 2, Color.red, "Grüne und schwarze Tonne sind dran.");
+//		Task t2 = new Task("Wäsche waschen", LocalDate.now(), 2, Color.green, "Buntwäsche.");
+//		Task t3 = new Task("Blumen gießen", LocalDate.now(), 2, Color.blue, "Auch an Tomaten denken.");
+//		frame.add(t1);
+//		frame.add(t2);
+//		frame.add(t3);
+//		frame.pack();
+//		frame.setVisible(true);
+//	}
 }

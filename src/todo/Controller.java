@@ -137,7 +137,7 @@ public class Controller {
 		ListOfTasks myList = task.getMyList();
 		myList.getTaskList().add(task);
 		gui.update();
-		save();
+		//TODO save();
 	}
 
 	/**
