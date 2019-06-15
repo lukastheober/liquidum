@@ -1,8 +1,12 @@
 package todo;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Properties;
 
 import javax.swing.JButton;
@@ -26,16 +30,18 @@ public class TaskCreationWizard extends MyDialog {
 	private JDatePickerImpl date;
 	private JComboBox<String> colour;
 	private JComboBox<String> interval;
+	private JTextField text;
 	private JButton cancel;
 	private JButton createTask;
+	private ListOfTasks tList;
 
-	private String[] colours = { "Auswählen", "Blau", "Rot", "Grün" };
-	private String[] intervals = { "Auswählen", "1 h", "2 h", "3 h", "4 h", "5 h" };
+	private String[] colours = {"Weiß", "Blau", "Grün", "Rot", "Orange", "Pink"};
+	private String[] intervals = { "1", "2", "3", "4", "5", "6" };
 
 	public TaskCreationWizard(ListOfTasks tList, Controller controller) {
 		super(controller);
+		this.tList = tList;
 		initialize();
-		// TODO Auto-generated constructor stub
 	}
 
 	private void initialize() {
@@ -66,7 +72,8 @@ public class TaskCreationWizard extends MyDialog {
 		UtilDateModel model = new UtilDateModel();
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		date = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-		date.getJFormattedTextField().setText("06.06.2019");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+		date.getJFormattedTextField().setText(LocalDate.now().format(formatter));
 		this.add(date);
 
 		this.add(new JLabel("    Farbe"));
@@ -79,6 +86,11 @@ public class TaskCreationWizard extends MyDialog {
 		interval.setName("interval");
 		this.add(interval);
 
+		this.add(new JLabel("    Text"));
+		text = new JTextField();
+		text.setName("text");
+		this.add(text);		
+		
 		cancel = new JButton("  Abbrechen");
 		cancel.setName("cancel");
 		cancel.addActionListener(new ActionListener() {
@@ -97,14 +109,29 @@ public class TaskCreationWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("Task-Constructor missing");
-				controller.addTask(new Task(name.getText(), date, colour.getSelectedItem(), interval.getSelectedItem()));
-
+				controller.addTask(new Task(tList ,name.getText(), LocalDate.parse(date.getJFormattedTextField().getText(), formatter) , Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText()));
+				dispose();
 			}
 		});
 		this.add(createTask);
 
 	}
 
+	private Color colorParser(String clrStr) {
+		//Color.BLUE, Color.GREEN.toString(), Color.RED.toString(), Color.ORANGE.toString(), Color.PINK.toString()
+		switch (clrStr) {
+		case "Blau":
+			return Color.BLUE;
+		case "Grün":
+			return Color.GREEN;
+		case "Rot":
+			return Color.RED;
+		case "Orange":
+			return Color.ORANGE;
+		case "Pink":
+			return Color.PINK;
+		default:
+			return Color.WHITE;
+		}
+	}
 }
