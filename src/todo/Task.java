@@ -129,7 +129,7 @@ public class Task extends JPanel {
 		return name;
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -143,5 +143,5 @@ public class Task extends JPanel {
 		frame.add(t3);
 		frame.pack();
 		frame.setVisible(true);
-	}
+	}*/
 }
