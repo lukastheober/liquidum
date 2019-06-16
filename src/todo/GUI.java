@@ -2,12 +2,15 @@ package todo;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -22,10 +25,8 @@ public class GUI extends JFrame {
 	private MainMenuBar menuBar = new MainMenuBar();
 	private int mainWindowWidth;
 	private int mainWindowHeight;
-	private Controller myController;
 	
-	public GUI(Controller myController) {
-		this.myController = myController;
+	public GUI() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		mainWindowHeight = screenSize.height;
 		mainWindowWidth = screenSize.width;
@@ -36,14 +37,16 @@ public class GUI extends JFrame {
         setLocationRelativeTo(null);
         setTitle("Liquidum");
         setLayout(new BorderLayout());
-        setVisible(true);
         
-        //add menuBar and listContainer
+        //menuBar
         menuBar = new MainMenuBar();
-        listContainer = new ListContainer();
         setJMenuBar(menuBar);
+        
+        //content
+        listContainer = new ListContainer();
         add(listContainer, BorderLayout.CENTER);
-        revalidate();
+        
+        setVisible(true);
 
         //Look and feel
 	    try {
@@ -72,17 +75,14 @@ public class GUI extends JFrame {
 	 * JComponents can be updated using updateUI().
 	 */
 	public void update(){
-		//TODO nur zum testen, muss nach ListContainer migriert werden
 		menuBar.updateUI();
 		listContainer.updateUI();
-		
-		for(ListOfTasks loT : myController.getallListOfTasks()) {
-			add(loT);
-		}		
 	}
 
 	public MainMenuBar getMainMenuBar() {
 		return menuBar;
 	}
-	
+	public ListContainer getListContainer() {
+		return listContainer;
+	}
 }

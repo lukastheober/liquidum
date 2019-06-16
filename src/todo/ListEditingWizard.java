@@ -52,6 +52,7 @@ public class ListEditingWizard extends MyDialog {
 		this.add(new JLabel("    Name"));
 		name = new JTextField(oldList.getListName());
 		name.setName("name");
+		name.setText(oldList.getListName());
 		this.add(name);
 
 		cancel = new JButton("  Abbrechen");

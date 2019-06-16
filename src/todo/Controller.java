@@ -3,7 +3,6 @@ package todo;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -97,6 +96,33 @@ public class Controller {
 	 */
 	public void addList(ListOfTasks list) {
 		listCollection.add(list);
+		list.getAddTaskButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TaskCreationWizard wiz = new TaskCreationWizard(list, Controller.this);
+				
+			}
+		});
+		
+		list.getEditButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ListEditingWizard wiz = new ListEditingWizard(list, Controller.this);
+				
+			}
+		});
+		
+		list.getDeleteButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ListDeletionWarningDialog diag = new ListDeletionWarningDialog(Controller.this, list);
+			}
+		});
+		
+		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
 		//System.out.println("debug: listCollection size is " + listCollection.size());
 		//TODO einkommentieren 
@@ -112,8 +138,9 @@ public class Controller {
 	public void addTask(Task task) {
 		ListOfTasks myList = task.getMyList();
 		myList.getTaskList().add(task);
+		myList.loadTasks();
 		gui.update();
-		save();
+		//TODO save();
 	}
 
 	/**

@@ -56,7 +56,7 @@ public class ListCreationWizard extends MyDialog {
 		});
 		this.add(cancel);
 
-		createListOfTasks = new JButton("  Liste erstellen");
+		createListOfTasks = new JButton("Liste erstellen");
 		createListOfTasks.setName("create");
 		createListOfTasks.addActionListener(new ActionListener() {
 
