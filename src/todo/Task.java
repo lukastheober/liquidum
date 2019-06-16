@@ -48,7 +48,7 @@ public class Task extends JPanel {
 		setPreferredSize(new Dimension(400, 150));
 		setLayout(new BorderLayout());
 		setBackground(Color.WHITE);
-		setBorder(BorderFactory.createRaisedBevelBorder());
+		setBorder(BorderFactory.createLoweredBevelBorder());
 		
 		add(createTopBar(), BorderLayout.NORTH);
 		
@@ -130,19 +130,20 @@ public class Task extends JPanel {
 		return name;
 	}
 
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setLocationRelativeTo(null);
-//        frame.setLayout(new GridLayout(3,1));
-//        
-//		Task t1 = new Task("Müll rausbringen", LocalDate.now(), 2, Color.red, "Grüne und schwarze Tonne sind dran.");
-//		Task t2 = new Task("Wäsche waschen", LocalDate.now(), 2, Color.green, "Buntwäsche.");
-//		Task t3 = new Task("Blumen gießen", LocalDate.now(), 2, Color.blue, "Auch an Tomaten denken.");
-//		frame.add(t1);
-//		frame.add(t2);
-//		frame.add(t3);
-//		frame.pack();
-//		frame.setVisible(true);
-//	}
+	/*public static void main(String[] args) {
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(new GridLayout(3,1));
+        
+        ListOfTasks list = new ListOfTasks("test");
+		Task t1 = new Task(list, "Müll rausbringen", LocalDate.now(), 2, Color.red, "Grüne und schwarze Tonne sind dran.");
+		Task t2 = new Task(list, "Wäsche waschen", LocalDate.now(), 2, Color.green, "Buntwäsche.");
+		Task t3 = new Task(list, "Blumen gießen", LocalDate.now(), 2, Color.blue, "Auch an Tomaten denken.");
+		frame.add(t1);
+		frame.add(t2);
+		frame.add(t3);
+		frame.pack();
+		frame.setVisible(true);
+	}*/
 }

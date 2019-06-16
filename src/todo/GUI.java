@@ -36,7 +36,6 @@ public class GUI extends JFrame {
         setLocationRelativeTo(null);
         setTitle("Liquidum");
         setLayout(new BorderLayout());
-        setVisible(true);
         
         //menuBar
         menuBar = new MainMenuBar();
@@ -44,9 +43,9 @@ public class GUI extends JFrame {
         
         //content
         listContainer = new ListContainer();
-        add(listContainer);
+        add(listContainer, BorderLayout.CENTER);
         
-        revalidate();
+        setVisible(true);
 
         //Look and feel
 	    try {
