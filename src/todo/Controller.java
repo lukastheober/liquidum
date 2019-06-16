@@ -3,6 +3,7 @@ package todo;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -36,7 +37,7 @@ public class Controller {
 		trashBin = new LinkedList<Task>();
 		draggedList = null;
 		draggedTask = null;
-		gui = new GUI(this);
+		gui = new GUI();
 		setActionListenerUp();
 	}
 
@@ -392,9 +393,9 @@ public class Controller {
 		return listCollection;
 	}
 	
-//	public static void main(String[] args) {
-//		Controller bla = new Controller();
-//	}
+	public static void main(String[] args) {
+		Controller bla = new Controller();
+	}
 	public void save() {
 		Thread t1 = new Save(listCollection);
 		t1.start();

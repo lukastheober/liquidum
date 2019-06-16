@@ -75,8 +75,9 @@ public class ListEditingWizard extends MyDialog {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				// missing Constructor with params
-				System.out.println("Missing ListOfTasks Constructor, doing nothing");
+//				System.out.println("Missing ListOfTasks Constructor, doing nothing");
 				oldList.overwrite(new ListOfTasks(name.getText()));
+				dispose();
 			}
 		});
 		this.add(editListOfTasks);

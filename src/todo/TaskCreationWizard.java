@@ -110,7 +110,7 @@ public class TaskCreationWizard extends MyDialog {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Task-Constructor is missing
 				System.out.println("Task-Constructor missing");
-				controller.addTask(new Task(name.getText(), date, colour.getSelectedItem(), interval.getSelectedItem()));
+				//	controller.addTask(new Task(name.getText(), date, colour.getSelectedItem(), interval.getSelectedItem()));
 
 				controller.addTask(new Task(tList ,name.getText(), LocalDate.parse(date.getJFormattedTextField().getText(), formatter) , Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText()));
 				dispose();
