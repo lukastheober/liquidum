@@ -34,6 +34,7 @@ public class Task extends JPanel {
 	private TaskMenu menu;
 	private ListOfTasks myList;
 	private String name;
+	private String text;
 	private JLabel nameLabel;
 	private JLabel dateLabel;
 	private JPanel textPanel;
@@ -44,6 +45,7 @@ public class Task extends JPanel {
 		this.deadline = deadline;
 		this.interval = interval;
 		this.color = color;
+		this.text = text;
 		
 		setPreferredSize(new Dimension(400, 150));
 		setLayout(new BorderLayout());
@@ -124,6 +126,10 @@ public class Task extends JPanel {
 
 	public ListOfTasks getMyList() {
 		return myList;
+	}
+	
+	public String getText() {
+		return text;
 	}
 
 	public String getName() {

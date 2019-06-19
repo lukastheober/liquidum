@@ -81,7 +81,7 @@ public class TaskCreationWizard extends MyDialog {
 		colour.setName("colour");
 		this.add(colour);
 
-		this.add(new JLabel("    Intervall"));
+		this.add(new JLabel("    Intervall in h"));
 		interval = new JComboBox<String>(intervals);
 		interval.setName("interval");
 		this.add(interval);
@@ -108,10 +108,6 @@ public class TaskCreationWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Task-Constructor is missing
-				System.out.println("Task-Constructor missing");
-				//	controller.addTask(new Task(name.getText(), date, colour.getSelectedItem(), interval.getSelectedItem()));
-
 				controller.addTask(new Task(tList ,name.getText(), LocalDate.parse(date.getJFormattedTextField().getText(), formatter) , Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText()));
 				dispose();
 			}
@@ -121,7 +117,6 @@ public class TaskCreationWizard extends MyDialog {
 	}
 
 	private Color colorParser(String clrStr) {
-		//Color.BLUE, Color.GREEN.toString(), Color.RED.toString(), Color.ORANGE.toString(), Color.PINK.toString()
 		switch (clrStr) {
 		case "Blau":
 			return Color.BLUE;
