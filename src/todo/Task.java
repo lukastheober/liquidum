@@ -61,10 +61,10 @@ public class Task extends JPanel {
 	private JPanel createTopBar() {
 		this.nameLabel = new JLabel(this.name);
 		this.nameLabel.setHorizontalTextPosition(JLabel.LEFT);
-		this.nameLabel.setPreferredSize(new Dimension(270,20));
+		this.nameLabel.setPreferredSize(new Dimension(270,25));
 				
 		this.dateLabel = new JLabel(this.deadline.toString());
-		this.dateLabel.setPreferredSize(new Dimension(80,20));
+		this.dateLabel.setPreferredSize(new Dimension(80,25));
 				
 		this.menu = new TaskMenu(this);
 				
