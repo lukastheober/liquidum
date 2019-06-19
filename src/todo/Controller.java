@@ -3,6 +3,7 @@ package todo;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -124,7 +125,9 @@ public class Controller {
 		
 		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
-	//	save();
+		//System.out.println("debug: listCollection size is " + listCollection.size());
+		//TODO einkommentieren 
+		//save();
 	}
 
 	/**
@@ -386,10 +389,13 @@ public class Controller {
 
 	}
 
+	public Collection<ListOfTasks> getallListOfTasks(){
+		return listCollection;
+	}
+	
 	public static void main(String[] args) {
 		Controller bla = new Controller();
 	}
-
 	public void save() {
 		Thread t1 = new Save(listCollection);
 		t1.start();

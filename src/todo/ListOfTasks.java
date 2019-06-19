@@ -25,7 +25,6 @@ public class ListOfTasks extends JPanel {
 	private ListSortMenu sortingMenu;
 	
 	static final int MAX_TASKS = 10;
-
 	public ListOfTasks(String listName) {
 		// TODO use this object
 		// MouseListener dnd = new DragAndDropMouseListener();
