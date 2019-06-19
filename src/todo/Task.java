@@ -61,10 +61,10 @@ public class Task extends JPanel {
 	private JPanel createTopBar() {
 		this.nameLabel = new JLabel(this.name);
 		this.nameLabel.setHorizontalTextPosition(JLabel.LEFT);
-		this.nameLabel.setPreferredSize(new Dimension(270,20));
+		this.nameLabel.setPreferredSize(new Dimension(270,25));
 				
 		this.dateLabel = new JLabel(this.deadline.toString());
-		this.dateLabel.setPreferredSize(new Dimension(80,20));
+		this.dateLabel.setPreferredSize(new Dimension(80,25));
 				
 		this.menu = new TaskMenu(this);
 				
@@ -130,7 +130,7 @@ public class Task extends JPanel {
 		return name;
 	}
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -145,5 +145,5 @@ public class Task extends JPanel {
 		frame.add(t3);
 		frame.pack();
 		frame.setVisible(true);
-	}*/
+	}
 }
