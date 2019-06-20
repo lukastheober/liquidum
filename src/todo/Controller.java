@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -125,7 +126,10 @@ public class Controller {
 
 		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
-		// save();
+
+		//System.out.println("debug: listCollection size is " + listCollection.size());
+		//TODO einkommentieren 
+		//save();
 	}
 
 	/**
@@ -137,6 +141,7 @@ public class Controller {
 	public void addTask(Task task) {
 		ListOfTasks myList = task.getMyList();
 		myList.getTaskList().add(task);
+		myList.loadTasks();
 		gui.update();
 		// TODO save();
 	}
@@ -479,6 +484,10 @@ public class Controller {
 		this.draggedObject = draggedObject;
 	}
 
+	public Collection<ListOfTasks> getallListOfTasks(){
+		return listCollection;
+	}
+	
 	public static void main(String[] args) {
 		Controller bla = new Controller();
 	}
