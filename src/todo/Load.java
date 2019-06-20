@@ -1,11 +1,10 @@
 package todo;
 
-import java.awt.List;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -101,5 +100,14 @@ public class Load extends Thread {
 	private LinkedList<Task> createList(JSONObject listInfo){
 		//TODO create loading methods
 		return null;
+	}
+	
+	public static LocalDateTime stringToDateTime(String ldt) {
+		LocalDateTime dateAsObj;
+		String[] dateTimeValues = ldt.split(":");
+		dateAsObj = LocalDateTime.of(Integer.parseInt(dateTimeValues[0]), Integer.parseInt(dateTimeValues[1]),
+		Integer.parseInt(dateTimeValues[2]), Integer.parseInt(dateTimeValues[3]), Integer.parseInt(dateTimeValues[4]));
+	return dateAsObj;
+	
 	}
 }

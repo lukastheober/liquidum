@@ -7,9 +7,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -94,11 +96,22 @@ public class Save extends Thread {
 
 	@SuppressWarnings("unchecked")
 	private void putDeadLine(Task task) {
-		Date jDeadLine = task.getDeadline();
-		Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String s = formatter.format(jDeadLine);
-		temp.put("deadline", s);
+		LocalDateTime timeAsObject = task.getDeadline(); 
+		String dateAsString="";
+		dateAsString+=timeAsObject.getYear();
+		dateAsString+=":";
+		dateAsString+=timeAsObject.getMonthValue();
+		dateAsString+=":";
+		dateAsString+=timeAsObject.getDayOfMonth();
+		dateAsString+=":";
+		dateAsString+=timeAsObject.getHour();
+		dateAsString+=":";
+		dateAsString+=timeAsObject.getMinute();
+		temp.put("deadline", dateAsString);
 	}
+	
+	
+	
 
 	@SuppressWarnings("unchecked")
 	private void putColor(Task task) {
