@@ -111,7 +111,26 @@ public class Save extends Thread {
 	}
 	
 	
-	
+	@SuppressWarnings("unchecked")
+	private void putDeletionDate(Task task) {
+		LocalDateTime deletionDateObj = task.getDeletionDate();
+		String dateAsString="";
+		dateAsString += deletionDateObj.getYear();
+		dateAsString += ":";
+		dateAsString += deletionDateObj.getMonthValue();
+		dateAsString += ":";
+		dateAsString += deletionDateObj.getDayOfMonth();
+		dateAsString += ":";
+		dateAsString += deletionDateObj.getHour();
+		dateAsString += ":";
+		dateAsString += deletionDateObj.getMinute();
+		temp.put("deletiondate", dateAsString);
+	/*	Date jDeletionDate = task.getDeletionDate();
+		Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String s = formatter.format(jDeletionDate);
+		temp.put("deletiondate", s);
+		*/
+	}
 
 	@SuppressWarnings("unchecked")
 	private void putColor(Task task) {
@@ -122,13 +141,7 @@ public class Save extends Thread {
 		temp.put("color", sColor);
 	}
 
-	@SuppressWarnings("unchecked")
-	private void putDeletionDate(Task task) {
-		Date jDeletionDate = task.getDeletionDate();
-		Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String s = formatter.format(jDeletionDate);
-		temp.put("deletiondate", s);
-	}
+
 
 	@SuppressWarnings("unchecked")
 	private void putInterval(Task task) {
