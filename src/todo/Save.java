@@ -125,11 +125,6 @@ public class Save extends Thread {
 		dateAsString += ":";
 		dateAsString += deletionDateObj.getMinute();
 		temp.put("deletiondate", dateAsString);
-	/*	Date jDeletionDate = task.getDeletionDate();
-		Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String s = formatter.format(jDeletionDate);
-		temp.put("deletiondate", s);
-		*/
 	}
 
 	@SuppressWarnings("unchecked")

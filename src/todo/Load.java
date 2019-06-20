@@ -101,6 +101,10 @@ public class Load extends Thread {
 		//TODO create loading methods
 		return null;
 	}
+	
+	private LocalDateTime getDeletionDate(){
+		return null;
+	}
 	/*
 	public static LocalDateTime stringToDateTime(String ldt) {
 		LocalDateTime dateAsObj;
