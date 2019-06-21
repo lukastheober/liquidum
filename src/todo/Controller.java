@@ -127,8 +127,8 @@ public class Controller {
 		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
 
-		//System.out.println("debug: listCollection size is " + listCollection.size());
-		//TODO einkommentieren 
+		// System.out.println("debug: listCollection size is " + listCollection.size());
+		// TODO einkommentieren
 		save();
 	}
 
@@ -172,7 +172,7 @@ public class Controller {
 	private void deleteOldTasksFromBin() {
 		Iterator<Task> trashIterator = trashBin.iterator();
 		while (trashIterator.hasNext()) {
-			if (trashIterator.next().getDeletionDate().isBefore(LocalDate.now().minusDays(30)))
+			if (trashIterator.next().getDeletionDate().isBefore(LocalDateTime.now().minusDays(30)))
 				trashBin.remove(trashIterator.next());
 		}
 	}
@@ -412,12 +412,12 @@ public class Controller {
 	 * @param task
 	 */
 	public void duplicateTask(Task task) {
-		// TODO Waiting on Task Constructor...
-//		Task clone = new Task();  
-//		LinkedList<Task> taskList = task.getMyList().getTaskList();
-//		taskList.add(taskList.indexOf(task) + 1, clone);
-//		gui.update();
-//		save();
+		Task clone = new Task(task.getMyList(), task.getName(), task.getDeadline(), task.getInterval(), task.getColor(),
+				task.getText());
+		LinkedList<Task> taskList = task.getMyList().getTaskList();
+		taskList.add(taskList.indexOf(task) + 1, clone);
+		gui.update();
+		save();
 	}
 
 	/**
@@ -484,10 +484,10 @@ public class Controller {
 		this.draggedObject = draggedObject;
 	}
 
-	public Collection<ListOfTasks> getallListOfTasks(){
+	public Collection<ListOfTasks> getallListOfTasks() {
 		return listCollection;
 	}
-	
+
 	public static void main(String[] args) {
 		Controller bla = new Controller();
 	}
