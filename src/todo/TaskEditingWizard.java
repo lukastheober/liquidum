@@ -73,7 +73,9 @@ public class TaskEditingWizard extends MyDialog {
 		UtilDateModel model = new UtilDateModel();
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		date = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		//System.out.println(oldTask.getDeadline());
 		date.getJFormattedTextField().setText(oldTask.getDeadline().format(formatter));
 		this.add(date);
 
@@ -104,18 +106,19 @@ public class TaskEditingWizard extends MyDialog {
 		});
 		this.add(cancel);
 
-		createTask = new JButton("  Aufgabe erstellen");
+		createTask = new JButton("  Aufgabe bearbeiten");
 		createTask.setName("create");
 		createTask.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Task-Constructor not complete");
-				oldTask.overwrite(new Task(oldTask.getMyList(), name.getText(), LocalDate.parse(date.getJFormattedTextField().getText()), Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText()));
+				//System.out.println("Task-Constructor not complete");
+			//	System.out.println(date.getJFormattedTextField().getText());
+				oldTask.overwrite(new Task(oldTask.getMyList(), name.getText(), LocalDate.parse(date.getJFormattedTextField().getText(), formatter), Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText()));
+				dispose();
 			}
 		});
 		this.add(createTask);
-
 	}
 
 	private int colorToIndex(Color inColor) {

@@ -125,7 +125,6 @@ public class Controller {
 		
 		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
-		//System.out.println("debug: listCollection size is " + listCollection.size());
 		//TODO einkommentieren 
 		//save();
 	}
@@ -140,6 +139,33 @@ public class Controller {
 		ListOfTasks myList = task.getMyList();
 		myList.getTaskList().add(task);
 		myList.loadTasks();
+		
+		task.getMenu().getDeleteButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, task);
+			}
+		});
+		
+		task.getMenu().getDuplicateButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+				System.out.println("pls implement me");
+				
+			}
+		});
+		
+		task.getMenu().getEditButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);	
+			}
+		});
+		
 		gui.update();
 		//TODO save();
 	}
