@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -28,8 +29,8 @@ public class Task extends JPanel {
 
 	
 	private Color color;
-	private LocalDate deadline;
-	private LocalDate deletionDate;
+	private LocalDateTime deadline;
+	private LocalDateTime deletionDate;
 	private int interval;
 	private TaskMenu menu;
 	private ListOfTasks myList;
@@ -38,7 +39,7 @@ public class Task extends JPanel {
 	private JLabel dateLabel;
 	private JPanel textPanel;
 
-	public Task(ListOfTasks myList, String name, LocalDate deadline, int interval, Color color, String text) {
+	public Task(ListOfTasks myList, String name, LocalDateTime deadline, int interval, Color color, String text) {
 		this.myList = myList;
 		this.name = name;
 		this.deadline = deadline;
@@ -95,7 +96,7 @@ public class Task extends JPanel {
 	}
 	
 	public boolean expiresWithing3Days() {
-		return this.deadline.minusDays(3).isBefore(LocalDate.now());
+		return this.deadline.minusDays(3).isBefore(LocalDateTime.now());
 	}
 
 	public void overwrite(Task newTask) {
@@ -106,11 +107,11 @@ public class Task extends JPanel {
 		return color;
 	}
 
-	public LocalDate getDeadline() {
+	public LocalDateTime getDeadline() {
 		return deadline;
 	}
 
-	public LocalDate getDeletionDate() {
+	public LocalDateTime getDeletionDate() {
 		return deletionDate;
 	}
 
