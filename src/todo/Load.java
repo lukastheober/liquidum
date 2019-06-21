@@ -1,5 +1,6 @@
 package todo;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Path;
@@ -25,29 +26,37 @@ public class Load extends Thread {
 	}
 
 	public LinkedList<ListOfTasks> loadFiles() {
-		// TODO
-		/* get all Files of the directory and load them */
+
+		/*
+		 * get all Files of the directory and load them
+		 * 
+		 * 
+		 * 
+		 */
 		Path currentRelativePath = Paths.get("");
 		String s = currentRelativePath.toAbsolutePath().toString();
 		System.out.println(s);
 		File dir = new File(s + "/saveFiles/");
-		
+
 		if (dir.isDirectory()) {
 			if (dir.list().length > 0) {
-				//directory exists and is not empty
+				// directory exists and is not empty
 				ArrayList<String> result = new ArrayList<>();
 
 				result = search(".*\\.json", dir, result);
 
 				for (String files : result) {
 					load(files);
-				}				
+				}
+				// TODO: add tasks to collection!
 				return collection;
-			}else {
-			//directory is empty
-				return collection;}
-		}else {
-		return collection;}
+			} else {
+				// directory is empty
+				return collection;
+			}
+		} else {
+			return collection;
+		}
 
 	}
 
@@ -66,53 +75,76 @@ public class Load extends Thread {
 	}
 
 	private void load(String file) {
-		/* 
-		 * Structure of the JSONArray: 
-		 * 1)get filename from listname + hashValue (?) <- avoid duplicate files
-		 * 2)First JSONObject has to contain all info about the list!!
-		 * 3)Following JSONObjects in the Array contain all info for the tasks
+		/*
+		 * Structure of the JSONArray: 1)get filename from listname + hashValue (?) <-
+		 * avoid duplicate files 2)First JSONObject has to contain all info about the
+		 * list!! 3)Following JSONObjects in the Array contain all info for the tasks
 		 * 
-		 * */
+		 */
 		JSONParser jParse = new JSONParser();
 		JSONArray jLoadedList = null;
+
 		try {
-			//build shit
 			FileReader reader = new FileReader(file);
 			jLoadedList = (JSONArray) jParse.parse(reader);
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			System.out.print(e);
 		}
+
 		Iterator i = jLoadedList.iterator();
-		JSONObject listInfo = (JSONObject)i.next();
-		this.currentList = createList(listInfo);
-		while(i.hasNext()) {
-			JSONObject task = (JSONObject) i.next();
-			createTask(task);
+		JSONObject listInfo = (JSONObject) i.next();
+
+		this.currentList = new LinkedList<Task>();
+		ListOfTasks listOfTasks = createList(listInfo);
+
+		while (i.hasNext()) {
+
+			JSONObject taskObj = (JSONObject) i.next();
+			Task task = createTask(taskObj, listOfTasks);
+			currentList.add(task);
 		}
+
+		listOfTasks.addList(currentList);
+
+		collection.add(listOfTasks);
+		currentList = null;
 	}
 
-	private void createTask(JSONObject task) {
-		//TODO create task loading methods
-		//Task task = new Task();
-		
+	private Task createTask(JSONObject taskObj, ListOfTasks list) {
+
+		/*
+		 * loads all fields from JSON-Arrays to create a new Task Obj
+		 */
+		String name = (String) taskObj.get("name");
+		LocalDateTime deadline = loadLocalDateTime((String) taskObj.get("deadline"));
+		int interval = Integer.parseInt((String) taskObj.get("interval"));
+		Color color = loadColor((String) taskObj.get(color));
+		String text = (String) taskObj.get(text);
+
+		Task task = new Task(list, name, deadline, interval, color, text);
+		return task;
+
 	}
-	
-	private LinkedList<Task> createList(JSONObject listInfo){
-		//TODO create loading methods
-		return null;
+
+	private ListOfTasks createList(JSONObject listInfo) {
+		ListOfTasks listOfTasks = new ListOfTasks((String) listInfo.get("name"));
+		return listOfTasks;
 	}
-	
-	private LocalDateTime getDeletionDate(){
-		return null;
-	}
-	/*
-	public static LocalDateTime stringToDateTime(String ldt) {
+
+	private LocalDateTime loadLocalDateTime(String s) {
 		LocalDateTime dateAsObj;
-		String[] dateTimeValues = ldt.split(":");
+		String[] dateTimeValues = s.split(":");
 		dateAsObj = LocalDateTime.of(Integer.parseInt(dateTimeValues[0]), Integer.parseInt(dateTimeValues[1]),
-		Integer.parseInt(dateTimeValues[2]), Integer.parseInt(dateTimeValues[3]), Integer.parseInt(dateTimeValues[4]));
-	return dateAsObj;
-	
+				Integer.parseInt(dateTimeValues[2]), Integer.parseInt(dateTimeValues[3]),
+				Integer.parseInt(dateTimeValues[4]));
+		return dateAsObj;
+
 	}
-	*/
+
+	private Color loadColor(String c) {
+		int a = Integer.parseInt(c);
+		Color color = new Color(a);
+		return color;
+	}
 }

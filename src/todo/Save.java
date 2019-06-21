@@ -26,9 +26,9 @@ public class Save extends Thread {
 	}
 
 	public void saveAll() {
-		for (int i = 0; i < collection.size(); i++) {
-			ListOfTasks temp = collection.get(i);
-			saveList(temp);
+		Iterator i = collection.iterator();
+		while(i.hasNext()) {
+			saveList((ListOfTasks)i.next());
 		}
 	}
 
@@ -37,7 +37,14 @@ public class Save extends Thread {
 		this.listName = list.getName();
 		LinkedList<Task> taskList = list.getTaskList();
 		this.jsonArray = new JSONArray();
-
+		
+		
+		JSONObject listInfo = new JSONObject();
+		listInfo.put("name", list.getName());
+		jsonArray.add(listInfo);
+		
+		
+		
 		for (Iterator<Task> i = taskList.iterator(); i.hasNext();) {
 			Task temp = i.next();
 			JSONObject jTemp = new JSONObject();
@@ -88,6 +95,7 @@ public class Save extends Thread {
 		putDeletionDate(task);
 		putInterval(task);
 		temp.put("name", task.getName());
+		temp.put("text", task.getText());
 
 		jSon = this.temp;
 		this.temp = null;

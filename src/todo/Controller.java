@@ -129,7 +129,7 @@ public class Controller {
 
 		//System.out.println("debug: listCollection size is " + listCollection.size());
 		//TODO einkommentieren 
-		//save();
+		save();
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class Controller {
 		myList.getTaskList().add(task);
 		myList.loadTasks();
 		gui.update();
-		// TODO save();
+		save();
 	}
 
 	/**
@@ -328,7 +328,7 @@ public class Controller {
 
 				Task actualTask = taskIterator.next();
 				String actualTaskName = actualTask.getName();
-				String actualTaskText = actualTask.getTextPane().getText();
+				String actualTaskText = actualTask.getText();
 
 				if (!(actualTaskName.contains(string) || actualTaskText.contains(string))) {
 					actualTask.setVisible(false);

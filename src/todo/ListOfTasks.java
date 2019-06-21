@@ -87,4 +87,11 @@ public class ListOfTasks extends JPanel {
 	public JButton getEditButton() {
 		return editButton;
 	}
+
+	public void addList(LinkedList<Task> loadList) {
+		/* only to use by the load class
+		 * */
+		this.tasks = loadList;
+		
+	}
 }
