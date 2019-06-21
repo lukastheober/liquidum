@@ -7,13 +7,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class Save extends Thread{
+public class Save extends Thread {
 	LinkedList<ListOfTasks> collection;
 	String listName;
 	JSONArray jsonArray;
@@ -24,21 +26,30 @@ public class Save extends Thread{
 	}
 
 	public void saveAll() {
-		for (int i = 0; i < collection.size(); i++) {
-			ListOfTasks temp = collection.get(i);
-			saveList(temp);
+		Iterator i = collection.iterator();
+		while(i.hasNext()) {
+			saveList((ListOfTasks)i.next());
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void saveList(ListOfTasks list) {
 		this.listName = list.getName();
+		LinkedList<Task> taskList = list.getTaskList();
 		this.jsonArray = new JSONArray();
 		
-		for (Iterator i = list.getTasks.iterator(); i.hasNext();) {
-			Task temp = i.next;
+		
+		JSONObject listInfo = new JSONObject();
+		listInfo.put("name", list.getName());
+		jsonArray.add(listInfo);
+		
+		
+		
+		for (Iterator<Task> i = taskList.iterator(); i.hasNext();) {
+			Task temp = i.next();
 			JSONObject jTemp = new JSONObject();
 			jsonArray.add(taskToJSON(temp, jTemp));
-	      }
+		}
 
 		writeJSONFile();
 	}
@@ -51,7 +62,7 @@ public class Save extends Thread{
 		File dir = new File(s + "/saveFiles/");
 		if (dir.isDirectory()) {
 			String filepath = s + "/saveFiles/" + listName + ".json";
-			//System.out.println(filepath);
+			// System.out.println(filepath);
 			try {
 				FileWriter fw = new FileWriter(filepath);
 				fw.write(jsonArray.toJSONString());
@@ -61,9 +72,9 @@ public class Save extends Thread{
 			}
 		} else {
 			boolean success = dir.mkdir();
-			if(success) {
+			if (success) {
 				String filepath = s + "/saveFiles/" + listName + ".json";
-				//System.out.println(filepath);
+				// System.out.println(filepath);
 				try {
 					FileWriter fw = new FileWriter(filepath);
 					fw.write(jsonArray.toJSONString());
@@ -75,56 +86,76 @@ public class Save extends Thread{
 		}
 
 	}
-	@SuppressWarnings("unchecked") 
+
+	@SuppressWarnings("unchecked")
 	private JSONObject taskToJSON(Task task, JSONObject jSon) {
-		this.temp=jSon;
+		this.temp = jSon;
 		putColor(task);
 		putDeadLine(task);
 		putDeletionDate(task);
 		putInterval(task);
 		temp.put("name", task.getName());
-		
-		
+		temp.put("text", task.getText());
+
 		jSon = this.temp;
 		this.temp = null;
 		return jSon;
 	}
-	
-	@SuppressWarnings("unchecked") 
+
+	@SuppressWarnings("unchecked")
 	private void putDeadLine(Task task) {
-		Date jDeadLine = task.getDeadline();
-		Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String s = formatter.format(jDeadLine);
-		temp.put("deadline", s);
+		LocalDateTime timeAsObject = task.getDeadline(); 
+		String dateAsString="";
+		dateAsString+=timeAsObject.getYear();
+		dateAsString+=":";
+		dateAsString+=timeAsObject.getMonthValue();
+		dateAsString+=":";
+		dateAsString+=timeAsObject.getDayOfMonth();
+		dateAsString+=":";
+		dateAsString+=timeAsObject.getHour();
+		dateAsString+=":";
+		dateAsString+=timeAsObject.getMinute();
+		temp.put("deadline", dateAsString);
 	}
 	
-	@SuppressWarnings("unchecked") 
+	
+	@SuppressWarnings("unchecked")
+	private void putDeletionDate(Task task) {
+		LocalDateTime deletionDateObj = task.getDeletionDate();
+		String dateAsString="";
+		dateAsString += deletionDateObj.getYear();
+		dateAsString += ":";
+		dateAsString += deletionDateObj.getMonthValue();
+		dateAsString += ":";
+		dateAsString += deletionDateObj.getDayOfMonth();
+		dateAsString += ":";
+		dateAsString += deletionDateObj.getHour();
+		dateAsString += ":";
+		dateAsString += deletionDateObj.getMinute();
+		temp.put("deletiondate", dateAsString);
+	}
+
+	@SuppressWarnings("unchecked")
 	private void putColor(Task task) {
-		Color jColor = task.getColor();	
-		//convert Color to String
+		Color jColor = task.getColor();
+		// convert Color to String
 		String sColor = Integer.toString(jColor.getRGB());
-		//put color in json
+		// put color in json
 		temp.put("color", sColor);
 	}
-	
-	@SuppressWarnings("unchecked") 
-	private void putDeletionDate(Task task) {
-		Date jDeletionDate = task.getDeletionDate();
-		Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String s = formatter.format(jDeletionDate);
-		temp.put("deletiondate", s);
-	}
-	
-	@SuppressWarnings("unchecked") 
+
+
+
+	@SuppressWarnings("unchecked")
 	private void putInterval(Task task) {
-		String i = "" +task.getInterval();
+		String i = "" + task.getInterval();
 		temp.put("interval", i);
 	}
 
 	@Override
 	public void run() {
 		saveAll();
-		
+
 	}
 
 }
