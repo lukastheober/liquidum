@@ -72,7 +72,7 @@ public class TaskCreationWizard extends MyDialog {
 		UtilDateModel model = new UtilDateModel();
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		date = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		date.getJFormattedTextField().setText(LocalDate.now().format(formatter));
 		this.add(date);
 
