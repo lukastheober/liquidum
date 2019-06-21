@@ -42,8 +42,8 @@ public class TaskEditingWizard extends MyDialog {
 	private String[] colours = { "Schwarz", "Blau", "Rot", "Grün", "Grau", "Orange", "Pink" };
 	private String[] intervals = { "Auswählen", "1 h", "2 h", "3 h", "4 h", "5 h" };
 
-	//private final static int BLACK = Color.BLACK.getRGB();
-	
+	// private final static int BLACK = Color.BLACK.getRGB();
+
 	private void initialize() {
 
 		setLayout(new GridLayout(0, 2, 10, 10));
@@ -72,7 +72,10 @@ public class TaskEditingWizard extends MyDialog {
 		UtilDateModel model = new UtilDateModel();
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		date = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-		date.getJFormattedTextField().setText("06.06.2019");
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		// System.out.println(oldTask.getDeadline());
+		date.getJFormattedTextField().setText(oldTask.getDeadline().format(formatter));
 		this.add(date);
 
 		this.add(new JLabel("    Farbe"));
@@ -98,41 +101,43 @@ public class TaskEditingWizard extends MyDialog {
 		});
 		this.add(cancel);
 
-		createTask = new JButton("  Aufgabe erstellen");
+		createTask = new JButton("  Aufgabe bearbeiten");
 		createTask.setName("create");
 		createTask.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("Task-Constructor not complete");
-				oldTask.overwrite(new Task(name, date, colour, interval, (ListOfTasks) e.getSource()));
-
+				// System.out.println("Task-Constructor not complete");
+				// System.out.println(date.getJFormattedTextField().getText());
+				oldTask.overwrite(new Task(oldTask.getMyList(), name.getText(),
+						LocalDate.parse(date.getJFormattedTextField().getText(), formatter),
+						Integer.parseInt((String) interval.getSelectedItem()),
+						colorParser((String) colour.getSelectedItem()), text.getText()));
+				dispose();
 			}
 		});
 		this.add(createTask);
-
 	}
 
 	private int colorToIndex(Color inColor) {
 
-		if(inColor == Color.BLACK) {
+		if (inColor == Color.BLACK) {
 			return 0;
-		} else if(inColor == Color.BLUE) {
+		} else if (inColor == Color.BLUE) {
 			return 1;
-		} else if(inColor == Color.RED) {
+		} else if (inColor == Color.RED) {
 			return 2;
-		} else if(inColor == Color.GREEN) {
+		} else if (inColor == Color.GREEN) {
 			return 3;
-		} else if(inColor == Color.GRAY) {
+		} else if (inColor == Color.GRAY) {
 			return 4;
-		} else if(inColor == Color.ORANGE) {
+		} else if (inColor == Color.ORANGE) {
 			return 5;
 		} else {
 			return 6;
 		}
 	}
-	
+
 	public TaskEditingWizard(Task task, Controller controller) {
 		super(controller);
 		oldTask = task;
