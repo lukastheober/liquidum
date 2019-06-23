@@ -73,6 +73,14 @@ public class Controller {
 				resetFilter();
 			}
 		});
+		
+		gui.getMainMenuBar().getShowBinButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+			}
+		});
 
 		JMenuItem[] filterMenu = gui.getMainMenuBar().getFilterButton();
 		for (JMenuItem filter : filterMenu) {
@@ -81,13 +89,22 @@ public class Controller {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					switch (e.getActionCommand()) {
-					case "Rot":
-						filterBy(Color.red);
+					case "Weiß":
+						filterBy(Color.white);
 						break;
 					case "Blau":
 						filterBy(Color.blue);
-					case "Grï¿½n":
+					case "Grün":
 						filterBy(Color.green);
+					case "Rot":
+						filterBy(Color.red);
+						break;
+					case "Orange":
+						filterBy(Color.orange);
+						break;
+					case "Pink":
+						filterBy(Color.pink);
+						break;
 					default:
 						System.out.println("couldnt pick color");
 					}
@@ -186,7 +203,7 @@ public class Controller {
 	 * @param list: the ListOfTasks that is being deleted
 	 */
 	public void clearBinOfAllTasksFrom(ListOfTasks list) {
-		LinkedList tasksToDelete = list.getTaskList();
+		LinkedList<Task> tasksToDelete = list.getTaskList();
 		Iterator<Task> listIterator = tasksToDelete.iterator();
 		Iterator<Task> trashIterator = trashBin.iterator();
 		while (listIterator.hasNext()) {
@@ -283,7 +300,9 @@ public class Controller {
 			ListOfTasks actualTaskListObject = taskListsIterator.next();
 			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
 			Iterator<Task> taskIterator = actualListOfTasks.iterator();
-
+			
+			actualTaskListObject.setVisible(true);
+			
 			while (taskIterator.hasNext()) {
 				taskIterator.next().setVisible(true);
 			}
@@ -300,8 +319,8 @@ public class Controller {
 	 * @param list
 	 */
 	public void removeList(ListOfTasks list) {
-
 		listCollection.remove(list);
+		gui.getListContainer().remove(list);
 
 		Iterator<Task> trashBinIterator = trashBin.iterator();
 		while (trashBinIterator.hasNext()) {

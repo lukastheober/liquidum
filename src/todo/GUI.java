@@ -61,14 +61,6 @@ public class GUI extends JFrame {
                 e.printStackTrace();
         }
 	}
-		
-	//testing main
-//	public static void main(String[] args) {
-//		new GUI();
-//	}
-	
-	
-	
 	
 	/**
 	 * Updates the whole UI.
