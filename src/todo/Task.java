@@ -5,11 +5,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -28,8 +26,8 @@ public class Task extends JPanel {
 
 	
 	private Color color;
-	private LocalDate deadline;
-	private LocalDate deletionDate;
+	private LocalDateTime deadline;
+	private LocalDateTime deletionDate;
 	private int interval;
 	private String text;
 	private TaskMenu menu;
@@ -39,18 +37,17 @@ public class Task extends JPanel {
 	private JLabel dateLabel;
 	private JPanel textPanel;
 
-	public Task(ListOfTasks myList, String name, LocalDate deadline, int interval, Color color, String text) {
+	public Task(ListOfTasks myList, String name, LocalDateTime deadline, int interval, Color color, String text) {
 		this.myList = myList;
 		this.name = name;
 		this.deadline = deadline;
 		this.interval = interval;
 		this.color = color;
-		this.text = text;
 		
 		setPreferredSize(new Dimension(400, 150));
 		setLayout(new BorderLayout());
 		setBackground(Color.WHITE);
-		setBorder(BorderFactory.createRaisedBevelBorder());
+		setBorder(BorderFactory.createLoweredBevelBorder());
 		
 		add(createTopBar(), BorderLayout.NORTH);
 		
@@ -97,7 +94,7 @@ public class Task extends JPanel {
 	}
 	
 	public boolean expiresWithing3Days() {
-		return this.deadline.minusDays(3).isBefore(LocalDate.now());
+		return this.deadline.minusDays(3).isBefore(LocalDateTime.now());
 	}
 
 	public void overwrite(Task newTask) {
@@ -108,11 +105,11 @@ public class Task extends JPanel {
 		return color;
 	}
 
-	public LocalDate getDeadline() {
+	public LocalDateTime getDeadline() {
 		return deadline;
 	}
 
-	public LocalDate getDeletionDate() {
+	public LocalDateTime getDeletionDate() {
 		return deletionDate;
 	}
 
@@ -131,23 +128,21 @@ public class Task extends JPanel {
 	public String getName() {
 		return name;
 	}
-	public String getText() {
-		return text;
-	}
 
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame();
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setLocationRelativeTo(null);
-//        frame.setLayout(new GridLayout(3,1));
-//        
-//		Task t1 = new Task("Mï¿½ll rausbringen", LocalDate.now(), 2, Color.red, "Grï¿½ne und schwarze Tonne sind dran.");
-//		Task t2 = new Task("Wï¿½sche waschen", LocalDate.now(), 2, Color.green, "Buntwï¿½sche.");
-//		Task t3 = new Task("Blumen gieï¿½en", LocalDate.now(), 2, Color.blue, "Auch an Tomaten denken.");
-//		frame.add(t1);
-//		frame.add(t2);
-//		frame.add(t3);
-//		frame.pack();
-//		frame.setVisible(true);
-//	}
+	/*public static void main(String[] args) {
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(new GridLayout(3,1));
+        
+        ListOfTasks list = new ListOfTasks("test");
+		Task t1 = new Task(list, "Müll rausbringen", LocalDate.now(), 2, Color.red, "Grüne und schwarze Tonne sind dran.");
+		Task t2 = new Task(list, "Wäsche waschen", LocalDate.now(), 2, Color.green, "Buntwäsche.");
+		Task t3 = new Task(list, "Blumen gießen", LocalDate.now(), 2, Color.blue, "Auch an Tomaten denken.");
+		frame.add(t1);
+		frame.add(t2);
+		frame.add(t3);
+		frame.pack();
+		frame.setVisible(true);
+	}*/
 }
