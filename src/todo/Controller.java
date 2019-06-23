@@ -3,6 +3,16 @@ package todo;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Collection;
+
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -24,8 +34,7 @@ public class Controller {
 	private GUI gui;
 	private LinkedList<ListOfTasks> listCollection;
 	private LinkedList<Task> trashBin;
-	private ListOfTasks draggedList;
-	private Task draggedTask;
+	private Object draggedObject;
 
 	/**
 	 * Creates and opens the GUI-frame.
@@ -34,8 +43,7 @@ public class Controller {
 		// TODO
 		listCollection = new LinkedList<ListOfTasks>();
 		trashBin = new LinkedList<Task>();
-		draggedList = null;
-		draggedTask = null;
+		draggedObject = null;
 		gui = new GUI();
 		setActionListenerUp();
 	}
@@ -57,22 +65,22 @@ public class Controller {
 				SearchWizard wiz = new SearchWizard(Controller.this);
 			}
 		});
-		
+
 		gui.getMainMenuBar().getResetFilter().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				resetFilter();
 			}
 		});
-		
+
 		JMenuItem[] filterMenu = gui.getMainMenuBar().getFilterButton();
-		for(JMenuItem filter : filterMenu) {
+		for (JMenuItem filter : filterMenu) {
 			filter.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					switch(e.getActionCommand()) {
+					switch (e.getActionCommand()) {
 					case "Rot":
 						filterBy(Color.red);
 						break;
@@ -85,7 +93,7 @@ public class Controller {
 					}
 				}
 			});
-		}	
+		}
 	}
 
 	/**
@@ -97,34 +105,37 @@ public class Controller {
 	public void addList(ListOfTasks list) {
 		listCollection.add(list);
 		list.getAddTaskButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				TaskCreationWizard wiz = new TaskCreationWizard(list, Controller.this);
-				
+
 			}
 		});
-		
+
 		list.getEditButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ListEditingWizard wiz = new ListEditingWizard(list, Controller.this);
-				
+
 			}
 		});
-		
+
 		list.getDeleteButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ListDeletionWarningDialog diag = new ListDeletionWarningDialog(Controller.this, list);
 			}
 		});
-		
+
 		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
-	//	save();
+
+		// System.out.println("debug: listCollection size is " + listCollection.size());
+		// TODO einkommentieren
+		save();
 	}
 
 	/**
@@ -137,8 +148,35 @@ public class Controller {
 		ListOfTasks myList = task.getMyList();
 		myList.getTaskList().add(task);
 		myList.loadTasks();
+		
+		task.getMenu().getDeleteButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, task);
+			}
+		});
+		
+		task.getMenu().getDuplicateButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO
+				System.out.println("pls implement me");
+				
+			}
+		});
+		
+		task.getMenu().getEditButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);	
+			}
+		});
+		
 		gui.update();
-		//TODO save();
+		save();
 	}
 
 	/**
@@ -167,9 +205,8 @@ public class Controller {
 	private void deleteOldTasksFromBin() {
 		Iterator<Task> trashIterator = trashBin.iterator();
 		while (trashIterator.hasNext()) {
-			// Date to Calendar Conversion missing
-//			if (trashIterator.next().getDeletionDate())
-//				trashBin.remove(trashIterator.next());
+			if (trashIterator.next().getDeletionDate().isBefore(LocalDateTime.now().minusDays(30)))
+				trashBin.remove(trashIterator.next());
 		}
 	}
 
@@ -181,7 +218,9 @@ public class Controller {
 	 * @param newList: the ListOfTasks after it was edited
 	 */
 	public void editList(ListOfTasks oldList, ListOfTasks newList) {
-		// TODO
+		listCollection.set(listCollection.indexOf(oldList), newList);
+		gui.update();
+		save();
 	}
 
 	/**
@@ -192,13 +231,8 @@ public class Controller {
 	 * @param newTask the Task after it was edited
 	 */
 	public void editTask(Task oldTask, Task newTask) {
-		Iterator<ListOfTasks> iterator = this.listCollection.iterator();
-		while (iterator.hasNext()) {
-			LinkedList<Task> actualListOfTasks = iterator.next().getTaskList();
-			if (actualListOfTasks.contains(oldTask)) {
-				actualListOfTasks.set(actualListOfTasks.indexOf(oldTask), newTask);
-			}
-		}
+		LinkedList<Task> actualListOfTasks = oldTask.getMyList().getTaskList();
+		actualListOfTasks.set(actualListOfTasks.indexOf(oldTask), newTask);
 		gui.update();
 		save();
 	}
@@ -243,14 +277,14 @@ public class Controller {
 	 */
 	public void resetFilter() {
 		Iterator<ListOfTasks> taskListsIterator = this.listCollection.iterator();
-		
-		while(taskListsIterator.hasNext()) {
-			
+
+		while (taskListsIterator.hasNext()) {
+
 			ListOfTasks actualTaskListObject = taskListsIterator.next();
 			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
 			Iterator<Task> taskIterator = actualListOfTasks.iterator();
-			
-			while(taskIterator.hasNext()) {
+
+			while (taskIterator.hasNext()) {
 				taskIterator.next().setVisible(true);
 			}
 		}
@@ -266,7 +300,18 @@ public class Controller {
 	 * @param list
 	 */
 	public void removeList(ListOfTasks list) {
-		// TODO
+
+		listCollection.remove(list);
+
+		Iterator<Task> trashBinIterator = trashBin.iterator();
+		while (trashBinIterator.hasNext()) {
+			Task actualTaskInTrashBin = trashBinIterator.next();
+			if (actualTaskInTrashBin.getMyList() == list) {
+				deleteTaskFromBin(actualTaskInTrashBin);
+			}
+		}
+		gui.update();
+		save();
 	}
 
 	/**
@@ -276,7 +321,11 @@ public class Controller {
 	 * @param task
 	 */
 	public void removeTask(Task task) {
-		// TODO
+		LinkedList<Task> actualListOfTasks = task.getMyList().getTaskList();
+		actualListOfTasks.remove(task);
+		trashBin.add(task);
+		gui.update();
+		save();
 	}
 
 	/**
@@ -298,7 +347,34 @@ public class Controller {
 	 * @param string: the String entered by the user
 	 */
 	public void searchFor(String string) {
-		// TODO
+		Iterator<ListOfTasks> taskListsIterator = this.listCollection.iterator();
+
+		while (taskListsIterator.hasNext()) {
+
+			ListOfTasks actualTaskListObject = taskListsIterator.next();
+			String nameOfActualTaskListObject = actualTaskListObject.getListName();
+			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
+			Iterator<Task> taskIterator = actualListOfTasks.iterator();
+			boolean taskListWithoutFilteredTasks = true;
+
+			while (taskIterator.hasNext()) {
+
+				Task actualTask = taskIterator.next();
+				String actualTaskName = actualTask.getName();
+				String actualTaskText = actualTask.getText();
+
+				if (!(actualTaskName.contains(string) || actualTaskText.contains(string))) {
+					actualTask.setVisible(false);
+				} else {
+					taskListWithoutFilteredTasks = false;
+				}
+			}
+			if (taskListWithoutFilteredTasks && !(nameOfActualTaskListObject.contains(string))) {
+				actualTaskListObject.setVisible(false);
+			}
+		}
+		gui.update();
+		save();
 	}
 
 	/**
@@ -310,7 +386,43 @@ public class Controller {
 	 * @param category
 	 */
 	public void sortListBy(ListOfTasks list, SortingCategory category) {
-		// TODO
+		LinkedList<Task> actualTaskList = list.getTaskList();
+
+		switch (category) {
+		case Color:
+			Collections.sort(actualTaskList, new Comparator<Task>() {
+
+				@Override
+				public int compare(Task task1, Task task2) {
+					String color1 = task1.getColor().toString();
+					String color2 = task2.getColor().toString();
+					return color1.compareTo(color2);
+				}
+
+			});
+			break;
+		case Deadline:
+			Collections.sort(actualTaskList, new Comparator<Task>() {
+
+				@Override
+				public int compare(Task task1, Task task2) {
+					return task1.getDeadline().compareTo(task2.getDeadline());
+				}
+
+			});
+			break;
+		case Name:
+			Collections.sort(actualTaskList, new Comparator<Task>() {
+
+				@Override
+				public int compare(Task task1, Task task2) {
+					return task1.getName().compareTo(task2.getName());
+				}
+
+			});
+		}
+		gui.update();
+		save();
 	}
 
 	/**
@@ -320,7 +432,9 @@ public class Controller {
 	 * @param task
 	 */
 	public void deleteTaskFromBin(Task task) {
-
+		trashBin.remove(task);
+		gui.update();
+		save();
 	}
 
 	/**
@@ -331,30 +445,48 @@ public class Controller {
 	 * @param task
 	 */
 	public void duplicateTask(Task task) {
-
+		Task clone = new Task(task.getMyList(), task.getName(), task.getDeadline(), task.getInterval(), task.getColor(),
+				task.getText());
+		LinkedList<Task> taskList = task.getMyList().getTaskList();
+		taskList.add(taskList.indexOf(task) + 1, clone);
+		gui.update();
+		save();
 	}
 
 	/**
 	 * Only called by a DragAndDropMouseListener. Changes the order of the
 	 * listCollection so that the draggedList is on the right side of the given
-	 * list. Reset the draggedList to null.
+	 * list. Reset the draggedObject to null.
 	 * 
 	 * @param list: the ListOfTasks that will end up on the left side of the
 	 *        draggedList.
 	 */
 	public void moveDraggedListNextToOtherList(ListOfTasks list) {
+		listCollection.remove(draggedObject);
+		int index = listCollection.indexOf(list);
+		listCollection.add(index + 1, (ListOfTasks) draggedObject);
+		draggedObject = null;
 
+		gui.update();
+		save();
 	}
 
 	/**
 	 * Only called by a DragAndDropMouseListener. Removes the draggedTask from its
-	 * current ListOfTasks and add it to the given ListOfTasks. Reset the
-	 * draggedTask to null.
+	 * current ListOfTasks and adds it to the given ListOfTasks. Reset the
+	 * draggedObject to null.
 	 * 
 	 * @param list
 	 */
 	public void moveDraggedTaskToList(ListOfTasks list) {
+		Task task = (Task) draggedObject;
+		ListOfTasks myList = task.getMyList();
+		myList.getTaskList().remove(task);
+		list.getTaskList().add(task);
+		draggedObject = null;
 
+		gui.update();
+		save();
 	}
 
 	/**
@@ -364,8 +496,16 @@ public class Controller {
 	 * 
 	 * @param task
 	 */
-	public void moveTaskUnderOtherTask(Task task) {
+	public void moveDraggedTaskUnderOtherTask(Task task) {
+		Task draggedTask = (Task) draggedObject;
+		draggedTask.getMyList().getTaskList().remove(draggedTask);
+		ListOfTasks list = task.getMyList();
+		int index = list.getTaskList().indexOf(task);
+		list.getTaskList().add(index + 1, draggedTask);
+		draggedObject = null;
 
+		gui.update();
+		save();
 	}
 
 	/**
@@ -373,26 +513,31 @@ public class Controller {
 	 * 
 	 * @param list: the new draggedList
 	 */
-	public void saveDraggedList(ListOfTasks list) {
 
+	public void saveDraggedObject(Object draggedObject) {
+		this.draggedObject = draggedObject;
 	}
 
-	/**
-	 * Called when the user starts a drag over a Task.
-	 * 
-	 * @param task: the new draggedTask
-	 */
-	public void saveDraggedTask(Task task) {
-
+	public Collection<ListOfTasks> getallListOfTasks() {
+		return listCollection;
 	}
 
 	public static void main(String[] args) {
 		Controller bla = new Controller();
 	}
 
+
 	public void save() {
 		Thread t1 = new Save(listCollection);
 		t1.start();
+	}
+
+	public Object getDraggedObject() {
+		return draggedObject;
+	}
+
+	public void setDraggedObject(Object object) {
+		draggedObject = null;
 	}
 
 }

@@ -38,7 +38,7 @@ public class ListEditingWizard extends MyDialog {
 		// feel free to make it pretty
 		setLayout(new GridLayout(0, 2, 10, 10));
 		setSize(300, 400);
-		setTitle("Liste erstellen");
+		setTitle("Liste bearbeiten");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		initializeFields();
@@ -73,10 +73,8 @@ public class ListEditingWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				// missing Constructor with params
-				System.out.println("Missing ListOfTasks Constructor, doing nothing");
 				oldList.overwrite(new ListOfTasks(name.getText()));
+				dispose();
 			}
 		});
 		this.add(editListOfTasks);

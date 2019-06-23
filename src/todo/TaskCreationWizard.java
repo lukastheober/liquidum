@@ -72,7 +72,7 @@ public class TaskCreationWizard extends MyDialog {
 		UtilDateModel model = new UtilDateModel();
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		date = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		date.getJFormattedTextField().setText(LocalDate.now().format(formatter));
 		this.add(date);
 
@@ -81,7 +81,7 @@ public class TaskCreationWizard extends MyDialog {
 		colour.setName("colour");
 		this.add(colour);
 
-		this.add(new JLabel("    Intervall"));
+		this.add(new JLabel("    Intervall in h"));
 		interval = new JComboBox<String>(intervals);
 		interval.setName("interval");
 		this.add(interval);
@@ -97,7 +97,6 @@ public class TaskCreationWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				dispose();
 			}
 		});
@@ -118,7 +117,6 @@ public class TaskCreationWizard extends MyDialog {
 	}
 
 	private Color colorParser(String clrStr) {
-		//Color.BLUE, Color.GREEN.toString(), Color.RED.toString(), Color.ORANGE.toString(), Color.PINK.toString()
 		switch (clrStr) {
 		case "Blau":
 			return Color.BLUE;

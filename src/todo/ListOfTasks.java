@@ -15,7 +15,8 @@ import javax.swing.*;
  * @created 18-Mai-2019 16:01:12
  */
 public class ListOfTasks extends JPanel {
-
+ 
+	//test
 	private String name;
 	private JButton addTaskButton;
 	private JButton deleteButton;
@@ -25,7 +26,6 @@ public class ListOfTasks extends JPanel {
 	private ListSortMenu sortingMenu;
 	
 	static final int MAX_TASKS = 10;
-
 	public ListOfTasks(String listName) {
 		// TODO use this object
 		// MouseListener dnd = new DragAndDropMouseListener();
@@ -108,5 +108,12 @@ public class ListOfTasks extends JPanel {
 
 	public JButton getEditButton() {
 		return editButton;
+	}
+
+	public void addList(LinkedList<Task> loadList) {
+		/* only to use by the load class
+		 * */
+		this.tasks = loadList;
+		
 	}
 }
