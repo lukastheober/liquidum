@@ -3,23 +3,13 @@ package todo;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Collection;
-
-import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.JMenuItem;
-
-import org.w3c.dom.ls.LSInput;
 
 /**
  * @author benja
@@ -95,8 +85,10 @@ public class Controller {
 						break;
 					case "Blau":
 						filterBy(colorParser("Blau"));
+						break;
 					case "Grün":
 						filterBy(colorParser("Grün"));
+						break;
 					case "Rot":
 						filterBy(colorParser("Rot"));
 						break;
@@ -146,6 +138,33 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				ListDeletionWarningDialog diag = new ListDeletionWarningDialog(Controller.this, list);
 			}
+		});
+		
+		list.getSortingMenu().getDeadlineButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				sortListBy(list, SortingCategory.Deadline);
+			}
+			
+		});
+		
+		list.getSortingMenu().getColorButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				sortListBy(list, SortingCategory.Color);
+			}
+			
+		});
+		
+		list.getSortingMenu().getNameButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				sortListBy(list, SortingCategory.Name);
+			}
+			
 		});
 
 		gui.getListContainer().loadListsOfTasks(listCollection);
@@ -342,6 +361,7 @@ public class Controller {
 	public void removeTask(Task task) {
 		LinkedList<Task> actualListOfTasks = task.getMyList().getTaskList();
 		actualListOfTasks.remove(task);
+		task.getMyList().remove(task);
 		trashBin.add(task);
 		gui.update();
 		save();
@@ -440,6 +460,7 @@ public class Controller {
 
 			});
 		}
+		list.loadTasks();
 		gui.update();
 		save();
 	}
