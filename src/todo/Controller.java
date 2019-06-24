@@ -64,12 +64,12 @@ public class Controller {
 				resetFilter();
 			}
 		});
-		
+
 		gui.getMainMenuBar().getShowBinButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				// TODO
 			}
 		});
 
@@ -80,14 +80,14 @@ public class Controller {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					switch (e.getActionCommand()) {
-					case "Weiß":
-						filterBy(colorParser("Weiß"));
+					case "Weiï¿½":
+						filterBy(colorParser("Weiï¿½"));
 						break;
 					case "Blau":
 						filterBy(colorParser("Blau"));
 						break;
-					case "Grün":
-						filterBy(colorParser("Grün"));
+					case "Grï¿½n":
+						filterBy(colorParser("Grï¿½n"));
 						break;
 					case "Rot":
 						filterBy(colorParser("Rot"));
@@ -139,32 +139,32 @@ public class Controller {
 				ListDeletionWarningDialog diag = new ListDeletionWarningDialog(Controller.this, list);
 			}
 		});
-		
+
 		list.getSortingMenu().getDeadlineButton().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				sortListBy(list, SortingCategory.Deadline);
 			}
-			
+
 		});
-		
+
 		list.getSortingMenu().getColorButton().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				sortListBy(list, SortingCategory.Color);
 			}
-			
+
 		});
-		
+
 		list.getSortingMenu().getNameButton().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				sortListBy(list, SortingCategory.Name);
 			}
-			
+
 		});
 
 		gui.getListContainer().loadListsOfTasks(listCollection);
@@ -185,31 +185,31 @@ public class Controller {
 		ListOfTasks myList = task.getMyList();
 		myList.getTaskList().add(task);
 		myList.loadTasks();
-		
+
 		task.getMenu().getDeleteButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, task);
 			}
 		});
-		
+
 		task.getMenu().getDuplicateButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				duplicateTask(task);
 			}
 		});
-		
+
 		task.getMenu().getEditButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);	
+				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);
 			}
 		});
-		
+
 		gui.update();
 		save();
 	}
@@ -293,7 +293,7 @@ public class Controller {
 			while (taskIterator.hasNext()) {
 
 				Task actualTask = taskIterator.next();
-				
+
 				if (actualTask.getColor() != color) {
 					actualTask.setVisible(false);
 				} else {
@@ -319,9 +319,9 @@ public class Controller {
 			ListOfTasks actualTaskListObject = taskListsIterator.next();
 			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
 			Iterator<Task> taskIterator = actualListOfTasks.iterator();
-			
+
 			actualTaskListObject.setVisible(true);
-			
+
 			while (taskIterator.hasNext()) {
 				taskIterator.next().setVisible(true);
 			}
@@ -386,32 +386,31 @@ public class Controller {
 	 * @param string: the String entered by the user
 	 */
 	public void searchFor(String string) {
-		Iterator<ListOfTasks> taskListsIterator = this.listCollection.iterator();
 
-		while (taskListsIterator.hasNext()) {
-
-			ListOfTasks actualTaskListObject = taskListsIterator.next();
-			String nameOfActualTaskListObject = actualTaskListObject.getListName();
-			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
-			Iterator<Task> taskIterator = actualListOfTasks.iterator();
-			boolean taskListWithoutFilteredTasks = true;
-
-			while (taskIterator.hasNext()) {
-
-				Task actualTask = taskIterator.next();
-				String actualTaskName = actualTask.getName();
-				String actualTaskText = actualTask.getText();
-
-				if (!(actualTaskName.contains(string) || actualTaskText.contains(string))) {
-					actualTask.setVisible(false);
-				} else {
-					taskListWithoutFilteredTasks = false;
+		for (int i = 0; i < listCollection.size(); i++) {
+			ListOfTasks currentList = listCollection.get(i);
+			boolean visibleTasksInCurrentList = false;
+			for (int j = 0; j < currentList.getTaskList().size(); j++) {
+				Task currentTask = currentList.getTaskList().get(j);
+				if (currentTask != null) {
+					if (currentTask.getText() != null && currentTask.getText().contains(string)) {
+						currentTask.setVisible(true);
+						visibleTasksInCurrentList = true;
+					} 
+					else if (currentTask.getName() != null && currentTask.getName().contains(string)) {
+						currentTask.setVisible(true);
+						visibleTasksInCurrentList = true;
+					} 
+					else
+						currentTask.setVisible(false);
 				}
 			}
-			if (taskListWithoutFilteredTasks && !(nameOfActualTaskListObject.contains(string))) {
-				actualTaskListObject.setVisible(false);
-			}
+			if (visibleTasksInCurrentList) 
+				currentList.setVisible(true);
+			else
+				currentList.setVisible(false);
 		}
+
 		gui.update();
 		save();
 	}
@@ -491,32 +490,31 @@ public class Controller {
 		LinkedList<Task> taskList = taskListObject.getTaskList();
 		taskList.add(taskList.indexOf(task) + 1, clone);
 		taskListObject.loadTasks();
-		
-		
+
 		clone.getMenu().getDeleteButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, task);
 			}
 		});
-		
+
 		clone.getMenu().getDuplicateButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				duplicateTask(task);
 			}
 		});
-		
+
 		clone.getMenu().getEditButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);	
+				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);
 			}
 		});
-		
+
 		gui.update();
 		save();
 	}
@@ -594,7 +592,6 @@ public class Controller {
 		Controller bla = new Controller();
 	}
 
-
 	public void save() {
 		Thread t1 = new Save(listCollection);
 		t1.start();
@@ -612,7 +609,7 @@ public class Controller {
 		switch (clrStr) {
 		case "Blau":
 			return Color.BLUE;
-		case "Grün":
+		case "Grï¿½n":
 			return Color.GREEN;
 		case "Rot":
 			return Color.RED;
