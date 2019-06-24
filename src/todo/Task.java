@@ -103,7 +103,6 @@ public class Task extends JPanel {
 	
 	private String deadlineToString() {
 		String dlTime = this.deadline.toString().substring(11, 16);
-		dlTime = dlTime.replace("T", " um ");
 		
 		String dlDate = this.deadline.toString().substring(0, 10);
 		String[] dlDateAsArray = dlDate.split("-");
