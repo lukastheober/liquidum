@@ -73,7 +73,8 @@ public class ListEditingWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				oldList.overwrite(new ListOfTasks(name.getText()));
+				oldList.setName(name.getText());
+				oldList.setNameLabel(name.getText());
 				dispose();
 			}
 		});

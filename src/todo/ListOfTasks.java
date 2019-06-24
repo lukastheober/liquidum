@@ -87,16 +87,6 @@ public class ListOfTasks extends JPanel {
 		return this.tasks;
 	}
 
-	/**
-	 * Overwrites all data in this List with data of the new Task, except tasks.
-	 * 
-	 * @param newList
-	 */
-	public void overwrite(ListOfTasks newList) {
-		this.name = newList.name;
-		this.nameLabel = newList.nameLabel;
-	}
-
 	public JButton getDeleteButton() {
 		return deleteButton;
 	}
@@ -107,6 +97,10 @@ public class ListOfTasks extends JPanel {
 
 	public JButton getEditButton() {
 		return editButton;
+	}
+	
+	public void setNameLabel(String newName) {
+		this.nameLabel.setText(newName);
 	}
 
 	public void addList(LinkedList<Task> loadList) {
