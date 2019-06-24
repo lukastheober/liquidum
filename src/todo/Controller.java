@@ -3,23 +3,13 @@ package todo;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Collection;
-
-import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.JMenuItem;
-
-import org.w3c.dom.ls.LSInput;
 
 /**
  * @author benja
@@ -371,8 +361,8 @@ public class Controller {
 	public void removeTask(Task task) {
 		LinkedList<Task> actualListOfTasks = task.getMyList().getTaskList();
 		actualListOfTasks.remove(task);
+		task.getMyList().remove(task);
 		trashBin.add(task);
-		task.getMyList().loadTasks();
 		gui.update();
 		save();
 	}
