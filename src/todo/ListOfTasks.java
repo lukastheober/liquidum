@@ -51,15 +51,15 @@ public class ListOfTasks extends JPanel {
 		JPanel bottomMenu = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 		sortingMenu = new ListSortMenu(this);
-		nameLabel.setPreferredSize(new Dimension(300, 30));
+		nameLabel.setPreferredSize(new Dimension(305, 30));
 		
 		// buttons
 		addTaskButton = new JButton("+");
-		addTaskButton.setPreferredSize(new Dimension(315, 30));
-		editButton = new JButton("B");
-		editButton.setPreferredSize(new Dimension(30, 30));
-		deleteButton = new JButton("E");
-		deleteButton.setPreferredSize(new Dimension(30, 30));
+		addTaskButton.setPreferredSize(new Dimension(165, 30));
+		editButton = new JButton("Liste bearbeiten");
+		editButton.setPreferredSize(new Dimension(105, 30));
+		deleteButton = new JButton("Liste löschen");
+		deleteButton.setPreferredSize(new Dimension(105, 30));
 		
 		topMenu.add(this.nameLabel);
 		topMenu.add(this.sortingMenu);
