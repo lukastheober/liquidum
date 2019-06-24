@@ -53,9 +53,8 @@ public class MainMenuBar extends JMenuBar {
 		return searchButton;
 	}
 
-	public JMenuItem[] getFilterButton() {
-		JMenuItem[] list = { filterButton1, filterButton2, filterButton3, filterButton4, filterButton5, filterButton6,
-				filterButton7 };
+	public JMenuItem[] getFilterButtons() {
+		JMenuItem[] list = { filterButton1, filterButton2, filterButton3, filterButton4, filterButton5, filterButton6};
 		return list;
 	}
 	

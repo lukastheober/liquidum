@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Collection;
@@ -82,7 +83,7 @@ public class Controller {
 			}
 		});
 
-		JMenuItem[] filterMenu = gui.getMainMenuBar().getFilterButton();
+		JMenuItem[] filterMenu = gui.getMainMenuBar().getFilterButtons();
 		for (JMenuItem filter : filterMenu) {
 			filter.addActionListener(new ActionListener() {
 
@@ -90,20 +91,20 @@ public class Controller {
 				public void actionPerformed(ActionEvent e) {
 					switch (e.getActionCommand()) {
 					case "Weiß":
-						filterBy(Color.white);
+						filterBy(colorParser("Weiß"));
 						break;
 					case "Blau":
-						filterBy(Color.blue);
+						filterBy(colorParser("Blau"));
 					case "Grün":
-						filterBy(Color.green);
+						filterBy(colorParser("Grün"));
 					case "Rot":
-						filterBy(Color.red);
+						filterBy(colorParser("Rot"));
 						break;
 					case "Orange":
-						filterBy(Color.orange);
+						filterBy(colorParser("Orange"));
 						break;
 					case "Pink":
-						filterBy(Color.pink);
+						filterBy(colorParser("Pink"));
 						break;
 					default:
 						System.out.println("couldnt pick color");
@@ -178,9 +179,7 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
-				System.out.println("pls implement me");
-				
+				duplicateTask(task);
 			}
 		});
 		
@@ -262,6 +261,7 @@ public class Controller {
 	 * @param color: the Color chosen by the user
 	 */
 	public void filterBy(Color color) {
+		resetFilter();
 		Iterator<ListOfTasks> taskListsIterator = this.listCollection.iterator();
 
 		while (taskListsIterator.hasNext()) {
@@ -274,7 +274,7 @@ public class Controller {
 			while (taskIterator.hasNext()) {
 
 				Task actualTask = taskIterator.next();
-
+				
 				if (actualTask.getColor() != color) {
 					actualTask.setVisible(false);
 				} else {
@@ -466,8 +466,36 @@ public class Controller {
 	public void duplicateTask(Task task) {
 		Task clone = new Task(task.getMyList(), task.getName(), task.getDeadline(), task.getInterval(), task.getColor(),
 				task.getText());
-		LinkedList<Task> taskList = task.getMyList().getTaskList();
+		ListOfTasks taskListObject = clone.getMyList();
+		LinkedList<Task> taskList = taskListObject.getTaskList();
 		taskList.add(taskList.indexOf(task) + 1, clone);
+		taskListObject.loadTasks();
+		
+		
+		clone.getMenu().getDeleteButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, task);
+			}
+		});
+		
+		clone.getMenu().getDuplicateButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				duplicateTask(task);
+			}
+		});
+		
+		clone.getMenu().getEditButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);	
+			}
+		});
+		
 		gui.update();
 		save();
 	}
@@ -559,4 +587,20 @@ public class Controller {
 		draggedObject = null;
 	}
 
+	private Color colorParser(String clrStr) {
+		switch (clrStr) {
+		case "Blau":
+			return Color.BLUE;
+		case "Grün":
+			return Color.GREEN;
+		case "Rot":
+			return Color.RED;
+		case "Orange":
+			return Color.ORANGE;
+		case "Pink":
+			return Color.PINK;
+		default:
+			return Color.WHITE;
+		}
+	}
 }
