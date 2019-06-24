@@ -24,20 +24,18 @@ public class MainMenuBar extends JMenuBar {
 		JMenu submenuFilter = new JMenu("Filtern");
 		menuResetFilter = new JMenuItem("Filter zurücksetzten");
 		submenuFilter.add(menuResetFilter);
-		filterButton1 = new JMenuItem("Rot");
+		filterButton1 = new JMenuItem("Weiß");
 		submenuFilter.add(filterButton1);
-		filterButton2 = new JMenuItem("Grün");
+		filterButton2 = new JMenuItem("Blau");
 		submenuFilter.add(filterButton2);
-		filterButton3 = new JMenuItem("Blau1");
+		filterButton3 = new JMenuItem("Grün");
 		submenuFilter.add(filterButton3);
-		filterButton4 = new JMenuItem("Blau2");
+		filterButton4 = new JMenuItem("Rot");
 		submenuFilter.add(filterButton4);
-		filterButton5 = new JMenuItem("Blau3");
+		filterButton5 = new JMenuItem("Orange");
 		submenuFilter.add(filterButton5);
-		filterButton6 = new JMenuItem("Blau4");
+		filterButton6 = new JMenuItem("Pink");
 		submenuFilter.add(filterButton6);
-		filterButton7 = new JMenuItem("Blau5");
-		submenuFilter.add(filterButton7);
 		mainMenu.add(submenuFilter);
 
 		searchButton = new JMenuItem("Suchen");
@@ -55,13 +53,16 @@ public class MainMenuBar extends JMenuBar {
 		return searchButton;
 	}
 
-	public JMenuItem[] getFilterButton() {
-		JMenuItem[] list = { filterButton1, filterButton2, filterButton3, filterButton4, filterButton5, filterButton6,
-				filterButton7 };
+	public JMenuItem[] getFilterButtons() {
+		JMenuItem[] list = { filterButton1, filterButton2, filterButton3, filterButton4, filterButton5, filterButton6};
 		return list;
 	}
 	
 	public JMenuItem getResetFilter() {
 		return menuResetFilter;
+	}
+	
+	public JMenuItem getShowBinButton() {
+		return showBinButton;
 	}
 }

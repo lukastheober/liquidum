@@ -1,18 +1,25 @@
 package todo;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.Date;
 import java.util.Properties;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
 
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -28,6 +35,7 @@ public class TaskCreationWizard extends MyDialog {
 
 	private JTextField name;
 	private JDatePickerImpl date;
+	private JSpinner timeSpinner;
 	private JComboBox<String> colour;
 	private JComboBox<String> interval;
 	private JTextField text;
@@ -46,7 +54,7 @@ public class TaskCreationWizard extends MyDialog {
 
 	private void initialize() {
 
-		setLayout(new GridLayout(0, 2, 10, 10));
+		setLayout(new GridLayout(0, 2, 11, 10));
 		setSize(300, 400);
 		setTitle("  Aufgabe erstellen");
 		setLocationRelativeTo(null);
@@ -62,6 +70,7 @@ public class TaskCreationWizard extends MyDialog {
 		this.add(new JLabel("    Name"));
 		name = new JTextField();
 		name.setName("name");
+		name.setPreferredSize(new Dimension(220, 25));
 		this.add(name);
 
 		this.add(new JLabel("    Ablaufdatum"));
@@ -74,21 +83,36 @@ public class TaskCreationWizard extends MyDialog {
 		date = new JDatePickerImpl(datePanel, new DateComponentFormatter());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		date.getJFormattedTextField().setText(LocalDate.now().format(formatter));
+		date.setPreferredSize(new Dimension(220, 25));
 		this.add(date);
+		
+		this.add(new JLabel("    Ablaufzeit"));
+		timeSpinner = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
+		timeSpinner.setEditor(timeEditor);
+		timeSpinner.setValue(new Date());
+		JPanel time = new JPanel();
+		timeSpinner.setPreferredSize(new Dimension(220, 25));
+		time.add(timeSpinner);
+		this.add(time);
+		
 
 		this.add(new JLabel("    Farbe"));
 		colour = new JComboBox<String>(colours);
 		colour.setName("colour");
+		colour.setPreferredSize(new Dimension(220, 25));
 		this.add(colour);
 
 		this.add(new JLabel("    Intervall in h"));
 		interval = new JComboBox<String>(intervals);
 		interval.setName("interval");
+		interval.setPreferredSize(new Dimension(220, 25));
 		this.add(interval);
 
 		this.add(new JLabel("    Text"));
 		text = new JTextField();
 		text.setName("text");
+		text.setPreferredSize(new Dimension(220, 25));
 		this.add(text);		
 		
 		cancel = new JButton("  Abbrechen");
@@ -108,7 +132,10 @@ public class TaskCreationWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.addTask(new Task(tList ,name.getText(), LocalDate.parse(date.getJFormattedTextField().getText(), formatter) , Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText()));
+				String time = (String) timeSpinner.getModel().getValue().toString().subSequence(11, 19);
+				String dateAndTime = date.getJFormattedTextField().getText() + "T" + time;
+				
+				controller.addTask(new Task(tList ,name.getText(), LocalDateTime.parse(dateAndTime) , Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText()));
 				dispose();
 			}
 		});

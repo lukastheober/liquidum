@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.time.LocalDateTime;
 
 import javax.swing.BorderFactory;
@@ -60,17 +61,24 @@ public class Task extends JPanel {
 	private JPanel createTopBar() {
 		this.nameLabel = new JLabel(this.name);
 		this.nameLabel.setHorizontalTextPosition(JLabel.LEFT);
-		this.nameLabel.setPreferredSize(new Dimension(270,20));
-				
-		this.dateLabel = new JLabel(this.deadline.toString());
-		this.dateLabel.setPreferredSize(new Dimension(80,20));
-				
+		this.nameLabel.setPreferredSize(new Dimension(350,20));
+		
 		this.menu = new TaskMenu(this);
+		
+		JPanel upperTopBar = new JPanel(new FlowLayout());
+		upperTopBar.add(this.nameLabel);
+		upperTopBar.add(this.menu);
+		
+		this.dateLabel = new JLabel(deadlineToString());
+		this.dateLabel.setPreferredSize(new Dimension(380, 20));
+		this.dateLabel.setHorizontalTextPosition(JLabel.LEFT);
+		JPanel lowerTopBar = new JPanel(new FlowLayout());
+		lowerTopBar.add(this.dateLabel);
 				
-		JPanel topBar = new JPanel(new FlowLayout());
-		topBar.add(this.nameLabel);
-		topBar.add(this.dateLabel);
-		topBar.add(this.menu);
+		JPanel topBar = new JPanel(new GridLayout(2, 0));
+		topBar.setPreferredSize(new Dimension(400, 60));
+		topBar.add(upperTopBar);
+		topBar.add(lowerTopBar);
 		topBar.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 		
 		return topBar;
@@ -91,6 +99,17 @@ public class Task extends JPanel {
 		
 		this.textPanel.add(textLabel, BorderLayout.CENTER);
 		this.textPanel.add(colorPanel, BorderLayout.EAST);
+	}
+	
+	private String deadlineToString() {
+		String dlTime = this.deadline.toString().substring(11, 16);
+		dlTime = dlTime.replace("T", " um ");
+		
+		String dlDate = this.deadline.toString().substring(0, 10);
+		String[] dlDateAsArray = dlDate.split("-");
+		dlDate = dlDateAsArray[2] + "." + dlDateAsArray[1] + "." + dlDateAsArray[0];
+		
+		return "Fällig am " + dlDate + " um " + dlTime;
 	}
 	
 	public boolean expiresWithing3Days() {
@@ -127,6 +146,10 @@ public class Task extends JPanel {
 
 	public String getName() {
 		return name;
+	}
+	
+	public String getText() {
+		return text;
 	}
 
 	/*public static void main(String[] args) {
