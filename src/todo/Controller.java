@@ -95,8 +95,10 @@ public class Controller {
 						break;
 					case "Blau":
 						filterBy(colorParser("Blau"));
+						break;
 					case "Grün":
 						filterBy(colorParser("Grün"));
+						break;
 					case "Rot":
 						filterBy(colorParser("Rot"));
 						break;
