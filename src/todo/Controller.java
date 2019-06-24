@@ -149,6 +149,33 @@ public class Controller {
 				ListDeletionWarningDialog diag = new ListDeletionWarningDialog(Controller.this, list);
 			}
 		});
+		
+		list.getSortingMenu().getDeadlineButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				sortListBy(list, SortingCategory.Deadline);
+			}
+			
+		});
+		
+		list.getSortingMenu().getColorButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				sortListBy(list, SortingCategory.Color);
+			}
+			
+		});
+		
+		list.getSortingMenu().getNameButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				sortListBy(list, SortingCategory.Name);
+			}
+			
+		});
 
 		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
@@ -345,6 +372,7 @@ public class Controller {
 		LinkedList<Task> actualListOfTasks = task.getMyList().getTaskList();
 		actualListOfTasks.remove(task);
 		trashBin.add(task);
+		task.getMyList().loadTasks();
 		gui.update();
 		save();
 	}
@@ -442,6 +470,7 @@ public class Controller {
 
 			});
 		}
+		list.loadTasks();
 		gui.update();
 		save();
 	}

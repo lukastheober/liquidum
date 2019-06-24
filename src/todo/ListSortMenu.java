@@ -1,6 +1,9 @@
 package todo;
 
+import java.awt.Dimension;
+
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 /**
@@ -8,7 +11,7 @@ import javax.swing.JMenuItem;
  * @version 1.0
  * @created 18-Mai-2019 16:01:12
  */
-public class ListSortMenu extends JMenu {
+public class ListSortMenu extends JMenuBar {
 
 	private ListOfTasks myList;
 	private JMenuItem colorButton;
@@ -17,7 +20,9 @@ public class ListSortMenu extends JMenu {
 
 	public ListSortMenu(ListOfTasks myList){
 		this.myList = myList;
-		JMenu mainMenu = new JMenu("sortieren");
+		this.setPreferredSize(new Dimension(70 ,30));
+		JMenu mainMenu = new JMenu("Sortieren...");
+		mainMenu.setPreferredSize(new Dimension(70, 30));
 		add(mainMenu);
 		colorButton = new JMenuItem("nach Farbe");
 		mainMenu.add(colorButton);
@@ -26,6 +31,22 @@ public class ListSortMenu extends JMenu {
 		nameButton = new JMenuItem("nach Name");
 		mainMenu.add(nameButton);
 		
+	}
+
+	public ListOfTasks getMyList() {
+		return myList;
+	}
+
+	public JMenuItem getColorButton() {
+		return colorButton;
+	}
+
+	public JMenuItem getDeadlineButton() {
+		return deadlineButton;
+	}
+
+	public JMenuItem getNameButton() {
+		return nameButton;
 	}
 
 

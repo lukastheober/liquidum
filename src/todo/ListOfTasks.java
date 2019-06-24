@@ -51,7 +51,6 @@ public class ListOfTasks extends JPanel {
 		JPanel bottomMenu = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 		sortingMenu = new ListSortMenu(this);
-		sortingMenu.setPreferredSize(new Dimension(50, 30));
 		nameLabel.setPreferredSize(new Dimension(300, 30));
 		
 		// buttons
@@ -63,7 +62,7 @@ public class ListOfTasks extends JPanel {
 		deleteButton.setPreferredSize(new Dimension(30, 30));
 		
 		topMenu.add(this.nameLabel);
-		topMenu.add(sortingMenu);
+		topMenu.add(this.sortingMenu);
 		menus.add(topMenu);
 		
 		bottomMenu.add(editButton);
@@ -115,5 +114,9 @@ public class ListOfTasks extends JPanel {
 		 * */
 		this.tasks = loadList;
 		
+	}
+	
+	public ListSortMenu getSortingMenu() {
+		return sortingMenu;
 	}
 }
