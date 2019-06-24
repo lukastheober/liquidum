@@ -74,7 +74,7 @@ public class TaskEditingWizard extends MyDialog {
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		date = new JDatePickerImpl(datePanel, new DateComponentFormatter());
 //		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 		//System.out.println(oldTask.getDeadline());
 		date.getJFormattedTextField().setText(oldTask.getDeadline().format(formatter));
 		this.add(date);
