@@ -27,8 +27,6 @@ public class ListOfTasks extends JPanel {
 	
 	static final int MAX_TASKS = 10;
 	public ListOfTasks(String listName) {
-		// TODO use this object
-		// MouseListener dnd = new DragAndDropMouseListener();
 		name = listName;
 		setBorder(BorderFactory.createRaisedSoftBevelBorder());
 		setLayout(new FlowLayout());

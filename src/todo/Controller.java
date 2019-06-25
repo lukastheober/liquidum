@@ -80,14 +80,14 @@ public class Controller {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					switch (e.getActionCommand()) {
-					case "Weiï¿½":
-						filterBy(colorParser("Weiï¿½"));
+					case "Weiß":
+						filterBy(colorParser("Weiß"));
 						break;
 					case "Blau":
 						filterBy(colorParser("Blau"));
 						break;
-					case "Grï¿½n":
-						filterBy(colorParser("Grï¿½n"));
+					case "Grün":
+						filterBy(colorParser("Grün"));
 						break;
 					case "Rot":
 						filterBy(colorParser("Rot"));
@@ -166,6 +166,8 @@ public class Controller {
 			}
 
 		});
+		
+		list.addMouseListener(new DragAndDropMouseListener(Controller.this));
 
 		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
@@ -209,6 +211,8 @@ public class Controller {
 				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);
 			}
 		});
+		
+		task.addMouseListener(new DragAndDropMouseListener(Controller.this));
 
 		gui.update();
 		save();
@@ -268,6 +272,7 @@ public class Controller {
 	public void editTask(Task oldTask, Task newTask) {
 		LinkedList<Task> actualListOfTasks = oldTask.getMyList().getTaskList();
 		actualListOfTasks.set(actualListOfTasks.indexOf(oldTask), newTask);
+		newTask.getMyList().loadTasks();
 		gui.update();
 		save();
 	}
@@ -531,6 +536,7 @@ public class Controller {
 		listCollection.add(index + 1, (ListOfTasks) draggedObject);
 		draggedObject = null;
 
+		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
 		save();
 	}
@@ -549,6 +555,8 @@ public class Controller {
 		list.getTaskList().add(task);
 		draggedObject = null;
 
+		myList.loadTasks();
+		list.loadTasks();
 		gui.update();
 		save();
 	}
@@ -567,7 +575,8 @@ public class Controller {
 		int index = list.getTaskList().indexOf(task);
 		list.getTaskList().add(index + 1, draggedTask);
 		draggedObject = null;
-
+		
+		list.loadTasks();
 		gui.update();
 		save();
 	}
@@ -607,7 +616,7 @@ public class Controller {
 		switch (clrStr) {
 		case "Blau":
 			return Color.BLUE;
-		case "Grï¿½n":
+		case "Grün":
 			return Color.GREEN;
 		case "Rot":
 			return Color.RED;
