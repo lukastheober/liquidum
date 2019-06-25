@@ -396,16 +396,14 @@ public class Controller {
 					if (currentTask.getText() != null && currentTask.getText().contains(string)) {
 						currentTask.setVisible(true);
 						visibleTasksInCurrentList = true;
-					} 
-					else if (currentTask.getName() != null && currentTask.getName().contains(string)) {
+					} else if (currentTask.getName() != null && currentTask.getName().contains(string)) {
 						currentTask.setVisible(true);
 						visibleTasksInCurrentList = true;
-					} 
-					else
+					} else
 						currentTask.setVisible(false);
 				}
 			}
-			if (visibleTasksInCurrentList) 
+			if (visibleTasksInCurrentList)
 				currentList.setVisible(true);
 			else
 				currentList.setVisible(false);
@@ -495,7 +493,7 @@ public class Controller {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, task);
+				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, clone);
 			}
 		});
 
@@ -503,7 +501,7 @@ public class Controller {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				duplicateTask(task);
+				duplicateTask(clone);
 			}
 		});
 

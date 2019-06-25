@@ -81,7 +81,7 @@ public class TaskCreationWizard extends MyDialog {
 		UtilDateModel model = new UtilDateModel();
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		date = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 		date.getJFormattedTextField().setText(LocalDate.now().format(formatter));
 		date.setPreferredSize(new Dimension(220, 25));
 		this.add(date);
@@ -132,11 +132,17 @@ public class TaskCreationWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String time = (String) timeSpinner.getModel().getValue().toString().subSequence(11, 19);
-				String dateAndTime = date.getJFormattedTextField().getText() + "T" + time;
+				String timeAsString = (String) timeSpinner.getModel().getValue().toString().subSequence(11, 19);
+				String dateAsString = date.getJFormattedTextField().getText();
+				String dateAndTime = toDateAndTime(dateAsString, timeAsString);
 				
 				controller.addTask(new Task(tList ,name.getText(), LocalDateTime.parse(dateAndTime) , Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText()));
 				dispose();
+			}
+
+			private String toDateAndTime(String date, String time) {
+				String[] dateAsArray = date.split("[.]");
+				return dateAsArray[2] + "-" + dateAsArray[1] + "-" + dateAsArray[0] + "T" + time;
 			}
 		});
 		this.add(createTask);
