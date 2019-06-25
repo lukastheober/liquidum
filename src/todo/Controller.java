@@ -386,26 +386,28 @@ public class Controller {
 	 * @param string: the String entered by the user
 	 */
 	public void searchFor(String string) {
-
+		resetFilter();
 		for (int i = 0; i < listCollection.size(); i++) {
 			ListOfTasks currentList = listCollection.get(i);
 			boolean visibleTasksInCurrentList = false;
-			for (int j = 0; j < currentList.getTaskList().size(); j++) {
-				Task currentTask = currentList.getTaskList().get(j);
-				if (currentTask != null) {
-					if (currentTask.getText() != null && currentTask.getText().contains(string)) {
-						currentTask.setVisible(true);
-						visibleTasksInCurrentList = true;
-					} 
-					else if (currentTask.getName() != null && currentTask.getName().contains(string)) {
-						currentTask.setVisible(true);
-						visibleTasksInCurrentList = true;
-					} 
-					else
-						currentTask.setVisible(false);
+			if (currentList.getListName().contains(string)) {
+				visibleTasksInCurrentList = true;
+			} else {
+				for (int j = 0; j < currentList.getTaskList().size(); j++) {
+					Task currentTask = currentList.getTaskList().get(j);
+					if (currentTask != null) {
+						if (currentTask.getText() != null && currentTask.getText().contains(string)) {
+							currentTask.setVisible(true);
+							visibleTasksInCurrentList = true;
+						} else if (currentTask.getName() != null && currentTask.getName().contains(string)) {
+							currentTask.setVisible(true);
+							visibleTasksInCurrentList = true;
+						} else
+							currentTask.setVisible(false);
+					}
 				}
 			}
-			if (visibleTasksInCurrentList) 
+			if (visibleTasksInCurrentList)
 				currentList.setVisible(true);
 			else
 				currentList.setVisible(false);
