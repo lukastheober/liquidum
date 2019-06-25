@@ -80,14 +80,14 @@ public class Controller {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					switch (e.getActionCommand()) {
-					case "Weiï¿½":
-						filterBy(colorParser("Weiï¿½"));
+					case "Weiß":
+						filterBy(colorParser("Weiß"));
 						break;
 					case "Blau":
 						filterBy(colorParser("Blau"));
 						break;
-					case "Grï¿½n":
-						filterBy(colorParser("Grï¿½n"));
+					case "Grün":
+						filterBy(colorParser("Grün"));
 						break;
 					case "Rot":
 						filterBy(colorParser("Rot"));
@@ -268,6 +268,7 @@ public class Controller {
 	public void editTask(Task oldTask, Task newTask) {
 		LinkedList<Task> actualListOfTasks = oldTask.getMyList().getTaskList();
 		actualListOfTasks.set(actualListOfTasks.indexOf(oldTask), newTask);
+		newTask.getMyList().loadTasks();
 		gui.update();
 		save();
 	}
