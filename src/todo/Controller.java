@@ -166,6 +166,8 @@ public class Controller {
 			}
 
 		});
+		
+		list.addMouseListener(new DragAndDropMouseListener(Controller.this));
 
 		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
@@ -209,6 +211,8 @@ public class Controller {
 				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);
 			}
 		});
+		
+		task.addMouseListener(new DragAndDropMouseListener(Controller.this));
 
 		gui.update();
 		save();
@@ -532,6 +536,7 @@ public class Controller {
 		listCollection.add(index + 1, (ListOfTasks) draggedObject);
 		draggedObject = null;
 
+		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
 		save();
 	}
@@ -550,6 +555,8 @@ public class Controller {
 		list.getTaskList().add(task);
 		draggedObject = null;
 
+		myList.loadTasks();
+		list.loadTasks();
 		gui.update();
 		save();
 	}
@@ -568,7 +575,8 @@ public class Controller {
 		int index = list.getTaskList().indexOf(task);
 		list.getTaskList().add(index + 1, draggedTask);
 		draggedObject = null;
-
+		
+		list.loadTasks();
 		gui.update();
 		save();
 	}
