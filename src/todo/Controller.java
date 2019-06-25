@@ -497,7 +497,7 @@ public class Controller {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, task);
+				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, clone);
 			}
 		});
 
@@ -505,7 +505,7 @@ public class Controller {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				duplicateTask(task);
+				duplicateTask(clone);
 			}
 		});
 

@@ -3,16 +3,22 @@ package todo;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Properties;
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
 
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -35,6 +41,7 @@ public class TaskEditingWizard extends MyDialog {
 
 	private JTextField name;
 	private JDatePickerImpl date;
+	private JSpinner timeSpinner;
 	private JComboBox<String> colour;
 	private JComboBox<String> interval;
 	private JButton cancel;
@@ -65,6 +72,9 @@ public class TaskEditingWizard extends MyDialog {
 		name.setName("name");
 		this.add(name);
 
+		// System.out.println(oldTask.getDeadline().toString().substring(11,
+		// oldTask.getDeadline().toString().length()));
+
 		this.add(new JLabel("    Ablaufdatum"));
 		Properties p = new Properties();
 		p.put("text.today", "today");
@@ -73,11 +83,26 @@ public class TaskEditingWizard extends MyDialog {
 		UtilDateModel model = new UtilDateModel();
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		date = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		//System.out.println(oldTask.getDeadline());
-		date.getJFormattedTextField().setText(oldTask.getDeadline().format(formatter));
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+		String oldDate = oldTask.getDeadline().format(formatter);
+		date.getJFormattedTextField().setText(oldDate);
+		date.setPreferredSize(new Dimension(220, 25));
 		this.add(date);
+
+		this.add(new JLabel("    Ablaufzeit"));
+		timeSpinner = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
+		timeSpinner.setEditor(timeEditor);
+
+		LocalDateTime ldt = oldTask.getDeadline();
+		ZonedDateTime zdt = ldt.atZone(ZoneId.systemDefault());
+		Date output = Date.from(zdt.toInstant());
+
+		timeSpinner.setValue(output);
+		JPanel time = new JPanel();
+		timeSpinner.setPreferredSize(new Dimension(220, 25));
+		time.add(timeSpinner);
+		this.add(time);
 
 		this.add(new JLabel("    Farbe"));
 		colour = new JComboBox<String>(colours);
@@ -89,7 +114,7 @@ public class TaskEditingWizard extends MyDialog {
 		interval = new JComboBox<String>(intervals);
 		interval.setName("interval");
 		this.add(interval);
-		
+
 		this.add(new JLabel("    Text"));
 		text = new JTextField(oldTask.getText());
 		text.setName("text");
@@ -112,10 +137,26 @@ public class TaskEditingWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//System.out.println("Task-Constructor not complete");
-			//	System.out.println(date.getJFormattedTextField().getText());
-				oldTask.overwrite(new Task(oldTask.getMyList(), name.getText(), LocalDate.parse(date.getJFormattedTextField().getText(), formatter), Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText()));
+				String timeAsString = (String) timeSpinner.getModel().getValue().toString().subSequence(11, 19);
+				String dateAsString = date.getJFormattedTextField().getText();
+				String dateAndTime = toDateAndTime(dateAsString, timeAsString);
+
+//				oldTask.overwrite(new Task(oldTask.getMyList(), name.getText(), LocalDateTime.parse(dateAndTime),
+//						Integer.parseInt((String) interval.getSelectedItem()),
+//						colorParser((String) colour.getSelectedItem()), text.getText()));
+	
+				oldTask.setColor(colorParser((String) colour.getSelectedItem()));
+				oldTask.setName(name.getText());
+				oldTask.setDeadline(LocalDateTime.parse(dateAndTime));
+				oldTask.setInterval(Integer.parseInt((String) interval.getSelectedItem()));
+				oldTask.setText(text.getText());
+				
 				dispose();
+			}
+
+			private String toDateAndTime(String date, String time) {
+				String[] dateAsArray = date.split("[.]");
+				return dateAsArray[2] + "-" + dateAsArray[1] + "-" + dateAsArray[0] + "T" + time;
 			}
 		});
 		this.add(createTask);
