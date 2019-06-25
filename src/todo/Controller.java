@@ -608,7 +608,7 @@ public class Controller {
 		switch (clrStr) {
 		case "Blau":
 			return Color.BLUE;
-		case "Grï¿½n":
+		case "Grün":
 			return Color.GREEN;
 		case "Rot":
 			return Color.RED;
