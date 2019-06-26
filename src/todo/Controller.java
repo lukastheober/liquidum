@@ -81,14 +81,14 @@ public class Controller {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					switch (e.getActionCommand()) {
-					case "Weiß":
-						filterBy(colorParser("Weiß"));
+					case "Wei" + '\u00DF':
+						filterBy(colorParser("Wei" + '\u00DF'));
 						break;
 					case "Blau":
 						filterBy(colorParser("Blau"));
 						break;
-					case "Grün":
-						filterBy(colorParser("Grün"));
+					case "Gr" + '\u00FC' + "n":
+						filterBy(colorParser("Gr" + '\u00FC' + "n"));
 						break;
 					case "Rot":
 						filterBy(colorParser("Rot"));
@@ -605,7 +605,7 @@ public class Controller {
 		switch (clrStr) {
 		case "Blau":
 			return Color.BLUE;
-		case "Grün":
+		case "Gr" + '\u00FC' + "n":
 			return Color.GREEN;
 		case "Rot":
 			return Color.RED;

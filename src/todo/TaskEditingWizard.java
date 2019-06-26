@@ -49,7 +49,7 @@ public class TaskEditingWizard extends MyDialog {
 	private Task oldTask;
 	private JTextField text;
 
-	private String[] colours = { "Schwarz", "Blau", "Rot", "Grün", "Grau", "Orange", "Pink" };
+	private String[] colours = { "Schwarz", "Blau", "Rot", "Gr" + '\u00FC' + "n", "Grau", "Orange", "Pink" };
 	private String[] intervals = { "1", "2", "3", "4", "5", "6" };
 
 	private void initialize() {
@@ -191,7 +191,7 @@ public class TaskEditingWizard extends MyDialog {
 		switch (clrStr) {
 		case "Blau":
 			return Color.BLUE;
-		case "Grün":
+		case "Gr" + '\u00FC' + "n":
 			return Color.GREEN;
 		case "Rot":
 			return Color.RED;

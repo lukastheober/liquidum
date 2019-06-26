@@ -45,7 +45,7 @@ public class TaskRestorationWizard extends MyDialog {
 	
 	private void setUpButtons() {
 		JButton restore = new JButton("Wiederherstellen");
-		JButton delete = new JButton("Löschen");
+		JButton delete = new JButton("L" + '\u00F6' + "schen");
 		JButton cancel = new JButton("Abbrechen");
 		
 		restore.addActionListener(new ActionListener() {
@@ -160,12 +160,7 @@ public class TaskRestorationWizard extends MyDialog {
 			colorPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 			add(colorPanel, BorderLayout.EAST);
 			setVisible(true);
-		}
-
-	
-
-		
-		
+		}	
 	}
 
 }
