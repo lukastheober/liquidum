@@ -187,29 +187,7 @@ public class Controller {
 		myList.getTaskList().add(task);
 		myList.loadTasks();
 
-		task.getMenu().getDeleteButton().addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, task);
-			}
-		});
-
-		task.getMenu().getDuplicateButton().addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				duplicateTask(task);
-			}
-		});
-
-		task.getMenu().getEditButton().addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);
-			}
-		});
+		
 
 		gui.update();
 		save();
