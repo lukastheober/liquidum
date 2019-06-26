@@ -80,14 +80,14 @@ public class Controller {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					switch (e.getActionCommand()) {
-					case "Weiﬂ":
-						filterBy(colorParser("Weiﬂ"));
+					case "Wei√ü":
+						filterBy(colorParser("Wei√ü"));
 						break;
 					case "Blau":
 						filterBy(colorParser("Blau"));
 						break;
-					case "Gr¸n":
-						filterBy(colorParser("Gr¸n"));
+					case "Gr√ºn":
+						filterBy(colorParser("Gr√ºn"));
 						break;
 					case "Rot":
 						filterBy(colorParser("Rot"));
@@ -391,21 +391,25 @@ public class Controller {
 	 * @param string: the String entered by the user
 	 */
 	public void searchFor(String string) {
-
+		resetFilter();
 		for (int i = 0; i < listCollection.size(); i++) {
 			ListOfTasks currentList = listCollection.get(i);
 			boolean visibleTasksInCurrentList = false;
-			for (int j = 0; j < currentList.getTaskList().size(); j++) {
-				Task currentTask = currentList.getTaskList().get(j);
-				if (currentTask != null) {
-					if (currentTask.getText() != null && currentTask.getText().contains(string)) {
-						currentTask.setVisible(true);
-						visibleTasksInCurrentList = true;
-					} else if (currentTask.getName() != null && currentTask.getName().contains(string)) {
-						currentTask.setVisible(true);
-						visibleTasksInCurrentList = true;
-					} else
-						currentTask.setVisible(false);
+			if (currentList.getListName().contains(string)) {
+				visibleTasksInCurrentList = true;
+			} else {
+				for (int j = 0; j < currentList.getTaskList().size(); j++) {
+					Task currentTask = currentList.getTaskList().get(j);
+					if (currentTask != null) {
+						if (currentTask.getText() != null && currentTask.getText().contains(string)) {
+							currentTask.setVisible(true);
+							visibleTasksInCurrentList = true;
+						} else if (currentTask.getName() != null && currentTask.getName().contains(string)) {
+							currentTask.setVisible(true);
+							visibleTasksInCurrentList = true;
+						} else
+							currentTask.setVisible(false);
+					}
 				}
 			}
 			if (visibleTasksInCurrentList)
@@ -616,7 +620,7 @@ public class Controller {
 		switch (clrStr) {
 		case "Blau":
 			return Color.BLUE;
-		case "Gr¸n":
+		case "Gr√ºn":
 			return Color.GREEN;
 		case "Rot":
 			return Color.RED;
