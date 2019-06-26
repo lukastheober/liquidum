@@ -16,19 +16,19 @@ public class MainMenuBar extends JMenuBar {
 	listCreateButton, searchButton, showBinButton, menuResetFilter;
 
 	public MainMenuBar() {
-		JMenu mainMenu = new JMenu("Menü");
+		JMenu mainMenu = new JMenu("Men"  + '\u00FC');
 		add(mainMenu);
 
 		listCreateButton = new JMenuItem("Liste erstellen");
 		mainMenu.add(listCreateButton);
 		JMenu submenuFilter = new JMenu("Filtern");
-		menuResetFilter = new JMenuItem("Filter zurücksetzten");
+		menuResetFilter = new JMenuItem("Filter zur" + '\u00FC' + "cksetzten");
 		submenuFilter.add(menuResetFilter);
-		filterButton1 = new JMenuItem("Weiß");
+		filterButton1 = new JMenuItem("Wei" + '\u00DF');
 		submenuFilter.add(filterButton1);
 		filterButton2 = new JMenuItem("Blau");
 		submenuFilter.add(filterButton2);
-		filterButton3 = new JMenuItem("Grün");
+		filterButton3 = new JMenuItem("Gr" + '\u00FC' + "n");
 		submenuFilter.add(filterButton3);
 		filterButton4 = new JMenuItem("Rot");
 		submenuFilter.add(filterButton4);
