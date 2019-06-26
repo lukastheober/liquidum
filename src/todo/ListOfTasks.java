@@ -3,6 +3,7 @@ package todo;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
@@ -32,6 +33,7 @@ public class ListOfTasks extends JPanel {
 		setLayout(new FlowLayout());
 		setPreferredSize(new Dimension(410, 750));
 		nameLabel = new JLabel(listName);
+		nameLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 
 		JPanel topBar = menuBars();
 		

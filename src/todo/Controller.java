@@ -37,6 +37,9 @@ public class Controller {
 		draggedObject = null;
 		gui = new GUI();
 		setActionListenerUp();
+		addList(new ListOfTasks("Default List"));
+		deleteOldTasksFromBin();
+		
 	}
 
 	// method to add ActionListener for MainMenuBar

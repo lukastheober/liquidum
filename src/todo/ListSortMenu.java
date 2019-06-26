@@ -1,6 +1,7 @@
 package todo;
 
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -20,9 +21,10 @@ public class ListSortMenu extends JMenuBar {
 
 	public ListSortMenu(ListOfTasks myList){
 		this.myList = myList;
-		this.setPreferredSize(new Dimension(70 ,30));
+		this.setPreferredSize(new Dimension(70 ,20));
 		JMenu mainMenu = new JMenu("Sortieren");
-		mainMenu.setPreferredSize(new Dimension(70, 30));
+		mainMenu.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		mainMenu.setPreferredSize(new Dimension(70, 20));
 		add(mainMenu);
 		colorButton = new JMenuItem("nach Farbe");
 		mainMenu.add(colorButton);
