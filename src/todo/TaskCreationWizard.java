@@ -136,17 +136,16 @@ public class TaskCreationWizard extends MyDialog {
 				String dateAsString = date.getJFormattedTextField().getText();
 				String dateAndTime = toDateAndTime(dateAsString, timeAsString);
 				
+				
 				controller.addTask(new Task(tList ,name.getText(), LocalDateTime.parse(dateAndTime) , Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText()));
 				dispose();
 			}
-
 			private String toDateAndTime(String date, String time) {
 				String[] dateAsArray = date.split("[.]");
 				return dateAsArray[2] + "-" + dateAsArray[1] + "-" + dateAsArray[0] + "T" + time;
 			}
 		});
 		this.add(createTask);
-
 	}
 
 	private Color colorParser(String clrStr) {

@@ -187,6 +187,7 @@ public class Controller {
 		myList.getTaskList().add(task);
 		myList.loadTasks();
 
+
 		task.getMenu().getDeleteButton().addActionListener(new ActionListener() {
 
 			@Override
@@ -616,5 +617,9 @@ public class Controller {
 		default:
 			return Color.WHITE;
 		}
+	}
+	
+	public void updateUI() {
+		gui.update();
 	}
 }
