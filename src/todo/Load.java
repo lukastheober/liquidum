@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.UUID;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -31,6 +32,7 @@ public class Load extends Thread {
 		Path currentRelativePath = Paths.get("");
 		String s = currentRelativePath.toAbsolutePath().toString();
 		File dir = new File(s + "/saveFiles/");
+		File trash = new File(s + "/trashbin/");
 
 		if (dir.isDirectory()) {
 			if (dir.list().length > 0) {
@@ -38,22 +40,50 @@ public class Load extends Thread {
 				ArrayList<String> result = new ArrayList<>();
 
 				result = search(".*\\.json", dir, result);
-				String trashString = s+ "trashbin.json";
+
 				for (String files : result) {
-				
-					if(files.equals(trashString)) {
-						loadBin(files);
-					}else {
-						load(files);
-					}
+					load(files);
 				}
 			}
 		}
+//		if(trash.isDirectory()) {
+//			if(dir.list().length>0) {
+//				ArrayList<String> trashList = new ArrayList<>();
+//				trashList = search(".*\\.json", trash, trashList);
+//				for(String files: trashList) {
+//					loadBin(files);
+//				}
+//			}
+//		}
 	}
 
-	private void loadBin(String files) {
-		// TODO Auto-generated method stub
-		
+	private void loadBin(String file) {
+//		LinkedList<Task> trash=null;
+//		JSONParser jParse = new JSONParser();
+//		JSONArray jLoadedList = null;
+//
+//		try {
+//			FileReader reader = new FileReader(file);
+//			jLoadedList = (JSONArray) jParse.parse(reader);
+//
+//		} catch (Exception e) {
+//			System.out.print(e);
+//		}
+//		
+//		Iterator i = jLoadedList.iterator();
+//		JSONObject listInfo = (JSONObject) i.next();
+//		ListOfTasks listOfTasks = new ListOfTasks(listName);
+//		//controller.addList(listOfTasks);
+//
+//		while (i.hasNext()) {
+//
+//			JSONObject taskObj = (JSONObject) i.next();
+//			Task task = createTask(taskObj, listOfTasks);
+//			controller.addTask(task);
+//		}
+//		
+//		
+//		this.controller.setTrashBin(trash);
 	}
 
 	private ArrayList<String> search(final String pattern, final File folder, ArrayList<String> result) {
@@ -72,9 +102,7 @@ public class Load extends Thread {
 
 	private void load(String file) {
 		/*
-		 * Structure of the JSONArray: 1)get filename from listname + hashValue (?) <-
-		 * avoid duplicate files 2)First JSONObject has to contain all info about the
-		 * list!! 3)Following JSONObjects in the Array contain all info for the tasks
+		 * Loads files
 		 */
 
 		JSONParser jParse = new JSONParser();
@@ -91,7 +119,8 @@ public class Load extends Thread {
 		Iterator i = jLoadedList.iterator();
 		JSONObject listInfo = (JSONObject) i.next();
 		String listName = (String) listInfo.get("name");
-		ListOfTasks listOfTasks = new ListOfTasks(listName);
+		String uuid = (String) listInfo.get("UUID");
+		ListOfTasks listOfTasks = new ListOfTasks(listName, uuid);
 		controller.addList(listOfTasks);
 
 		while (i.hasNext()) {

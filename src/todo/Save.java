@@ -26,15 +26,16 @@ public class Save extends Thread {
 		this.collection = listCollection;
 		this.controller = c;
 	}
+
 	@SuppressWarnings("unchecked")
 	public void saveAll() {
-		
+
 		Iterator i = collection.iterator();
-		while(i.hasNext()) {
-			saveList((ListOfTasks)i.next());
+		while (i.hasNext()) {
+			saveList((ListOfTasks) i.next());
 		}
-		
-		//save trashBin too
+
+		// save trashBin too
 		LinkedList<Task> bin = controller.getBin();
 		saveBin(bin);
 	}
@@ -42,10 +43,10 @@ public class Save extends Thread {
 	private void saveBin(LinkedList<Task> bin) {
 		this.jsonArray = new JSONArray();
 		JSONObject binInfo = new JSONObject();
-		
+
 		binInfo.put("name", "trashbin");
 		jsonArray.add(binInfo);
-		for(Iterator<Task> i= bin.iterator(); i.hasNext();) {
+		for (Iterator<Task> i = bin.iterator(); i.hasNext();) {
 			Task temp = i.next();
 			JSONObject jTemp = new JSONObject();
 			jsonArray.add(taskToJSON(temp, jTemp));
@@ -55,21 +56,18 @@ public class Save extends Thread {
 
 	@SuppressWarnings("unchecked")
 	public void saveList(ListOfTasks list) {
-		
+
 		this.listName = list.getListName();
 		String uid = list.getUUID().toString();
-		
+
 		LinkedList<Task> taskList = list.getTaskList();
 		this.jsonArray = new JSONArray();
-		
-		
+
 		JSONObject listInfo = new JSONObject();
 		listInfo.put("name", listName);
-		listInfo.put("UUID",uid);
+		listInfo.put("UUID", uid);
 		jsonArray.add(listInfo);
-		
-		
-		
+
 		for (Iterator<Task> i = taskList.iterator(); i.hasNext();) {
 			Task temp = i.next();
 			JSONObject jTemp = new JSONObject();
@@ -79,12 +77,11 @@ public class Save extends Thread {
 	}
 
 	private void writeJSONFile(String uuid) {
-		// TODO duplicate file handling
 		Path currentRelativePath = Paths.get("");
 		String s = currentRelativePath.toAbsolutePath().toString();
 		File dir = new File(s + "/saveFiles/");
 		if (dir.isDirectory()) {
-			String filepath = s + "/saveFiles/" + listName +uuid  + ".json";
+			String filepath = s + "/saveFiles/" + listName + uuid + ".json";
 			try {
 				FileWriter fw = new FileWriter(filepath);
 				fw.write(jsonArray.toJSONString());
@@ -95,7 +92,7 @@ public class Save extends Thread {
 		} else {
 			boolean success = dir.mkdir();
 			if (success) {
-				String filepath = s + "/saveFiles/" + listName +uuid + ".json";
+				String filepath = s + "/saveFiles/" + listName + uuid + ".json";
 				try {
 					FileWriter fw = new FileWriter(filepath);
 					fw.write(jsonArray.toJSONString());
@@ -107,12 +104,13 @@ public class Save extends Thread {
 		}
 
 	}
+
 	private void writeBinFile() {
 		Path currentRelativePath = Paths.get("");
 		String s = currentRelativePath.toAbsolutePath().toString();
-		File dir = new File(s + "/saveFiles/");
+		File dir = new File(s + "/trashbin/");
 		if (dir.isDirectory()) {
-			String filepath = s + "/saveFiles/trashbin.json";
+			String filepath = s + "/trashbin/trashbin.json";
 			try {
 				FileWriter fw = new FileWriter(filepath);
 				fw.write(jsonArray.toJSONString());
@@ -123,7 +121,7 @@ public class Save extends Thread {
 		} else {
 			boolean success = dir.mkdir();
 			if (success) {
-				String filepath = s + "/saveFiles/trashbin.json";
+				String filepath = s + "/trashbin/trashbin.json";
 				try {
 					FileWriter fw = new FileWriter(filepath);
 					fw.write(jsonArray.toJSONString());
@@ -135,11 +133,11 @@ public class Save extends Thread {
 		}
 
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	private JSONObject taskToJSON(Task task, JSONObject jSon) {
 		this.temp = jSon;
+		String listname = task.getMyList().getListName();
 		putColor(task);
 		putDeadLine(task);
 		putDeletionDate(task);
@@ -154,37 +152,36 @@ public class Save extends Thread {
 
 	@SuppressWarnings("unchecked")
 	private void putDeadLine(Task task) {
-		LocalDateTime timeAsObject = task.getDeadline(); 
-		String dateAsString="";
-		dateAsString+=timeAsObject.getYear();
-		dateAsString+=":";
-		dateAsString+=timeAsObject.getMonthValue();
-		dateAsString+=":";
-		dateAsString+=timeAsObject.getDayOfMonth();
-		dateAsString+=":";
-		dateAsString+=timeAsObject.getHour();
-		dateAsString+=":";
-		dateAsString+=timeAsObject.getMinute();
+		LocalDateTime timeAsObject = task.getDeadline();
+		String dateAsString = "";
+		dateAsString += timeAsObject.getYear();
+		dateAsString += ":";
+		dateAsString += timeAsObject.getMonthValue();
+		dateAsString += ":";
+		dateAsString += timeAsObject.getDayOfMonth();
+		dateAsString += ":";
+		dateAsString += timeAsObject.getHour();
+		dateAsString += ":";
+		dateAsString += timeAsObject.getMinute();
 		temp.put("deadline", dateAsString);
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	private void putDeletionDate(Task task) {
 		LocalDateTime deletionDateObj = task.getDeletionDate();
-		if(deletionDateObj !=null) {
-		String dateAsString="";
-		dateAsString += deletionDateObj.getYear();
-		dateAsString += ":";
-		dateAsString += deletionDateObj.getMonthValue();
-		dateAsString += ":";
-		dateAsString += deletionDateObj.getDayOfMonth();
-		dateAsString += ":";
-		dateAsString += deletionDateObj.getHour();
-		dateAsString += ":";
-		dateAsString += deletionDateObj.getMinute();
-		temp.put("deletiondate", dateAsString);
-		}else {
+		if (deletionDateObj != null) {
+			String dateAsString = "";
+			dateAsString += deletionDateObj.getYear();
+			dateAsString += ":";
+			dateAsString += deletionDateObj.getMonthValue();
+			dateAsString += ":";
+			dateAsString += deletionDateObj.getDayOfMonth();
+			dateAsString += ":";
+			dateAsString += deletionDateObj.getHour();
+			dateAsString += ":";
+			dateAsString += deletionDateObj.getMinute();
+			temp.put("deletiondate", dateAsString);
+		} else {
 			return;
 		}
 	}
@@ -197,8 +194,6 @@ public class Save extends Thread {
 		// put color in json
 		temp.put("color", sColor);
 	}
-
-
 
 	@SuppressWarnings("unchecked")
 	private void putInterval(Task task) {

@@ -609,6 +609,9 @@ public class Controller {
 	public void setDraggedObject(Object object) {
 		draggedObject = null;
 	}
+	public void setTrashBin(LinkedList<Task> trash) {
+		this.trashBin = trash;
+	}
 
 	private Color colorParser(String clrStr) {
 		switch (clrStr) {
