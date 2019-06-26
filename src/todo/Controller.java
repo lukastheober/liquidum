@@ -69,7 +69,7 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				new TaskRestorationWizard(Controller.this);
 			}
 		});
 
@@ -221,15 +221,9 @@ public class Controller {
 	 * @param list: the ListOfTasks that is being deleted
 	 */
 	public void clearBinOfAllTasksFrom(ListOfTasks list) {
-		LinkedList<Task> tasksToDelete = list.getTaskList();
-		Iterator<Task> listIterator = tasksToDelete.iterator();
-		Iterator<Task> trashIterator = trashBin.iterator();
-		while (listIterator.hasNext()) {
-			while (trashIterator.hasNext()) {
-				if (trashIterator.next().equals(listIterator.next())) {
-					trashBin.remove(trashIterator.next());
-				}
-			}
+		for (Task task : trashBin) {
+			if (task.getMyList().equals(list))
+				trashBin.remove(task);
 		}
 	}
 
@@ -340,14 +334,8 @@ public class Controller {
 	public void removeList(ListOfTasks list) {
 		listCollection.remove(list);
 		gui.getListContainer().remove(list);
-
-		Iterator<Task> trashBinIterator = trashBin.iterator();
-		while (trashBinIterator.hasNext()) {
-			Task actualTaskInTrashBin = trashBinIterator.next();
-			if (actualTaskInTrashBin.getMyList() == list) {
-				deleteTaskFromBin(actualTaskInTrashBin);
-			}
-		}
+		clearBinOfAllTasksFrom(list);
+		
 		gui.update();
 		save();
 	}
@@ -588,6 +576,10 @@ public class Controller {
 
 	public Collection<ListOfTasks> getallListOfTasks() {
 		return listCollection;
+	}
+	
+	public LinkedList<Task> getBin() {
+		return trashBin;
 	}
 
 	public static void main(String[] args) {
