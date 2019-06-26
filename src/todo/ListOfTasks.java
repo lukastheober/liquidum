@@ -27,6 +27,8 @@ public class ListOfTasks extends JPanel {
 	private LinkedList<Task> tasks = new LinkedList<Task>();
 	private ListSortMenu sortingMenu;
 	
+	static final int MAX_TASKS = 10;
+	
 	public ListOfTasks(String listName) {
 		this.uuid = UUID.randomUUID();
 		name = listName;
