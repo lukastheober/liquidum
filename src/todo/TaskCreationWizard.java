@@ -136,42 +136,16 @@ public class TaskCreationWizard extends MyDialog {
 				String dateAsString = date.getJFormattedTextField().getText();
 				String dateAndTime = toDateAndTime(dateAsString, timeAsString);
 				
-				Task task = new Task(tList ,name.getText(), LocalDateTime.parse(dateAndTime) , Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText());
 				
-				task.getMenu().getDeleteButton().addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(controller, task);
-					}
-				});
-
-				task.getMenu().getDuplicateButton().addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						controller.duplicateTask(task);
-					}
-				});
-
-				task.getMenu().getEditButton().addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						TaskEditingWizard wiz = new TaskEditingWizard(task, controller);
-					}
-				});
-				controller.addTask(task);
+				controller.addTask(new Task(tList ,name.getText(), LocalDateTime.parse(dateAndTime) , Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText()));
 				dispose();
 			}
-
 			private String toDateAndTime(String date, String time) {
 				String[] dateAsArray = date.split("[.]");
 				return dateAsArray[2] + "-" + dateAsArray[1] + "-" + dateAsArray[0] + "T" + time;
 			}
 		});
 		this.add(createTask);
-
 	}
 
 	private Color colorParser(String clrStr) {

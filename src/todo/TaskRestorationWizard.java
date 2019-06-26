@@ -54,7 +54,10 @@ public class TaskRestorationWizard extends MyDialog {
 			public void actionPerformed(ActionEvent e) {
 				Task task = getCorrespondingTask(taskList.getSelectedValue());
 				controller.getBin().remove(task);
-				controller.addTask(task);
+				ListOfTasks myList = task.getMyList();
+				myList.getTaskList().add(task);
+				myList.loadTasks();
+				controller.updateUI();
 				
 				fillTaskListWithCurrentBin();
 				taskList.setSelectedIndex(0);
