@@ -64,12 +64,13 @@ public class Controller {
 				resetFilter();
 			}
 		});
-		
+
 		gui.getMainMenuBar().getShowBinButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new TaskRestorationWizard(Controller.this);
+				// TODO
 			}
 		});
 
