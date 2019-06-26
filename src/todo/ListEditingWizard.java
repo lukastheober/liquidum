@@ -92,12 +92,12 @@ public class ListEditingWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (name.getText().equals("")) {
+				if (name.getText().trim().equals("")) {
 					name.setBackground(Color.red);
 				}
 				else {
 					oldList.setName(name.getText());
-					oldList.setNameLabel(name.getText());
+					oldList.setNameLabel(name.getText().trim());
 					dispose();
 				}
 			}

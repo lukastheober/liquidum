@@ -15,6 +15,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -22,7 +23,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 
@@ -53,7 +56,7 @@ public class TaskEditingWizard extends MyDialog {
 	private JButton cancel;
 	private JButton createTask;
 	private Task oldTask;
-	private JTextField text;
+	private JTextArea text;
 
 	private String[] colours = {"Wei" + '\u00DF', "Blau", "Gr" + '\u00FC' + "n", "Rot", "Orange", "Pink"};
 	private String[] intervals = { "1", "2", "3", "4", "5", "6" };
@@ -169,9 +172,13 @@ public class TaskEditingWizard extends MyDialog {
 		inputPanel.add(new JLabel("Text"), new GridBagConstraints(0, 5, 1, 1, 1, 1, 
 				GridBagConstraints.LINE_START, GridBagConstraints.NONE, 
 				new Insets(5, 5, 5, 5), 0, 0));
-		text = new JTextField(oldTask.getText());
+		text = new JTextArea(oldTask.getText());
+		text.setLineWrap(true);
+		text.setWrapStyleWord(true);
+		text.setRows(5);
+		text.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		text.setName("text");
-		inputPanel.add(text, new GridBagConstraints(1, 5, 1, 1, 1, 1, 
+		inputPanel.add(new JScrollPane(text), new GridBagConstraints(1, 5, 1, 1, 1, 1, 
 				GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, 
 				new Insets(5, 5, 5, 5), 0, 0));
 	}
@@ -198,14 +205,14 @@ public class TaskEditingWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (text.getText().equals("") || name.getText().equals("")) {
-					if (text.getText().equals("")) {
+				if (text.getText().trim().equals("") || name.getText().trim().equals("")) {
+					if (text.getText().trim().equals("")) {
 						text.setBackground(Color.red);
 					}
 					else {
 						text.setBackground(Color.white);
 					}
-					if (name.getText().equals("")) {
+					if (name.getText().trim().equals("")) {
 						name.setBackground(Color.red);
 					}
 					else {
@@ -218,7 +225,7 @@ public class TaskEditingWizard extends MyDialog {
 					String dateAndTime = toDateAndTime(dateAsString, timeAsString);
 		
 					oldTask.setColor(colorParser((String) colour.getSelectedItem()));
-					oldTask.setName(name.getText());
+					oldTask.setName(name.getText().trim());
 					oldTask.setDeadline(LocalDateTime.parse(dateAndTime));
 					oldTask.setInterval(Integer.parseInt((String) interval.getSelectedItem()));
 					oldTask.setText(text.getText());

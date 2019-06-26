@@ -83,11 +83,11 @@ public class ListCreationWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (name.getText().equals("")) {
+				if (name.getText().trim().equals("")) {
 					name.setBackground(Color.red);
 				}
 				else {
-					controller.addList(new ListOfTasks(name.getText()));
+					controller.addList(new ListOfTasks(name.getText().trim()));
 					dispose();
 				}
 			}

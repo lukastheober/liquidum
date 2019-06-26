@@ -4,12 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.time.LocalDateTime;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 /**
@@ -34,7 +37,7 @@ public class Task extends JPanel {
 	private String name;
 	private JLabel nameLabel;
 	private JLabel dateLabel;
-	private JLabel textLabel;
+	private JTextArea textArea;
 	private JPanel textPanel;
 	private JPanel colorPanel;
 
@@ -89,15 +92,18 @@ public class Task extends JPanel {
 		this.textPanel.setBackground(Color.WHITE);
 		this.textPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 
-		textLabel = new JLabel(text);
-		textLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		textLabel.setVerticalAlignment(SwingConstants.TOP);
+		textArea = new JTextArea(text);
+		textArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		textArea.setEditable(false);
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+		textArea.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
 		colorPanel = new JPanel();
 		colorPanel.setBackground(this.color.darker());
 		colorPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 
-		this.textPanel.add(textLabel, BorderLayout.CENTER);
+		this.textPanel.add(new JScrollPane(textArea), BorderLayout.CENTER);
 		this.textPanel.add(colorPanel, BorderLayout.EAST);
 	}
 
@@ -180,6 +186,6 @@ public class Task extends JPanel {
 	public void setText(String text2) {
 		// TODO Auto-generated method stub
 		this.text = text2;
-		this.textLabel.setText(text2);
+		this.textArea.setText(text2);
 	}
 }
