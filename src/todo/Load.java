@@ -9,34 +9,30 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.UUID;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class Load extends Thread {
+	Controller controller;
 	LinkedList<ListOfTasks> collection;
 	String listName;
 	JSONArray jsonArray;
 	JSONObject temp;
 	LinkedList<Task> currentList;
 
-	public Load(LinkedList<ListOfTasks> listCollection) {
+	public Load(LinkedList<ListOfTasks> listCollection, Controller c) {
+		this.controller = c;
 		this.collection = listCollection;
 	}
 
-	public LinkedList<ListOfTasks> loadFiles() {
-
-		/*
-		 * get all Files of the directory and load them
-		 * 
-		 * 
-		 * 
-		 */
+	public void run() {
 		Path currentRelativePath = Paths.get("");
 		String s = currentRelativePath.toAbsolutePath().toString();
-		System.out.println(s);
 		File dir = new File(s + "/saveFiles/");
+		File trash = new File(s + "/trashbin/");
 
 		if (dir.isDirectory()) {
 			if (dir.list().length > 0) {
@@ -48,16 +44,46 @@ public class Load extends Thread {
 				for (String files : result) {
 					load(files);
 				}
-				// TODO: add tasks to collection!
-				return collection;
-			} else {
-				// directory is empty
-				return collection;
 			}
-		} else {
-			return collection;
 		}
+//		if(trash.isDirectory()) {
+//			if(dir.list().length>0) {
+//				ArrayList<String> trashList = new ArrayList<>();
+//				trashList = search(".*\\.json", trash, trashList);
+//				for(String files: trashList) {
+//					loadBin(files);
+//				}
+//			}
+//		}
+	}
 
+	private void loadBin(String file) {
+//		LinkedList<Task> trash=null;
+//		JSONParser jParse = new JSONParser();
+//		JSONArray jLoadedList = null;
+//
+//		try {
+//			FileReader reader = new FileReader(file);
+//			jLoadedList = (JSONArray) jParse.parse(reader);
+//
+//		} catch (Exception e) {
+//			System.out.print(e);
+//		}
+//		
+//		Iterator i = jLoadedList.iterator();
+//		JSONObject listInfo = (JSONObject) i.next();
+//		ListOfTasks listOfTasks = new ListOfTasks(listName);
+//		//controller.addList(listOfTasks);
+//
+//		while (i.hasNext()) {
+//
+//			JSONObject taskObj = (JSONObject) i.next();
+//			Task task = createTask(taskObj, listOfTasks);
+//			controller.addTask(task);
+//		}
+//		
+//		
+//		this.controller.setTrashBin(trash);
 	}
 
 	private ArrayList<String> search(final String pattern, final File folder, ArrayList<String> result) {
@@ -76,11 +102,9 @@ public class Load extends Thread {
 
 	private void load(String file) {
 		/*
-		 * Structure of the JSONArray: 1)get filename from listname + hashValue (?) <-
-		 * avoid duplicate files 2)First JSONObject has to contain all info about the
-		 * list!! 3)Following JSONObjects in the Array contain all info for the tasks
-		 * 
+		 * Loads files
 		 */
+
 		JSONParser jParse = new JSONParser();
 		JSONArray jLoadedList = null;
 
@@ -94,21 +118,17 @@ public class Load extends Thread {
 
 		Iterator i = jLoadedList.iterator();
 		JSONObject listInfo = (JSONObject) i.next();
-
-		this.currentList = new LinkedList<Task>();
-		ListOfTasks listOfTasks = createList(listInfo);
+		String listName = (String) listInfo.get("name");
+		String uuid = (String) listInfo.get("UUID");
+		ListOfTasks listOfTasks = new ListOfTasks(listName, uuid);
+		controller.addList(listOfTasks);
 
 		while (i.hasNext()) {
 
 			JSONObject taskObj = (JSONObject) i.next();
 			Task task = createTask(taskObj, listOfTasks);
-			currentList.add(task);
+			controller.addTask(task);
 		}
-
-		listOfTasks.addList(currentList);
-
-		collection.add(listOfTasks);
-		currentList = null;
 	}
 
 	private Task createTask(JSONObject taskObj, ListOfTasks list) {
@@ -116,20 +136,18 @@ public class Load extends Thread {
 		/*
 		 * loads all fields from JSON-Arrays to create a new Task Obj
 		 */
+
 		String name = (String) taskObj.get("name");
+
 		LocalDateTime deadline = loadLocalDateTime((String) taskObj.get("deadline"));
 		int interval = Integer.parseInt((String) taskObj.get("interval"));
-		Color color = loadColor((String) taskObj.get(color));
-		String text = (String) taskObj.get(text);
+		Color color = loadColor((String) taskObj.get("color"));
+
+		String text = (String) taskObj.get("text");
 
 		Task task = new Task(list, name, deadline, interval, color, text);
 		return task;
 
-	}
-
-	private ListOfTasks createList(JSONObject listInfo) {
-		ListOfTasks listOfTasks = new ListOfTasks((String) listInfo.get("name"));
-		return listOfTasks;
 	}
 
 	private LocalDateTime loadLocalDateTime(String s) {
@@ -147,4 +165,5 @@ public class Load extends Thread {
 		Color color = new Color(a);
 		return color;
 	}
+
 }

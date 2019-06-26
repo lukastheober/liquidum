@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
+import java.util.UUID;
 
 import javax.swing.*;
 
@@ -17,6 +18,7 @@ import javax.swing.*;
 public class ListOfTasks extends JPanel {
  
 	//test
+	private UUID uuid;
 	private String name;
 	private JButton addTaskButton;
 	private JButton deleteButton;
@@ -25,8 +27,22 @@ public class ListOfTasks extends JPanel {
 	private LinkedList<Task> tasks = new LinkedList<Task>();
 	private ListSortMenu sortingMenu;
 	
-	static final int MAX_TASKS = 10;
 	public ListOfTasks(String listName) {
+		this.uuid = UUID.randomUUID();
+		name = listName;
+		setBorder(BorderFactory.createRaisedSoftBevelBorder());
+		setLayout(new FlowLayout());
+		setPreferredSize(new Dimension(410, 750));
+		nameLabel = new JLabel(listName);
+
+		JPanel topBar = menuBars();
+		
+		add(topBar);
+
+		setVisible(true);
+	}
+	public ListOfTasks(String listName, String uuid) {
+		this.uuid = UUID.fromString(uuid);
 		name = listName;
 		setBorder(BorderFactory.createRaisedSoftBevelBorder());
 		setLayout(new FlowLayout());
@@ -110,5 +126,9 @@ public class ListOfTasks extends JPanel {
 	
 	public ListSortMenu getSortingMenu() {
 		return sortingMenu;
+	}
+	
+	public UUID getUUID() {
+		return this.uuid;
 	}
 }
