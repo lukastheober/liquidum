@@ -35,11 +35,11 @@ public class TaskMenu extends JMenuBar {
 		mainMenu.setIcon(icon);
 		
 		add(mainMenu);
-		deleteButton = new JMenuItem("Task löschen");
+		deleteButton = new JMenuItem("Aufgabe l" + '\u00F6' + "schen");
 		mainMenu.add(deleteButton);
-		duplicateButton = new JMenuItem("Task duplizieren");
+		duplicateButton = new JMenuItem("Aufgabe duplizieren");
 		mainMenu.add(duplicateButton);
-		editButton = new JMenuItem("Task bearbeiten");
+		editButton = new JMenuItem("Aufgabe bearbeiten");
 		mainMenu.add(editButton);
 	}
 	

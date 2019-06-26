@@ -108,38 +108,36 @@ public class Save extends Thread {
 	}
 	private void writeBinFile() {
 		System.out.print("bin block");
-		//TODO : fehler finden
-		
-		
-		
-//		Path currentRelativePath = Paths.get("");
-//		String s = currentRelativePath.toAbsolutePath().toString();
-//		File dir = new File(s + "/saveFiles/");
-//		if (dir.isDirectory()) {
-//			String filepath = s + "/saveFiles/" + listName + ".json";
-//			try {
-//				FileWriter fw = new FileWriter(filepath);
-//				fw.write(jsonArray.toJSONString());
-//				fw.close();
-//			} catch (Exception e) {
-//				System.out.println(e);
-//			}
-//		} else {
-//			System.out.print("else-bin block");
-//			boolean success = dir.mkdir();
-//			if (success) {
-//				String filepath = s + "/saveFiles/" + listName + ".json";
-//				try {
-//					FileWriter fw = new FileWriter(filepath);
-//					fw.write(jsonArray.toJSONString());
-//					fw.close();
-//				} catch (Exception e) {
-//					System.out.println(e);
-//				}
-//			}
-//		}
+		//TODO : fehler finden	
+		Path currentRelativePath = Paths.get("");
+		String s = currentRelativePath.toAbsolutePath().toString();
+		File dir = new File(s + "/saveFiles/");
+		if (dir.isDirectory()) {
+			String filepath = s + "/saveFiles/trashbin.json";
+			try {
+				FileWriter fw = new FileWriter(filepath);
+				fw.write(jsonArray.toJSONString());
+				fw.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		} else {
+			System.out.print("else-bin block");
+			boolean success = dir.mkdir();
+			if (success) {
+				String filepath = s + "/saveFiles/trashbin.json";
+				try {
+					FileWriter fw = new FileWriter(filepath);
+					fw.write(jsonArray.toJSONString());
+					fw.close();
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+			}
+		}
 
 	}
+	
 	
 	@SuppressWarnings("unchecked")
 	private JSONObject taskToJSON(Task task, JSONObject jSon) {

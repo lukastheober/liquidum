@@ -43,7 +43,7 @@ public class TaskCreationWizard extends MyDialog {
 	private JButton createTask;
 	private ListOfTasks tList;
 
-	private String[] colours = {"Weiß", "Blau", "Grün", "Rot", "Orange", "Pink"};
+	private String[] colours = {"Wei" + '\u00DF', "Blau", "Gr" + '\u00FC' + "n", "Rot", "Orange", "Pink"};
 	private String[] intervals = { "1", "2", "3", "4", "5", "6" };
 
 	public TaskCreationWizard(ListOfTasks tList, Controller controller) {
@@ -136,24 +136,23 @@ public class TaskCreationWizard extends MyDialog {
 				String dateAsString = date.getJFormattedTextField().getText();
 				String dateAndTime = toDateAndTime(dateAsString, timeAsString);
 				
+				
 				controller.addTask(new Task(tList ,name.getText(), LocalDateTime.parse(dateAndTime) , Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText()));
 				dispose();
 			}
-
 			private String toDateAndTime(String date, String time) {
 				String[] dateAsArray = date.split("[.]");
 				return dateAsArray[2] + "-" + dateAsArray[1] + "-" + dateAsArray[0] + "T" + time;
 			}
 		});
 		this.add(createTask);
-
 	}
 
 	private Color colorParser(String clrStr) {
 		switch (clrStr) {
 		case "Blau":
 			return Color.BLUE;
-		case "Grün":
+		case "Gr" + '\u00FC' + "n":
 			return Color.GREEN;
 		case "Rot":
 			return Color.RED;

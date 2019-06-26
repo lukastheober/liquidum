@@ -81,14 +81,14 @@ public class Controller {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					switch (e.getActionCommand()) {
-					case "Weiß":
-						filterBy(colorParser("Weiß"));
+					case "Wei" + '\u00DF':
+						filterBy(colorParser("Wei" + '\u00DF'));
 						break;
 					case "Blau":
 						filterBy(colorParser("Blau"));
 						break;
-					case "Grün":
-						filterBy(colorParser("Grün"));
+					case "Gr" + '\u00FC' + "n":
+						filterBy(colorParser("Gr" + '\u00FC' + "n"));
 						break;
 					case "Rot":
 						filterBy(colorParser("Rot"));
@@ -140,32 +140,32 @@ public class Controller {
 				ListDeletionWarningDialog diag = new ListDeletionWarningDialog(Controller.this, list);
 			}
 		});
-		
+
 		list.getSortingMenu().getDeadlineButton().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				sortListBy(list, SortingCategory.Deadline);
 			}
-			
+
 		});
-		
+
 		list.getSortingMenu().getColorButton().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				sortListBy(list, SortingCategory.Color);
 			}
-			
+
 		});
-		
+
 		list.getSortingMenu().getNameButton().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				sortListBy(list, SortingCategory.Name);
 			}
-			
+
 		});
 
 		gui.getListContainer().loadListsOfTasks(listCollection);
@@ -186,31 +186,32 @@ public class Controller {
 		ListOfTasks myList = task.getMyList();
 		myList.getTaskList().add(task);
 		myList.loadTasks();
-		
+
+
 		task.getMenu().getDeleteButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, task);
 			}
 		});
-		
+
 		task.getMenu().getDuplicateButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				duplicateTask(task);
 			}
 		});
-		
+
 		task.getMenu().getEditButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);	
+				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);
 			}
 		});
-		
+
 		gui.update();
 		save();
 	}
@@ -288,7 +289,7 @@ public class Controller {
 			while (taskIterator.hasNext()) {
 
 				Task actualTask = taskIterator.next();
-				
+
 				if (actualTask.getColor() != color) {
 					actualTask.setVisible(false);
 				} else {
@@ -314,9 +315,9 @@ public class Controller {
 			ListOfTasks actualTaskListObject = taskListsIterator.next();
 			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
 			Iterator<Task> taskIterator = actualListOfTasks.iterator();
-			
+
 			actualTaskListObject.setVisible(true);
-			
+
 			while (taskIterator.hasNext()) {
 				taskIterator.next().setVisible(true);
 			}
@@ -336,7 +337,7 @@ public class Controller {
 		listCollection.remove(list);
 		gui.getListContainer().remove(list);
 		clearBinOfAllTasksFrom(list);
-		
+
 		gui.update();
 		save();
 	}
@@ -402,7 +403,7 @@ public class Controller {
 			else
 				currentList.setVisible(false);
 		}
-		
+
 		gui.update();
 		save();
 	}
@@ -482,32 +483,31 @@ public class Controller {
 		LinkedList<Task> taskList = taskListObject.getTaskList();
 		taskList.add(taskList.indexOf(task) + 1, clone);
 		taskListObject.loadTasks();
-		
-		
+
 		clone.getMenu().getDeleteButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, task);
+				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, clone);
 			}
 		});
-		
+
 		clone.getMenu().getDuplicateButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				duplicateTask(task);
+				duplicateTask(clone);
 			}
 		});
-		
+
 		clone.getMenu().getEditButton().addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);	
+				TaskEditingWizard wiz = new TaskEditingWizard(clone, Controller.this);
 			}
 		});
-		
+
 		gui.update();
 		save();
 	}
@@ -580,7 +580,7 @@ public class Controller {
 	public Collection<ListOfTasks> getallListOfTasks() {
 		return listCollection;
 	}
-	
+
 	public LinkedList<Task> getBin() {
 		return trashBin;
 	}
@@ -590,7 +590,6 @@ public class Controller {
 		bla.loadProgramm();
 		
 	}
-
 
 	public void save() {
 		Thread t1 = new Save(listCollection, this);
@@ -620,7 +619,7 @@ public class Controller {
 		switch (clrStr) {
 		case "Blau":
 			return Color.BLUE;
-		case "Grün":
+		case "Gr" + '\u00FC' + "n":
 			return Color.GREEN;
 		case "Rot":
 			return Color.RED;
@@ -631,5 +630,9 @@ public class Controller {
 		default:
 			return Color.WHITE;
 		}
+	}
+	
+	public void updateUI() {
+		gui.update();
 	}
 }

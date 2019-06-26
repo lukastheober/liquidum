@@ -39,13 +39,14 @@ public class TaskRestorationWizard extends MyDialog {
 		setUpButtons();
 		
 		pack();
+		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
 	}
 	
 	private void setUpButtons() {
 		JButton restore = new JButton("Wiederherstellen");
-		JButton delete = new JButton("Löschen");
+		JButton delete = new JButton("L" + '\u00F6' + "schen");
 		JButton cancel = new JButton("Abbrechen");
 		
 		restore.addActionListener(new ActionListener() {
@@ -54,7 +55,11 @@ public class TaskRestorationWizard extends MyDialog {
 			public void actionPerformed(ActionEvent e) {
 				Task task = getCorrespondingTask(taskList.getSelectedValue());
 				controller.getBin().remove(task);
-				controller.addTask(task);
+				ListOfTasks myList = task.getMyList();
+				myList.getTaskList().add(task);
+				myList.loadTasks();
+				controller.updateUI();
+				
 				fillTaskListWithCurrentBin();
 				taskList.setSelectedIndex(0);
 			}
@@ -156,16 +161,11 @@ public class TaskRestorationWizard extends MyDialog {
 			add(textLabel, BorderLayout.CENTER);
 			
 			JPanel colorPanel = new JPanel();
-			colorPanel.setBackground(color);
+			colorPanel.setBackground(color.darker());
 			colorPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 			add(colorPanel, BorderLayout.EAST);
 			setVisible(true);
-		}
-
-	
-
-		
-		
+		}	
 	}
 
 }
