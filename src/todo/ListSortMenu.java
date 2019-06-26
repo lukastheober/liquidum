@@ -21,7 +21,7 @@ public class ListSortMenu extends JMenuBar {
 	public ListSortMenu(ListOfTasks myList){
 		this.myList = myList;
 		this.setPreferredSize(new Dimension(70 ,30));
-		JMenu mainMenu = new JMenu("Sortieren...");
+		JMenu mainMenu = new JMenu("Sortieren");
 		mainMenu.setPreferredSize(new Dimension(70, 30));
 		add(mainMenu);
 		colorButton = new JMenuItem("nach Farbe");

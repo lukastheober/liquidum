@@ -1,16 +1,22 @@
 package todo;
 
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Properties;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -49,14 +55,13 @@ public class TaskEditingWizard extends MyDialog {
 	private Task oldTask;
 	private JTextField text;
 
-	private String[] colours = { "Schwarz", "Blau", "Rot", "Gr" + '\u00FC' + "n", "Grau", "Orange", "Pink" };
+	private String[] colours = {"Wei" + '\u00DF', "Blau", "Gr" + '\u00FC' + "n", "Rot", "Orange", "Pink"};
 	private String[] intervals = { "1", "2", "3", "4", "5", "6" };
 
 	private void initialize() {
 
-		setLayout(new GridLayout(0, 2, 10, 10));
-		setSize(300, 400);
-		setTitle("  Aufgabe bearbeiten");
+		setLayout(new BorderLayout());
+		setTitle("Aufgabe bearbeiten");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		initializeFields();
@@ -66,16 +71,40 @@ public class TaskEditingWizard extends MyDialog {
 	}
 
 	private void initializeFields() {
+		
+		JPanel inputPanel = new JPanel(new GridBagLayout());
+		
+		namePanel(inputPanel);
+		datePanel(inputPanel);
+		timePanel(inputPanel);
+		colorPanel(inputPanel);
+		intervallPanel(inputPanel);
+		textPanel(inputPanel);
+		
+		add(inputPanel, BorderLayout.CENTER);
+		
+		add(buttonPanel(), BorderLayout.SOUTH);
 
-		this.add(new JLabel("    Name"));
+	}
+	
+	private void namePanel(JPanel inputPanel) {
+		inputPanel.add(new JLabel("Name"), new GridBagConstraints(0, 0, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_START, GridBagConstraints.NONE, 
+				new Insets(5, 5, 5, 5), 0, 0));
+		
 		name = new JTextField(oldTask.getName());
 		name.setName("name");
-		this.add(name);
+		inputPanel.add(name, new GridBagConstraints(1, 0, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+	}
 
-		// System.out.println(oldTask.getDeadline().toString().substring(11,
-		// oldTask.getDeadline().toString().length()));
-
-		this.add(new JLabel("    Ablaufdatum"));
+	private void datePanel(JPanel inputPanel) {
+		
+		inputPanel.add(new JLabel("Ablaufdatum"), new GridBagConstraints(0, 1, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_START, GridBagConstraints.NONE, 
+				new Insets(5, 5, 5, 5), 0, 0));
+		
 		Properties p = new Properties();
 		p.put("text.today", "today");
 		p.put("text.month", "month");
@@ -86,10 +115,16 @@ public class TaskEditingWizard extends MyDialog {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 		String oldDate = oldTask.getDeadline().format(formatter);
 		date.getJFormattedTextField().setText(oldDate);
-		date.setPreferredSize(new Dimension(220, 25));
-		this.add(date);
+		inputPanel.add(date, new GridBagConstraints(1, 1, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+	}
 
-		this.add(new JLabel("    Ablaufzeit"));
+	private void timePanel(JPanel inputPanel) {
+		
+		inputPanel.add(new JLabel("Ablaufzeit"), new GridBagConstraints(0, 2, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_START, GridBagConstraints.NONE, 
+				new Insets(5, 5, 5, 5), 0, 0));
 		timeSpinner = new JSpinner(new SpinnerDateModel());
 		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
 		timeSpinner.setEditor(timeEditor);
@@ -99,28 +134,52 @@ public class TaskEditingWizard extends MyDialog {
 		Date output = Date.from(zdt.toInstant());
 
 		timeSpinner.setValue(output);
-		JPanel time = new JPanel();
-		timeSpinner.setPreferredSize(new Dimension(220, 25));
-		time.add(timeSpinner);
-		this.add(time);
+		inputPanel.add(timeSpinner, new GridBagConstraints(1, 2, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+	}
 
-		this.add(new JLabel("    Farbe"));
+	private void colorPanel(JPanel inputPanel) {
+		
+		inputPanel.add(new JLabel("Farbe"), new GridBagConstraints(0, 3, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_START, GridBagConstraints.NONE, 
+				new Insets(5, 5, 5, 5), 0, 0));
 		colour = new JComboBox<String>(colours);
 		colour.setSelectedIndex(colorToIndex(oldTask.getColor()));
 		colour.setName("colour");
-		this.add(colour);
+		inputPanel.add(colour, new GridBagConstraints(1, 3, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+	}
 
-		this.add(new JLabel("    Intervall in h"));
+	private void intervallPanel(JPanel inputPanel) {
+		
+		inputPanel.add(new JLabel("Intervall in h"), new GridBagConstraints(0, 4, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_START, GridBagConstraints.NONE, 
+				new Insets(5, 5, 5, 5), 0, 0));
 		interval = new JComboBox<String>(intervals);
 		interval.setName("interval");
-		this.add(interval);
+		inputPanel.add(interval, new GridBagConstraints(1, 4, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+	}
 
-		this.add(new JLabel("    Text"));
+	private void textPanel(JPanel inputPanel) {
+		
+		inputPanel.add(new JLabel("Text"), new GridBagConstraints(0, 5, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_START, GridBagConstraints.NONE, 
+				new Insets(5, 5, 5, 5), 0, 0));
 		text = new JTextField(oldTask.getText());
 		text.setName("text");
-		this.add(text);
+		inputPanel.add(text, new GridBagConstraints(1, 5, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+	}
 
-		cancel = new JButton("  Abbrechen");
+	private Component buttonPanel() {
+		JPanel buttonPanel = new JPanel();
+		
+		cancel = new JButton("Abbrechen");
 		cancel.setName("cancel");
 		cancel.addActionListener(new ActionListener() {
 
@@ -129,9 +188,11 @@ public class TaskEditingWizard extends MyDialog {
 				dispose();
 			}
 		});
-		this.add(cancel);
+		buttonPanel.add(cancel, new GridBagConstraints(0, 6, 1, 1, 1, 1, 
+				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
 
-		createTask = new JButton("  Aufgabe bearbeiten");
+		createTask = new JButton("Aufgabe erstellen");
 		createTask.setName("create");
 		createTask.addActionListener(new ActionListener() {
 
@@ -140,10 +201,6 @@ public class TaskEditingWizard extends MyDialog {
 				String timeAsString = (String) timeSpinner.getModel().getValue().toString().subSequence(11, 19);
 				String dateAsString = date.getJFormattedTextField().getText();
 				String dateAndTime = toDateAndTime(dateAsString, timeAsString);
-
-//				oldTask.overwrite(new Task(oldTask.getMyList(), name.getText(), LocalDateTime.parse(dateAndTime),
-//						Integer.parseInt((String) interval.getSelectedItem()),
-//						colorParser((String) colour.getSelectedItem()), text.getText()));
 	
 				oldTask.setColor(colorParser((String) colour.getSelectedItem()));
 				oldTask.setName(name.getText());
@@ -159,26 +216,29 @@ public class TaskEditingWizard extends MyDialog {
 				return dateAsArray[2] + "-" + dateAsArray[1] + "-" + dateAsArray[0] + "T" + time;
 			}
 		});
-		this.add(createTask);
+		buttonPanel.add(createTask, new GridBagConstraints(1, 6, 1, 1, 1, 1, 
+				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+		
+		return buttonPanel;
 	}
 
 	private int colorToIndex(Color inColor) {
 
-		if (inColor == Color.BLACK) {
+		if (inColor.equals(Color.white))
 			return 0;
-		} else if (inColor == Color.BLUE) {
+		else if (inColor.equals(Color.blue))
 			return 1;
-		} else if (inColor == Color.RED) {
+		else if (inColor.equals(Color.green))
 			return 2;
-		} else if (inColor == Color.GREEN) {
+		else if (inColor.equals(Color.red))
 			return 3;
-		} else if (inColor == Color.GRAY) {
+		else if (inColor.equals(Color.orange))
 			return 4;
-		} else if (inColor == Color.ORANGE) {
+		else if (inColor.equals(Color.pink))
 			return 5;
-		} else {
-			return 6;
-		}
+		else
+			return 0;
 	}
 
 	public TaskEditingWizard(Task task, Controller controller) {

@@ -148,7 +148,7 @@ public class TaskRestorationWizard extends MyDialog {
 		}
 
 		private void setUp() {
-			setPreferredSize(new Dimension(300, 100));
+			setPreferredSize(new Dimension(200, 100));
 			setLayout(new BorderLayout());
 			
 			JLabel nameLabel = new JLabel(name);

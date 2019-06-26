@@ -1,8 +1,13 @@
 package todo;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -54,9 +59,8 @@ public class TaskCreationWizard extends MyDialog {
 
 	private void initialize() {
 
-		setLayout(new GridLayout(0, 2, 11, 10));
-		setSize(300, 400);
-		setTitle("  Aufgabe erstellen");
+		setLayout(new BorderLayout());
+		setTitle("Aufgabe erstellen");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		initializeFields();
@@ -66,14 +70,40 @@ public class TaskCreationWizard extends MyDialog {
 	}
 
 	private void initializeFields() {
+		
+		JPanel inputPanel = new JPanel(new GridBagLayout());
 
-		this.add(new JLabel("    Name"));
+		namePanel(inputPanel);
+		datePanel(inputPanel);
+		timePanel(inputPanel);
+		colorPanel(inputPanel);
+		intervallPanel(inputPanel);
+		textPanel(inputPanel);
+		
+		add(inputPanel, BorderLayout.CENTER);
+		
+		add(buttonPanel(), BorderLayout.SOUTH);
+		
+	}
+
+	private void namePanel(JPanel inputPanel) {
+		inputPanel.add(new JLabel("Name"), new GridBagConstraints(0, 0, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_START, GridBagConstraints.NONE, 
+				new Insets(5, 5, 5, 5), 0, 0));
+		
 		name = new JTextField();
 		name.setName("name");
-		name.setPreferredSize(new Dimension(220, 25));
-		this.add(name);
+		inputPanel.add(name, new GridBagConstraints(1, 0, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+	}
 
-		this.add(new JLabel("    Ablaufdatum"));
+	private void datePanel(JPanel inputPanel) {
+		
+		inputPanel.add(new JLabel("Ablaufdatum"), new GridBagConstraints(0, 1, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_START, GridBagConstraints.NONE, 
+				new Insets(5, 5, 5, 5), 0, 0));
+		
 		Properties p = new Properties();
 		p.put("text.today", "today");
 		p.put("text.month", "month");
@@ -83,39 +113,65 @@ public class TaskCreationWizard extends MyDialog {
 		date = new JDatePickerImpl(datePanel, new DateComponentFormatter());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 		date.getJFormattedTextField().setText(LocalDate.now().format(formatter));
-		date.setPreferredSize(new Dimension(220, 25));
-		this.add(date);
+		inputPanel.add(date, new GridBagConstraints(1, 1, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+	}
+
+	private void timePanel(JPanel inputPanel) {
 		
-		this.add(new JLabel("    Ablaufzeit"));
+		inputPanel.add(new JLabel("Ablaufzeit"), new GridBagConstraints(0, 2, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_START, GridBagConstraints.NONE, 
+				new Insets(5, 5, 5, 5), 0, 0));
 		timeSpinner = new JSpinner(new SpinnerDateModel());
 		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
 		timeSpinner.setEditor(timeEditor);
 		timeSpinner.setValue(new Date());
-		JPanel time = new JPanel();
-		timeSpinner.setPreferredSize(new Dimension(220, 25));
-		time.add(timeSpinner);
-		this.add(time);
-		
+		inputPanel.add(timeSpinner, new GridBagConstraints(1, 2, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+	}
 
-		this.add(new JLabel("    Farbe"));
+	private void colorPanel(JPanel inputPanel) {
+		
+		inputPanel.add(new JLabel("Farbe"), new GridBagConstraints(0, 3, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_START, GridBagConstraints.NONE, 
+				new Insets(5, 5, 5, 5), 0, 0));
 		colour = new JComboBox<String>(colours);
 		colour.setName("colour");
-		colour.setPreferredSize(new Dimension(220, 25));
-		this.add(colour);
+		inputPanel.add(colour, new GridBagConstraints(1, 3, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+	}
 
-		this.add(new JLabel("    Intervall in h"));
+	private void intervallPanel(JPanel inputPanel) {
+		
+		inputPanel.add(new JLabel("Intervall in h"), new GridBagConstraints(0, 4, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_START, GridBagConstraints.NONE, 
+				new Insets(5, 5, 5, 5), 0, 0));
 		interval = new JComboBox<String>(intervals);
 		interval.setName("interval");
-		interval.setPreferredSize(new Dimension(220, 25));
-		this.add(interval);
+		inputPanel.add(interval, new GridBagConstraints(1, 4, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+	}
 
-		this.add(new JLabel("    Text"));
+	private void textPanel(JPanel inputPanel) {
+		
+		inputPanel.add(new JLabel("Text"), new GridBagConstraints(0, 5, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_START, GridBagConstraints.NONE, 
+				new Insets(5, 5, 5, 5), 0, 0));
 		text = new JTextField();
 		text.setName("text");
-		text.setPreferredSize(new Dimension(220, 25));
-		this.add(text);		
+		inputPanel.add(text, new GridBagConstraints(1, 5, 1, 1, 1, 1, 
+				GridBagConstraints.LINE_END, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+	}
+
+	private Component buttonPanel() {
+		JPanel buttonPanel = new JPanel();
 		
-		cancel = new JButton("  Abbrechen");
+		cancel = new JButton("Abbrechen");
 		cancel.setName("cancel");
 		cancel.addActionListener(new ActionListener() {
 
@@ -124,9 +180,11 @@ public class TaskCreationWizard extends MyDialog {
 				dispose();
 			}
 		});
-		this.add(cancel);
+		buttonPanel.add(cancel, new GridBagConstraints(0, 6, 1, 1, 1, 1, 
+				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
 
-		createTask = new JButton("  Aufgabe erstellen");
+		createTask = new JButton("Aufgabe erstellen");
 		createTask.setName("create");
 		createTask.addActionListener(new ActionListener() {
 
@@ -145,7 +203,11 @@ public class TaskCreationWizard extends MyDialog {
 				return dateAsArray[2] + "-" + dateAsArray[1] + "-" + dateAsArray[0] + "T" + time;
 			}
 		});
-		this.add(createTask);
+		buttonPanel.add(createTask, new GridBagConstraints(1, 6, 1, 1, 1, 1, 
+				GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, 
+				new Insets(5, 5, 5, 5), 0, 0));
+		
+		return buttonPanel;
 	}
 
 	private Color colorParser(String clrStr) {

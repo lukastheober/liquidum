@@ -54,9 +54,9 @@ public class ListOfTasks extends JPanel {
 		// buttons
 		addTaskButton = new JButton("+");
 		addTaskButton.setPreferredSize(new Dimension(165, 30));
-		editButton = new JButton("Liste bearbeiten");
+		editButton = new JButton("Bearbeiten");
 		editButton.setPreferredSize(new Dimension(105, 30));
-		deleteButton = new JButton("Liste l" + '\u00F6' + "schen");
+		deleteButton = new JButton("Löschen");
 		deleteButton.setPreferredSize(new Dimension(105, 30));
 		
 		topMenu.add(this.nameLabel);
