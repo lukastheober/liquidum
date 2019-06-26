@@ -602,6 +602,7 @@ public class Controller {
 //		gui.getListContainer().revalidate();
 //		gui.getListContainer().repaint();
 		System.out.print(this.listCollection.size());
+		gui.getListContainer().loadListsOfTasks(listCollection);
 	}
 
 	public void setListCollection(LinkedList<ListOfTasks> collection) {
