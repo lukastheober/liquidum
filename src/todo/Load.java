@@ -44,7 +44,6 @@ public class Load extends Thread {
 					if(files.equals(trashString)) {
 						loadBin(files);
 					}else {
-					System.out.println(files);
 						load(files);
 					}
 				}

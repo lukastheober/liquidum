@@ -587,11 +587,19 @@ public class Controller {
 
 	public static void main(String[] args) {
 		Controller bla = new Controller();
+		bla.loadProgramm();
 	}
 
 	public void save() {
-		Thread t1 = new Save(listCollection);
+		Thread t1 = new Save(listCollection, this);
 		t1.start();
+	}
+	public void loadProgramm() {
+		Thread load = new Load(listCollection, this);
+		load.run();
+//		gui.getListContainer().revalidate();
+//		gui.getListContainer().repaint();
+		gui.getListContainer().loadListsOfTasks(listCollection);
 	}
 
 	public Object getDraggedObject() {

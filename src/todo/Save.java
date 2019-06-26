@@ -26,7 +26,7 @@ public class Save extends Thread {
 		this.collection = listCollection;
 		this.controller = c;
 	}
-
+	@SuppressWarnings("unchecked")
 	public void saveAll() {
 		
 		Iterator i = collection.iterator();
@@ -41,8 +41,10 @@ public class Save extends Thread {
 
 	private void saveBin(LinkedList<Task> bin) {
 		this.jsonArray = new JSONArray();
-		JSONObject listInfo = new JSONObject();
-		listInfo.put("name", "trashbin");
+		JSONObject binInfo = new JSONObject();
+		
+		binInfo.put("name", "trashbin");
+		jsonArray.add(binInfo);
 		for(Iterator<Task> i= bin.iterator(); i.hasNext();) {
 			Task temp = i.next();
 			JSONObject jTemp = new JSONObject();
@@ -56,6 +58,7 @@ public class Save extends Thread {
 		
 		this.listName = list.getListName();
 		String uid = list.getUUID().toString();
+		
 		LinkedList<Task> taskList = list.getTaskList();
 		this.jsonArray = new JSONArray();
 		
@@ -83,7 +86,6 @@ public class Save extends Thread {
 		if (dir.isDirectory()) {
 			String filepath = s + "/saveFiles/" + listName +uuid  + ".json";
 			try {
-				System.out.print("if block");
 				FileWriter fw = new FileWriter(filepath);
 				fw.write(jsonArray.toJSONString());
 				fw.close();
@@ -91,7 +93,6 @@ public class Save extends Thread {
 				System.out.println(e);
 			}
 		} else {
-			System.out.print("else block");
 			boolean success = dir.mkdir();
 			if (success) {
 				String filepath = s + "/saveFiles/" + listName +uuid + ".json";
@@ -107,8 +108,6 @@ public class Save extends Thread {
 
 	}
 	private void writeBinFile() {
-		System.out.print("bin block");
-		//TODO : fehler finden	
 		Path currentRelativePath = Paths.get("");
 		String s = currentRelativePath.toAbsolutePath().toString();
 		File dir = new File(s + "/saveFiles/");
@@ -122,7 +121,6 @@ public class Save extends Thread {
 				System.out.println(e);
 			}
 		} else {
-			System.out.print("else-bin block");
 			boolean success = dir.mkdir();
 			if (success) {
 				String filepath = s + "/saveFiles/trashbin.json";
