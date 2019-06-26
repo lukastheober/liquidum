@@ -40,7 +40,7 @@ public class GUI extends JFrame {
         setSize(mainWindowWidth, mainWindowHeight);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setTitle("Liquidum 1.0.00");
+        setTitle("Liquidum 1.0.0");
         setLayout(new BorderLayout());
         
         //menuBar
