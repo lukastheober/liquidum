@@ -69,6 +69,7 @@ public class Controller {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				new TaskRestorationWizard(Controller.this);
 				// TODO
 			}
 		});
@@ -139,35 +140,33 @@ public class Controller {
 				ListDeletionWarningDialog diag = new ListDeletionWarningDialog(Controller.this, list);
 			}
 		});
-
+		
 		list.getSortingMenu().getDeadlineButton().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				sortListBy(list, SortingCategory.Deadline);
 			}
-
+			
 		});
-
+		
 		list.getSortingMenu().getColorButton().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				sortListBy(list, SortingCategory.Color);
 			}
-
+			
 		});
-
+		
 		list.getSortingMenu().getNameButton().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				sortListBy(list, SortingCategory.Name);
 			}
-
+			
 		});
-		
-		list.addMouseListener(new DragAndDropMouseListener(Controller.this));
 
 		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
@@ -187,33 +186,31 @@ public class Controller {
 		ListOfTasks myList = task.getMyList();
 		myList.getTaskList().add(task);
 		myList.loadTasks();
-
+		
 		task.getMenu().getDeleteButton().addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, task);
 			}
 		});
-
+		
 		task.getMenu().getDuplicateButton().addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				duplicateTask(task);
 			}
 		});
-
+		
 		task.getMenu().getEditButton().addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);
+				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);	
 			}
 		});
 		
-		task.addMouseListener(new DragAndDropMouseListener(Controller.this));
-
 		gui.update();
 		save();
 	}
@@ -225,15 +222,9 @@ public class Controller {
 	 * @param list: the ListOfTasks that is being deleted
 	 */
 	public void clearBinOfAllTasksFrom(ListOfTasks list) {
-		LinkedList<Task> tasksToDelete = list.getTaskList();
-		Iterator<Task> listIterator = tasksToDelete.iterator();
-		Iterator<Task> trashIterator = trashBin.iterator();
-		while (listIterator.hasNext()) {
-			while (trashIterator.hasNext()) {
-				if (trashIterator.next().equals(listIterator.next())) {
-					trashBin.remove(trashIterator.next());
-				}
-			}
+		for (Task task : trashBin) {
+			if (task.getMyList().equals(list))
+				trashBin.remove(task);
 		}
 	}
 
@@ -272,7 +263,6 @@ public class Controller {
 	public void editTask(Task oldTask, Task newTask) {
 		LinkedList<Task> actualListOfTasks = oldTask.getMyList().getTaskList();
 		actualListOfTasks.set(actualListOfTasks.indexOf(oldTask), newTask);
-		newTask.getMyList().loadTasks();
 		gui.update();
 		save();
 	}
@@ -298,7 +288,7 @@ public class Controller {
 			while (taskIterator.hasNext()) {
 
 				Task actualTask = taskIterator.next();
-
+				
 				if (actualTask.getColor() != color) {
 					actualTask.setVisible(false);
 				} else {
@@ -324,9 +314,9 @@ public class Controller {
 			ListOfTasks actualTaskListObject = taskListsIterator.next();
 			LinkedList<Task> actualListOfTasks = actualTaskListObject.getTaskList();
 			Iterator<Task> taskIterator = actualListOfTasks.iterator();
-
+			
 			actualTaskListObject.setVisible(true);
-
+			
 			while (taskIterator.hasNext()) {
 				taskIterator.next().setVisible(true);
 			}
@@ -345,14 +335,8 @@ public class Controller {
 	public void removeList(ListOfTasks list) {
 		listCollection.remove(list);
 		gui.getListContainer().remove(list);
-
-		Iterator<Task> trashBinIterator = trashBin.iterator();
-		while (trashBinIterator.hasNext()) {
-			Task actualTaskInTrashBin = trashBinIterator.next();
-			if (actualTaskInTrashBin.getMyList() == list) {
-				deleteTaskFromBin(actualTaskInTrashBin);
-			}
-		}
+		clearBinOfAllTasksFrom(list);
+		
 		gui.update();
 		save();
 	}
@@ -392,6 +376,7 @@ public class Controller {
 	 */
 	public void searchFor(String string) {
 		resetFilter();
+
 		for (int i = 0; i < listCollection.size(); i++) {
 			ListOfTasks currentList = listCollection.get(i);
 			boolean visibleTasksInCurrentList = false;
@@ -417,7 +402,7 @@ public class Controller {
 			else
 				currentList.setVisible(false);
 		}
-
+		
 		gui.update();
 		save();
 	}
@@ -497,31 +482,32 @@ public class Controller {
 		LinkedList<Task> taskList = taskListObject.getTaskList();
 		taskList.add(taskList.indexOf(task) + 1, clone);
 		taskListObject.loadTasks();
-
+		
+		
 		clone.getMenu().getDeleteButton().addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, clone);
+				TaskDeletionWarningDialog diag = new TaskDeletionWarningDialog(Controller.this, task);
 			}
 		});
-
+		
 		clone.getMenu().getDuplicateButton().addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				duplicateTask(clone);
+				duplicateTask(task);
 			}
 		});
-
+		
 		clone.getMenu().getEditButton().addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);
+				TaskEditingWizard wiz = new TaskEditingWizard(task, Controller.this);	
 			}
 		});
-
+		
 		gui.update();
 		save();
 	}
@@ -540,7 +526,6 @@ public class Controller {
 		listCollection.add(index + 1, (ListOfTasks) draggedObject);
 		draggedObject = null;
 
-		gui.getListContainer().loadListsOfTasks(listCollection);
 		gui.update();
 		save();
 	}
@@ -559,8 +544,6 @@ public class Controller {
 		list.getTaskList().add(task);
 		draggedObject = null;
 
-		myList.loadTasks();
-		list.loadTasks();
 		gui.update();
 		save();
 	}
@@ -579,8 +562,7 @@ public class Controller {
 		int index = list.getTaskList().indexOf(task);
 		list.getTaskList().add(index + 1, draggedTask);
 		draggedObject = null;
-		
-		list.loadTasks();
+
 		gui.update();
 		save();
 	}
@@ -598,10 +580,15 @@ public class Controller {
 	public Collection<ListOfTasks> getallListOfTasks() {
 		return listCollection;
 	}
+	
+	public LinkedList<Task> getBin() {
+		return trashBin;
+	}
 
 	public static void main(String[] args) {
 		Controller bla = new Controller();
 	}
+
 
 	public void save() {
 		Thread t1 = new Save(listCollection);
