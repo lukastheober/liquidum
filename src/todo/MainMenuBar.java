@@ -12,8 +12,8 @@ import javax.swing.JMenu;
 
 public class MainMenuBar extends JMenuBar {
 
-	private JMenuItem filterButton1, filterButton2, filterButton3, filterButton4, filterButton5, filterButton6,
-			filterButton7, listCreateButton, searchButton, showBinButton, menuResetFilter;
+	private JMenuItem filterButton1, filterButton2, filterButton3, filterButton4, filterButton5, filterButton6, 
+	listCreateButton, searchButton, showBinButton, menuResetFilter;
 
 	public MainMenuBar() {
 		JMenu mainMenu = new JMenu("Menü");

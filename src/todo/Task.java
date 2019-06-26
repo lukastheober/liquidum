@@ -34,7 +34,9 @@ public class Task extends JPanel {
 	private String name;
 	private JLabel nameLabel;
 	private JLabel dateLabel;
+	private JLabel textLabel;
 	private JPanel textPanel;
+	private JPanel colorPanel;
 
 	public Task(ListOfTasks myList, String name, LocalDateTime deadline, int interval, Color color, String text) {
 		this.myList = myList;
@@ -87,11 +89,11 @@ public class Task extends JPanel {
 		this.textPanel.setBackground(Color.WHITE);
 		this.textPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 
-		JLabel textLabel = new JLabel(text);
+		textLabel = new JLabel(text);
 		textLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		textLabel.setVerticalAlignment(SwingConstants.TOP);
 
-		JPanel colorPanel = new JPanel();
+		colorPanel = new JPanel();
 		colorPanel.setBackground(this.color.darker());
 		colorPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 
@@ -148,5 +150,36 @@ public class Task extends JPanel {
 
 	public String getText() {
 		return text;
+	}
+
+	public void setName(String newName) {
+		this.name = newName;
+		nameLabel.setText(this.name);
+	}
+
+	public void setColor(Color colorParser) {
+		// TODO Auto-generated method stub
+		this.color = colorParser;
+		colorPanel.setBackground(this.color.darker());
+
+	}
+
+	public void setDeadline(LocalDateTime parse) {
+		// TODO Auto-generated method stub
+		this.deadline = parse;
+		dateLabel.setText(deadlineToString());
+
+	}
+
+	public void setInterval(int parseInt) {
+		// TODO Auto-generated method stub
+		this.interval = parseInt;
+		
+	}
+
+	public void setText(String text2) {
+		// TODO Auto-generated method stub
+		this.text = text2;
+		this.textLabel.setText(text2);
 	}
 }
