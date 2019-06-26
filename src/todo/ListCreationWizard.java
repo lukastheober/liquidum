@@ -1,10 +1,12 @@
 package todo;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Transparency;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -81,9 +83,13 @@ public class ListCreationWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				controller.addList(new ListOfTasks(name.getText()));
-				dispose();
+				if (name.getText().equals("")) {
+					name.setBackground(Color.red);
+				}
+				else {
+					controller.addList(new ListOfTasks(name.getText()));
+					dispose();
+				}
 			}
 		});
 		bottom.add(createListOfTasks, new GridBagConstraints(1, 0, 1, 1, 1, 1, 

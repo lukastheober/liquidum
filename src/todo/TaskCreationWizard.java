@@ -20,6 +20,7 @@ import java.util.Properties;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -190,13 +191,29 @@ public class TaskCreationWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String timeAsString = (String) timeSpinner.getModel().getValue().toString().subSequence(11, 19);
-				String dateAsString = date.getJFormattedTextField().getText();
-				String dateAndTime = toDateAndTime(dateAsString, timeAsString);
-				
-				
-				controller.addTask(new Task(tList ,name.getText(), LocalDateTime.parse(dateAndTime) , Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText()));
-				dispose();
+				if (text.getText().equals("") || name.getText().equals("")) {
+					if (text.getText().equals("")) {
+						text.setBackground(Color.red);
+					}
+					else {
+						text.setBackground(Color.white);
+					}
+					if (name.getText().equals("")) {
+						name.setBackground(Color.red);
+					}
+					else {
+						name.setBackground(Color.white);
+					}
+				}
+				else {
+					String timeAsString = (String) timeSpinner.getModel().getValue().toString().subSequence(11, 19);
+					String dateAsString = date.getJFormattedTextField().getText();
+					String dateAndTime = toDateAndTime(dateAsString, timeAsString);
+					
+					
+					controller.addTask(new Task(tList ,name.getText(), LocalDateTime.parse(dateAndTime) , Integer.parseInt((String) interval.getSelectedItem()), colorParser((String) colour.getSelectedItem()), text.getText()));
+					dispose();
+				}
 			}
 			private String toDateAndTime(String date, String time) {
 				String[] dateAsArray = date.split("[.]");

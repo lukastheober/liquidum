@@ -1,6 +1,7 @@
 package todo;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -91,9 +92,14 @@ public class ListEditingWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				oldList.setName(name.getText());
-				oldList.setNameLabel(name.getText());
-				dispose();
+				if (name.getText().equals("")) {
+					name.setBackground(Color.red);
+				}
+				else {
+					oldList.setName(name.getText());
+					oldList.setNameLabel(name.getText());
+					dispose();
+				}
 			}
 		});
 		bottom.add(editListOfTasks, new GridBagConstraints(1, 0, 1, 1, 1, 1, 

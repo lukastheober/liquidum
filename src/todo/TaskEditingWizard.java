@@ -198,17 +198,33 @@ public class TaskEditingWizard extends MyDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String timeAsString = (String) timeSpinner.getModel().getValue().toString().subSequence(11, 19);
-				String dateAsString = date.getJFormattedTextField().getText();
-				String dateAndTime = toDateAndTime(dateAsString, timeAsString);
-	
-				oldTask.setColor(colorParser((String) colour.getSelectedItem()));
-				oldTask.setName(name.getText());
-				oldTask.setDeadline(LocalDateTime.parse(dateAndTime));
-				oldTask.setInterval(Integer.parseInt((String) interval.getSelectedItem()));
-				oldTask.setText(text.getText());
-				
-				dispose();
+				if (text.getText().equals("") || name.getText().equals("")) {
+					if (text.getText().equals("")) {
+						text.setBackground(Color.red);
+					}
+					else {
+						text.setBackground(Color.white);
+					}
+					if (name.getText().equals("")) {
+						name.setBackground(Color.red);
+					}
+					else {
+						name.setBackground(Color.white);
+					}
+				}
+				else {
+					String timeAsString = (String) timeSpinner.getModel().getValue().toString().subSequence(11, 19);
+					String dateAsString = date.getJFormattedTextField().getText();
+					String dateAndTime = toDateAndTime(dateAsString, timeAsString);
+		
+					oldTask.setColor(colorParser((String) colour.getSelectedItem()));
+					oldTask.setName(name.getText());
+					oldTask.setDeadline(LocalDateTime.parse(dateAndTime));
+					oldTask.setInterval(Integer.parseInt((String) interval.getSelectedItem()));
+					oldTask.setText(text.getText());
+					
+					dispose();
+				}
 			}
 
 			private String toDateAndTime(String date, String time) {
