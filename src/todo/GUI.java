@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -25,17 +26,21 @@ public class GUI extends JFrame {
 	private MainMenuBar menuBar = new MainMenuBar();
 	private int mainWindowWidth;
 	private int mainWindowHeight;
+	private ImageIcon programmIcon;
 	
 	public GUI() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		mainWindowHeight = screenSize.height;
 		mainWindowWidth = screenSize.width;
 		
+		programmIcon = new ImageIcon("favicon.png");
+		this.setIconImage(programmIcon.getImage());
+		
         //window settings
         setSize(mainWindowWidth, mainWindowHeight);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setTitle("Liquidum");
+        setTitle("Liquidum 1.0.00");
         setLayout(new BorderLayout());
         
         //menuBar
