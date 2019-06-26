@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
+import java.util.UUID;
 
 import javax.swing.*;
 
@@ -17,6 +18,7 @@ import javax.swing.*;
 public class ListOfTasks extends JPanel {
  
 	//test
+	private UUID uuid;
 	private String name;
 	private JButton addTaskButton;
 	private JButton deleteButton;
@@ -27,6 +29,7 @@ public class ListOfTasks extends JPanel {
 	
 	static final int MAX_TASKS = 10;
 	public ListOfTasks(String listName) {
+		this.uuid = UUID.randomUUID();
 		name = listName;
 		setBorder(BorderFactory.createRaisedSoftBevelBorder());
 		setLayout(new FlowLayout());
@@ -39,7 +42,21 @@ public class ListOfTasks extends JPanel {
 
 		setVisible(true);
 	}
+	public ListOfTasks(String listName, String uuid) {
+		this.uuid = UUID.fromString(uuid);
+		name = listName;
+		setBorder(BorderFactory.createRaisedSoftBevelBorder());
+		setLayout(new FlowLayout());
+		setPreferredSize(new Dimension(410, 750));
+		nameLabel = new JLabel(listName);
 
+		JPanel topBar = menuBars();
+		
+		add(topBar);
+
+		setVisible(true);
+	}
+	
 	private JPanel menuBars() {
 		JPanel menus = new JPanel(new GridLayout(2,1));
 		menus.setPreferredSize(new Dimension(400, 80));
@@ -56,7 +73,7 @@ public class ListOfTasks extends JPanel {
 		addTaskButton.setPreferredSize(new Dimension(165, 30));
 		editButton = new JButton("Liste bearbeiten");
 		editButton.setPreferredSize(new Dimension(105, 30));
-		deleteButton = new JButton("Liste löschen");
+		deleteButton = new JButton("Liste lï¿½schen");
 		deleteButton.setPreferredSize(new Dimension(105, 30));
 		
 		topMenu.add(this.nameLabel);
@@ -106,6 +123,9 @@ public class ListOfTasks extends JPanel {
 		 * */
 		this.tasks = loadList;
 		
+	}
+	public UUID getUUID() {
+		return this.uuid;
 	}
 	
 	public ListSortMenu getSortingMenu() {

@@ -593,17 +593,17 @@ public class Controller {
 
 
 	public void save() {
-		Thread t1 = new Save(listCollection);
+		Thread t1 = new Save(listCollection, this);
 		t1.start();
 	}
 	public void loadProgramm() {
 		Thread load = new Load(listCollection, this);
-		load.start();
+		load.run();
 //		gui.getListContainer().revalidate();
 //		gui.getListContainer().repaint();
-		System.out.print(this.listCollection.size());
 		gui.getListContainer().loadListsOfTasks(listCollection);
 	}
+
 
 	public void setListCollection(LinkedList<ListOfTasks> collection) {
 		this.listCollection = collection;

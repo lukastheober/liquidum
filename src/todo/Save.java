@@ -17,31 +17,52 @@ import org.json.simple.JSONObject;
 
 public class Save extends Thread {
 	LinkedList<ListOfTasks> collection;
+	Controller controller;
 	String listName;
 	JSONArray jsonArray;
 	JSONObject temp;
 
-	public Save(LinkedList<ListOfTasks> listCollection) {
+	public Save(LinkedList<ListOfTasks> listCollection, Controller c) {
 		this.collection = listCollection;
+		this.controller = c;
 	}
 
 	public void saveAll() {
+		
 		Iterator i = collection.iterator();
 		while(i.hasNext()) {
 			saveList((ListOfTasks)i.next());
 		}
+		
+		//save trashBin too
+		LinkedList<Task> bin = controller.getBin();
+		saveBin(bin);
+	}
+
+	private void saveBin(LinkedList<Task> bin) {
+		this.jsonArray = new JSONArray();
+		JSONObject listInfo = new JSONObject();
+		listInfo.put("name", "trashbin");
+		for(Iterator<Task> i= bin.iterator(); i.hasNext();) {
+			Task temp = i.next();
+			JSONObject jTemp = new JSONObject();
+			jsonArray.add(taskToJSON(temp, jTemp));
+		}
+		writeBinFile();
 	}
 
 	@SuppressWarnings("unchecked")
 	public void saveList(ListOfTasks list) {
+		
 		this.listName = list.getListName();
-		System.out.print(listName);
+		String uid = list.getUUID().toString();
 		LinkedList<Task> taskList = list.getTaskList();
 		this.jsonArray = new JSONArray();
 		
 		
 		JSONObject listInfo = new JSONObject();
-		listInfo.put("name", list.getName());
+		listInfo.put("name", listName);
+		listInfo.put("UUID",uid);
 		jsonArray.add(listInfo);
 		
 		
@@ -51,20 +72,18 @@ public class Save extends Thread {
 			JSONObject jTemp = new JSONObject();
 			jsonArray.add(taskToJSON(temp, jTemp));
 		}
-
-		writeJSONFile();
+		writeJSONFile(uid);
 	}
 
-	private void writeJSONFile() {
+	private void writeJSONFile(String uuid) {
 		// TODO duplicate file handling
 		Path currentRelativePath = Paths.get("");
 		String s = currentRelativePath.toAbsolutePath().toString();
-		System.out.println(s);
 		File dir = new File(s + "/saveFiles/");
 		if (dir.isDirectory()) {
-			String filepath = s + "/saveFiles/" + listName + ".json";
-			// System.out.println(filepath);
+			String filepath = s + "/saveFiles/" + listName +uuid  + ".json";
 			try {
+				System.out.print("if block");
 				FileWriter fw = new FileWriter(filepath);
 				fw.write(jsonArray.toJSONString());
 				fw.close();
@@ -72,10 +91,10 @@ public class Save extends Thread {
 				System.out.println(e);
 			}
 		} else {
+			System.out.print("else block");
 			boolean success = dir.mkdir();
 			if (success) {
-				String filepath = s + "/saveFiles/" + listName + ".json";
-				// System.out.println(filepath);
+				String filepath = s + "/saveFiles/" + listName +uuid + ".json";
 				try {
 					FileWriter fw = new FileWriter(filepath);
 					fw.write(jsonArray.toJSONString());
@@ -87,7 +106,41 @@ public class Save extends Thread {
 		}
 
 	}
+	private void writeBinFile() {
+		System.out.print("bin block");
+		//TODO : fehler finden
+		
+		
+		
+//		Path currentRelativePath = Paths.get("");
+//		String s = currentRelativePath.toAbsolutePath().toString();
+//		File dir = new File(s + "/saveFiles/");
+//		if (dir.isDirectory()) {
+//			String filepath = s + "/saveFiles/" + listName + ".json";
+//			try {
+//				FileWriter fw = new FileWriter(filepath);
+//				fw.write(jsonArray.toJSONString());
+//				fw.close();
+//			} catch (Exception e) {
+//				System.out.println(e);
+//			}
+//		} else {
+//			System.out.print("else-bin block");
+//			boolean success = dir.mkdir();
+//			if (success) {
+//				String filepath = s + "/saveFiles/" + listName + ".json";
+//				try {
+//					FileWriter fw = new FileWriter(filepath);
+//					fw.write(jsonArray.toJSONString());
+//					fw.close();
+//				} catch (Exception e) {
+//					System.out.println(e);
+//				}
+//			}
+//		}
 
+	}
+	
 	@SuppressWarnings("unchecked")
 	private JSONObject taskToJSON(Task task, JSONObject jSon) {
 		this.temp = jSon;
