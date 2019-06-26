@@ -15,17 +15,59 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class Load extends Thread {
+	Controller controller;
 	LinkedList<ListOfTasks> collection;
 	String listName;
 	JSONArray jsonArray;
 	JSONObject temp;
 	LinkedList<Task> currentList;
 
-	public Load(LinkedList<ListOfTasks> listCollection) {
+	public Load(LinkedList<ListOfTasks> listCollection, Controller c) {
 		this.collection = listCollection;
+		this.controller = c;
 	}
 
-	public LinkedList<ListOfTasks> loadFiles() {
+//	public LinkedList<ListOfTasks> loadFiles() {
+//
+//		/*
+//		 * get all Files of the directory and load them
+//		 * 
+//		 * 
+//		 * 
+//		 */
+//		Path currentRelativePath = Paths.get("");
+//		String s = currentRelativePath.toAbsolutePath().toString();
+//		System.out.println(s);
+//		File dir = new File(s + "/saveFiles/");
+//
+//		if (dir.isDirectory()) {
+//			if (dir.list().length > 0) {
+//				// directory exists and is not empty
+//				ArrayList<String> result = new ArrayList<>();
+//
+//				result = search(".*\\.json", dir, result);
+//
+//				for (String files : result) {
+//					load(files);
+//				}
+//				// TODO: add tasks to collection!
+//				return collection;
+//			} else {
+//				// directory is empty
+//				return collection;
+//			}
+//		} else {
+//			return collection;
+//		}
+//
+//	}
+	public void start() {
+		controller.setListCollection(loadFiles());
+	}
+	
+	private LinkedList<ListOfTasks> loadFiles() {
+		//TODO debug command
+		System.out.print("loading");
 
 		/*
 		 * get all Files of the directory and load them
@@ -33,11 +75,12 @@ public class Load extends Thread {
 		 * 
 		 * 
 		 */
+		
 		Path currentRelativePath = Paths.get("");
 		String s = currentRelativePath.toAbsolutePath().toString();
 		System.out.println(s);
 		File dir = new File(s + "/saveFiles/");
-
+		
 		if (dir.isDirectory()) {
 			if (dir.list().length > 0) {
 				// directory exists and is not empty
@@ -61,6 +104,8 @@ public class Load extends Thread {
 	}
 
 	private ArrayList<String> search(final String pattern, final File folder, ArrayList<String> result) {
+		//TODO debug command
+		System.out.print("searching");
 		for (File f : folder.listFiles()) {
 			if (f.isDirectory()) {
 				search(pattern, f, result);
@@ -81,6 +126,8 @@ public class Load extends Thread {
 		 * list!! 3)Following JSONObjects in the Array contain all info for the tasks
 		 * 
 		 */
+		//TODO debug command
+		System.out.println("Load single file");
 		JSONParser jParse = new JSONParser();
 		JSONArray jLoadedList = null;
 
@@ -116,11 +163,17 @@ public class Load extends Thread {
 		/*
 		 * loads all fields from JSON-Arrays to create a new Task Obj
 		 */
+		
+		//TODO avoid nullpointer
+		//TODO debug command
+		System.out.println("creating task");
+		
 		String name = (String) taskObj.get("name");
 		LocalDateTime deadline = loadLocalDateTime((String) taskObj.get("deadline"));
 		int interval = Integer.parseInt((String) taskObj.get("interval"));
-		Color color = loadColor((String) taskObj.get(color));
-		String text = (String) taskObj.get(text);
+		Color color = loadColor((String) taskObj.get("color"));
+		
+		String text = (String) taskObj.get("text");
 
 		Task task = new Task(list, name, deadline, interval, color, text);
 		return task;
@@ -128,6 +181,8 @@ public class Load extends Thread {
 	}
 
 	private ListOfTasks createList(JSONObject listInfo) {
+		//TODO debug command
+		System.out.print("creating list");
 		ListOfTasks listOfTasks = new ListOfTasks((String) listInfo.get("name"));
 		return listOfTasks;
 	}

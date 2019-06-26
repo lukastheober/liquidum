@@ -587,6 +587,8 @@ public class Controller {
 
 	public static void main(String[] args) {
 		Controller bla = new Controller();
+		bla.loadProgramm();
+		
 	}
 
 
@@ -594,7 +596,17 @@ public class Controller {
 		Thread t1 = new Save(listCollection);
 		t1.start();
 	}
+	public void loadProgramm() {
+		Thread load = new Load(listCollection, this);
+		load.start();
+//		gui.getListContainer().revalidate();
+//		gui.getListContainer().repaint();
+		System.out.print(this.listCollection.size());
+	}
 
+	public void setListCollection(LinkedList<ListOfTasks> collection) {
+		this.listCollection = collection;
+	}
 	public Object getDraggedObject() {
 		return draggedObject;
 	}

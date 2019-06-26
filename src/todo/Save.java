@@ -34,7 +34,8 @@ public class Save extends Thread {
 
 	@SuppressWarnings("unchecked")
 	public void saveList(ListOfTasks list) {
-		this.listName = list.getName();
+		this.listName = list.getListName();
+		System.out.print(listName);
 		LinkedList<Task> taskList = list.getTaskList();
 		this.jsonArray = new JSONArray();
 		
@@ -122,6 +123,7 @@ public class Save extends Thread {
 	@SuppressWarnings("unchecked")
 	private void putDeletionDate(Task task) {
 		LocalDateTime deletionDateObj = task.getDeletionDate();
+		if(deletionDateObj !=null) {
 		String dateAsString="";
 		dateAsString += deletionDateObj.getYear();
 		dateAsString += ":";
@@ -133,6 +135,9 @@ public class Save extends Thread {
 		dateAsString += ":";
 		dateAsString += deletionDateObj.getMinute();
 		temp.put("deletiondate", dateAsString);
+		}else {
+			return;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
