@@ -39,6 +39,7 @@ public class TaskRestorationWizard extends MyDialog {
 		setUpButtons();
 		
 		pack();
+		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
 	}
@@ -160,7 +161,7 @@ public class TaskRestorationWizard extends MyDialog {
 			add(textLabel, BorderLayout.CENTER);
 			
 			JPanel colorPanel = new JPanel();
-			colorPanel.setBackground(color);
+			colorPanel.setBackground(color.darker());
 			colorPanel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 			add(colorPanel, BorderLayout.EAST);
 			setVisible(true);
