@@ -43,7 +43,7 @@ public class TaskCreationWizard extends MyDialog {
 	private JButton createTask;
 	private ListOfTasks tList;
 
-	private String[] colours = {"Weiß", "Blau", "Grün", "Rot", "Orange", "Pink"};
+	private String[] colours = {"Weiï¿½", "Blau", "Grï¿½n", "Rot", "Orange", "Pink"};
 	private String[] intervals = { "1", "2", "3", "4", "5", "6" };
 
 	public TaskCreationWizard(ListOfTasks tList, Controller controller) {
@@ -153,7 +153,7 @@ public class TaskCreationWizard extends MyDialog {
 		switch (clrStr) {
 		case "Blau":
 			return Color.BLUE;
-		case "Grün":
+		case "Grï¿½n":
 			return Color.GREEN;
 		case "Rot":
 			return Color.RED;

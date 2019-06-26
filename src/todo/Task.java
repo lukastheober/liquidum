@@ -108,7 +108,7 @@ public class Task extends JPanel {
 		String[] dlDateAsArray = dlDate.split("-");
 		dlDate = dlDateAsArray[2] + "." + dlDateAsArray[1] + "." + dlDateAsArray[0];
 
-		return "Fällig am " + dlDate + " um " + dlTime;
+		return "F" + '\u00E4' + "llig am " + dlDate + " um " + dlTime;
 	}
 
 	public boolean expiresWithing3Days() {
