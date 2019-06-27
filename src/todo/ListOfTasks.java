@@ -37,6 +37,7 @@ public class ListOfTasks extends JPanel {
 		setLayout(new FlowLayout());
 		setPreferredSize(new Dimension(410, 750));
 		nameLabel = new JLabel(listName);
+		nameLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 
 		JPanel topBar = menuBars();
 		
